@@ -1,0 +1,175 @@
+@use '../colors.scss' as *;
+
+.home-body-container {
+  padding: 0 0.2rem;
+
+  // ======== HEADERS & PARAGRAPHS =========
+  h3,
+  p {
+    padding: 0 5rem 0 0;
+    color: $custom-dark-green;
+  }
+
+  h3 {
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+  }
+
+  p {
+    margin-top: 0;
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  // ======== TRENDING DESTINATIONS CAROUSEL =========
+  .trending-destinations-carousel-container {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+
+    .stepper-button-carousel {
+      background: none;
+      border: none;
+
+      img {
+        width: 2rem;
+      }
+    }
+
+    .carousel-destination-preview-container {
+      width: 100%;
+      display: grid;
+      grid-template-rows: 85% auto;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px 10px 0 0;
+      }
+
+      .carousel-destination-preview-name-and-review-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: $custom-dark-green;
+        color: white;
+        border-radius: 0 0 10px 10px;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  // ======== HOME FEATURES SECTION =========
+  .home-features-container {
+    display: flex;
+    flex-direction: column; // stack features vertically
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    .home-features {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+
+      .features-icon {
+        width: 2rem;
+        height: 2rem;
+        flex-shrink: 0;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: $custom-dark-green;
+        line-height: 1.3;
+        padding-right: 2rem;
+      }
+    }
+  }
+
+  // ======== SIGN-UP / LOG-IN SECTION =========
+  .sign-up-log-in-section-home-container {
+    color: $custom-dark-green;
+    margin: 2rem 0;
+
+    h4 {
+      margin-top: 0;
+      font-size: 0.95rem;
+    }
+
+    p {
+      font-size: 0.7rem;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: $custom-dark-green;
+    }
+
+    .sign-up-and-log-in-button-container {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  // ======== NEWSLETTER SECTION =========
+  .newsletter-section-home-container {
+    p {
+      margin-bottom: 0.5rem;
+      font-size: 0.7rem;
+    }
+
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+  }
+
+  // ======== NAVIGATION SECTION (BOTTOM) =========
+  .navigation-section-home-bottom {
+    width: 100vw; // ensures full-width expansion
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw; // expands beyond container padding
+    margin-right: -50vw;
+    margin-bottom: 2rem;
+    background-color: $custom-dark-green;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+    button {
+      background: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: white;
+      border: none;
+      padding: 0.6rem 0;
+    }
+
+    .language-button-home-bottom {
+      img {
+        width: 0.7rem;
+        filter: invert(100%);
+      }
+    }
+  }
+  .logo-and-rights-bottom-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .logo-bottom {
+        width: 40%;
+    }
+
+    p {
+        padding: 0;
+        font-size: .7rem;
+    }
+}
+}

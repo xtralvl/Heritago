@@ -86,7 +86,7 @@ hr {
       background-color: $custom-dark-green;
       color: white;
       text-align: center;
-      padding: 2rem 0 5rem;
+      padding: 2rem 0 5rem 0;
       width: 100vw;
       position: relative;
       left: 50%;
@@ -173,7 +173,7 @@ hr {
     }
 
     .hero-location-form {
-      margin: 1rem 0.2rem;
+      margin: 1rem 0;
       border-radius: 10px;
       max-width: 100%;
       z-index: 5;
@@ -304,7 +304,7 @@ hr {
         width: 100%;
         border-radius: 10px;
         padding: 1rem 0;
-        font-size: 1rem;
+        font-size: 1.1rem;
         font-weight: bold;
         margin: 1.2rem 0;
       }

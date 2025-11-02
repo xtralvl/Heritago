@@ -1,11 +1,11 @@
 import HomeNavAndHero from "../components/homePageComponents/HomeNavAndHero";
-import HomeBody from "../components/homePageComponents/HomeBody";
+import HomeBodyAndFooter from "../components/homePageComponents/HomeBodyAndFooter";
 
 export default function HomePage() {
     return (
         <>
         <HomeNavAndHero />
-        <HomeBody />
+        <HomeBodyAndFooter />
 
         </>
     )
