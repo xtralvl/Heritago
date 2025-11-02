@@ -1,6 +1,9 @@
 import leftIcon from "../../assets/left-icon-green.svg";
 import rightIcon from "../../assets/right-icon-green.svg";
 import yellowstonePic from "../../assets/yellowstone-example-pic.jpg";
+import yosemitePic from "../../assets/yosemitePic.avif";
+import grandTetonPic from "../../assets/grandTetonPic.jpg";
+
 import "../../styles/homePageStyles/HomeBodyAndFooter.scss";
 import exploreIcon from "../../assets/explore-icon.svg";
 import reviewIcon from "../../assets/review-icon.svg";
@@ -26,7 +29,7 @@ export default function HomeBodyAndFooter() {
         </button>
 
         {/* Later: Replace with API-driven destination data */}
-        <div className="carousel-destination-preview-container">
+        <div className="carousel-destination-preview-container-mobile">
           <img src={yellowstonePic} alt="Yellowstone National Park" />
           <div className="carousel-destination-preview-name-and-review-container">
             <span className="carousel-destination-preview-name">
@@ -35,6 +38,40 @@ export default function HomeBodyAndFooter() {
             <span className="carousel-destination-preview-review">4.8 / 5</span>
           </div>
         </div>
+
+      <div className="carousel-destination-preview-container-desktop-container">
+
+        <div className="carousel-destination-preview-container-desktop">
+          <img src={yellowstonePic} alt="Yellowstone National Park" />
+          <div className="carousel-destination-preview-name-and-review-container">
+            <span className="carousel-destination-preview-name">
+              Yellowstone National Park
+            </span>
+            <span className="carousel-destination-preview-review">4.8 / 5</span>
+          </div>
+        </div>
+
+        <div className="carousel-destination-preview-container-desktop">
+          <img src={yosemitePic} alt="Yellowstone National Park" />
+          <div className="carousel-destination-preview-name-and-review-container">
+            <span className="carousel-destination-preview-name">
+              Yosemite National Park
+            </span>
+            <span className="carousel-destination-preview-review">4.3 / 5</span>
+          </div>
+        </div>
+
+        <div className="carousel-destination-preview-container-desktop">
+          <img src={grandTetonPic} alt="Yellowstone National Park" />
+          <div className="carousel-destination-preview-name-and-review-container">
+            <span className="carousel-destination-preview-name">
+              Grand Teton National Park
+            </span>
+            <span className="carousel-destination-preview-review">4.4 / 5</span>
+          </div>
+        </div>
+
+      </div>
 
         <button className="stepper-button-carousel carousel-right-button">
           <img src={rightIcon} alt="Next destination" />
@@ -45,41 +82,41 @@ export default function HomeBodyAndFooter() {
 
       {/* === FEATURE SECTION === */}
       <div className="home-features-container">
-        <div className="home-features home-features-first">
-          <img
-            className="features-icon"
-            src={exploreIcon}
-            alt="Explore icon"
-          />
-          <p>
-            Explore hundreds of national parks <br />
-            Discover world-class museums
-          </p>
-        </div>
+      <div className="home-features home-features-first">
+      <img
+        className="features-icon"
+        src={exploreIcon}
+        alt="Destination icon"
+      />
+      <p>
+        Explore hundreds of breathtaking parks <br />
+        Discover inspiring museums around the world
+      </p>
+    </div>
 
-        <div className="home-features home-features-second">
-          <img
-            className="features-icon"
-            src={reviewIcon}
-            alt="Review icon"
-          />
-          <p>
-            Detailed insights and authentic reviews <br />
-            Countless opinions from travelers around the world
-          </p>
-        </div>
+    <div className="home-features home-features-second">
+      <img
+        className="features-icon"
+        src={reviewIcon}
+        alt="Review icon"
+      />
+      <p>
+        Read detailed insights and honest reviews <br />
+        Find opinions shared by travelers worldwide
+      </p>
+    </div>
 
-        <div className="home-features home-features-third">
-          <img
-            className="features-icon"
-            src={growingIcon}
-            alt="Growing database icon"
-          />
-          <p>
-            We are constantly expanding our database <br />
-            Soon, new destinations from across the globe will be available
-          </p>
-        </div>
+    <div className="home-features home-features-third">
+      <img
+        className="features-icon"
+        src={growingIcon}
+        alt="Growing database icon"
+      />
+      <p>
+        We’re constantly expanding our database <br />
+        Soon, new destinations will join from every region
+      </p>
+    </div>
       </div>
 
       <hr />

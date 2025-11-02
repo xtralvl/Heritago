@@ -7,6 +7,14 @@
   
 }
 
+.home-nav-and-hero-container,
+.home-body-container {
+  padding: 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  
+}
+
 .hr-hide {
   opacity: 0;
 }
@@ -380,12 +388,19 @@ hr {
 };
 
 // ===== DESKTOP ==== //
+@media (min-width: 1300px) {
+  .home-nav-and-hero-container,
+  .home-body-container {
+    max-width: 1100px !important;
+  }
+
+}
 @media (min-width: 1024px) {
 
   // Make all main page sections have consistent side padding
   .home-nav-and-hero-container,
   .home-body-container {
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
     
   }
@@ -466,7 +481,7 @@ hr {
     left: 50%;
     transform: translateX(-50%);
     margin-bottom: 0;
-    padding: 3rem 3rem 10rem 3rem !important;
+    padding: 3rem 3rem 10rem 3.5rem !important;
 
     .hero-text {
       max-width: 1000px !important;
