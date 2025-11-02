@@ -7,6 +7,8 @@ import museumIconBlack from "../../assets/museum-icon-black.svg";
 import nationalParkIconBlack from "../../assets/national-park-icon-black.svg";
 import bothIconBlack from "../../assets/both-icon-black.svg";
 import { northAmerica } from "../homePageComponents/Countries";
+import downIcon from "../../assets/down-icon.svg";
+import questionMarkIcon from "../../assets/question-mark-icon.svg";
 
 export default function HomeNavAndHero() {
 
@@ -88,7 +90,9 @@ export default function HomeNavAndHero() {
           ============================== */}
       <div className="top-row-home-page">
         <img src={logo} alt="Heritago Logo" className="homepage-logo" />
-        <div className="top-row-buttons-container">
+
+        {/* === MOBILE AND TAB === */}
+        <div className="top-row-buttons-container-mobile">
           <button className="profile-button">
             <img src={profileIcon} alt="Show Profile" />
           </button>
@@ -96,9 +100,27 @@ export default function HomeNavAndHero() {
             <img src={hamburgerIcon} alt="Show Menu" />
           </button>
         </div>
+
+        {/* === DESKTOP === */}
+        <div className="top-row-buttons-container-desktop" >
+
+          <div className="language-and-help-button-container-top" >
+            <button className="language-button-home-top">
+              EN <img src={downIcon} alt="Select language" />
+            </button>
+            <button className="help-button-home-top" ><img src={questionMarkIcon} alt="" /></button>
+          </div>
+
+          <div className="sign-up-and-log-in-button-container-top">
+            <button className="sign-up-button" >
+              <strong>Sign up</strong>
+            </button>
+            <button className="log-in-button" >Log in</button>
+        </div>
+        </div>
       </div>
 
-      <hr />
+      <hr className="top-hr-line-home"/>
 
       {/* ==============================
           HERO / SEARCH FORM
@@ -107,13 +129,17 @@ export default function HomeNavAndHero() {
 
         {/* Hero Text */}
         <div className="hero-text-container">
+          <div className="hero-text" >
           <h1>Explore the national parks and museums all over the world!</h1>
           <p>See the details, reviews and insights for all.</p>
+          </div>
         </div>
 
         <h2 className="mobile-hero-subheader">What would you like to visit?</h2>
 
         {/* Destination Category Buttons */}
+        <div className="form-outermost-container" >
+
         <div className={`hero-option-buttons ${destinationError ? `home-page-form-error-button` : ""}`}>
           {/* Museums */}
           <button
@@ -151,7 +177,7 @@ export default function HomeNavAndHero() {
 
         {/* Show error message if no category selected */}
         {destinationError &&
-          <p className="home-page-form-error-msg">
+          <p className=" home-page-first-error home-page-form-error-msg">
             Choose a category.
           </p>
         }
@@ -165,7 +191,7 @@ export default function HomeNavAndHero() {
           <div className="form-fields">
 
             {/* Continent Select */}
-            <div className="form-group custom-select-wrapper" ref={continentRef}>
+            <div className="continent-select form-group custom-select-wrapper" ref={continentRef}>
               <label htmlFor="continent">Continent</label>
 
               {/* Dropdown options */}
@@ -214,7 +240,7 @@ export default function HomeNavAndHero() {
 
             {/* Country/State Select */}
             <div
-              className={`form-group custom-select-wrapper ${countryOrStateError ? "country-or-state-error-state" : ""}`}
+              className={`country-or-state-select form-group custom-select-wrapper ${countryOrStateError ? "country-or-state-error-state" : ""}`}
               ref={countryRef}
             >
               <label htmlFor="countryState">Country/State</label>
@@ -292,8 +318,10 @@ export default function HomeNavAndHero() {
           </div>
         </div>
       </div>
+      </div>
 
-      <hr />
+
+      <hr className={` hr-below-form ${continentOpen || countryOrStateOpen ? "hr-hide" : ""}`}/>
     </div>
   );
 }

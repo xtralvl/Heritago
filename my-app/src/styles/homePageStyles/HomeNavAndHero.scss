@@ -1,8 +1,20 @@
 @use '../colors.scss' as *;
 
+@media (max-width: 1023px) {
+  .top-row-buttons-container-desktop {
+    display: none;
+  }
+  
+}
+
+.hr-hide {
+  opacity: 0;
+}
+
 hr {
   opacity: 0.2;
   margin-bottom: 1rem;
+  z-index: 0;
 }
 
 .home-nav-and-hero-container {
@@ -10,7 +22,6 @@ hr {
   font-family: 'Inter', sans-serif;
 
   .top-row-home-page {
-
     padding: 0 0.2rem;
     display: flex;
     align-items: center;
@@ -20,25 +31,10 @@ hr {
       width: 5rem;
     }
 
-    .top-row-buttons-container {
+    .top-row-buttons-container-mobile {
       display: flex;
       align-items: center;
       gap: 1.2rem;
-
-      .profile-button,
-      .hamburger-button {
-        background: none;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: transform 0.2s ease;
-
-        &:hover {
-          transform: scale(1.1);
-        }
-      }
 
       .profile-button img {
         width: 1.5rem;
@@ -163,13 +159,6 @@ hr {
         }
       }
 
-      .museum-select-button {
-        border-right: none;
-      }
-
-      .both-select-button {
-        border-left: none;
-      }
     }
 
     .hero-location-form {
@@ -322,3 +311,314 @@ hr {
     transform: translateY(0);
   }
 }
+
+// ===== TABLET ==== //
+
+@media (min-width: 600px) and (max-width: 1024px) {
+
+  .homepage-logo {
+    width: 7rem !important;
+  }
+
+  .profile-button,
+  .hamburger-button {
+
+    img {
+      width: 2rem !important;
+    }
+  }
+
+  .hero-text-container {
+    padding: 0 5rem 0.1rem 0.2rem;
+
+    h1 {
+      font-size: 1.5rem !important;
+    }
+
+    p {
+      font-size: 1rem !important;
+    }
+  };
+  
+  .mobile-hero-subheader {
+    font-size: 1.6rem !important;
+  };
+
+  .hero-option-buttons {
+
+    button {
+      font-size: 1.1rem;
+
+      img {
+        height: 55% !important;
+      }
+    }
+  };
+
+  .hero-location-form {
+
+    .form-heading {
+      font-size: 1.5rem !important;
+    }
+
+    label {
+      font-size: 1.2rem !important;
+    }
+  };
+
+  .custom-select {
+
+    span {
+      color: #333;
+      font-size: 1.1rem !important;
+    }
+  }
+  
+  .search-button {
+    font-size: 1.3rem !important;
+  };
+};
+
+// ===== DESKTOP ==== //
+@media (min-width: 1024px) {
+
+  // Make all main page sections have consistent side padding
+  .home-nav-and-hero-container,
+  .home-body-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    
+  }
+
+  .homepage-logo {
+    width: 10rem !important;
+  }
+
+  .top-row-buttons-container-mobile {
+    display: none !important;
+  }
+
+  .top-row-buttons-container-desktop {
+    display: grid;
+    grid-template-rows: auto auto;
+    margin-bottom: 1rem;
+  }
+
+  .language-and-help-button-container-top {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+    gap: 1rem;
+
+    button {
+      color: $custom-dark-green;
+      font-size: 1rem;
+
+    }
+  }
+
+  .sign-up-and-log-in-button-container-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+
+    button {
+      border: none;
+      background: none;
+      color: $custom-dark-green;
+      font-size: 1rem;
+    }
+  }
+
+  .language-button-home-top {
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+    background: none;
+    border: none;
+    width: 2.2rem;
+
+    img {
+      width: 0.7rem;
+    }
+  }
+
+  .help-button-home-top {
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+    background: none;
+    border: none;
+
+    img {
+      width: 2.2rem;
+    }
+  };
+
+  .top-hr-line-home {
+    display: none;
+  }
+
+  .hero-text-container {
+    background-color: $custom-dark-green;
+    width: 100vw; // full viewport width
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 0;
+    padding: 3rem 3rem 10rem 3rem !important;
+
+    .hero-text {
+      max-width: 1000px !important;
+      margin: 0 auto;
+    }
+
+    h1,
+    p {
+      color: white !important;
+    }
+
+    h1 {
+      font-size: 1.4rem !important;
+    };
+
+    p {
+      font-size: 0.9rem !important;
+    }
+  }
+
+  .mobile-hero-subheader {
+    display: none;
+  };
+
+  .form-outermost-container {
+    position: relative;
+    padding: 0 !important;
+  };
+
+  .hero-option-buttons {
+    justify-content: flex-start;
+    width: 60%;
+    margin-top: -7rem !important;
+
+    .option-button {
+      margin-bottom: 0 !important;
+    }
+  };
+
+  .hero-location-form {
+    position: relative;
+    
+    .form-fields {
+      padding: 1rem !important;
+      display: flex;
+      align-items: flex-end;
+      background-color: $custom-dark-green;
+      gap: 3rem;
+      border: 1px solid white;
+      margin-top: -1rem;
+      
+    }
+  };
+
+  .form-heading {
+    display: none;
+  };
+
+  .hero-option-buttons {
+    height: auto !important;
+
+    button {
+
+      p {
+        font-size: 1.1rem !important;
+      }
+
+      img {
+        height: 3rem !important;
+        padding: 1rem 0 1rem 0 !important;
+
+      }
+    }
+  };
+
+  label {
+    color: white !important;
+    margin-bottom: .2rem !important;
+  };
+
+  .custom-select {
+    width: 100%; 
+    min-width: 15rem;
+  }
+    
+
+  .search-button {
+    position: absolute;
+    bottom: -1.2rem; // adjust how far it sticks out
+    right: -1.2rem;  // half the button width outside the container
+    transform: translateY(50%); // optional: to lower it a bit more naturally
+    border: 2px solid $custom-dark-green !important;
+    color: $custom-dark-green !important;
+    background-color: white !important;
+    border-radius: 10px;
+    padding: .8rem 2rem !important;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    width: 10rem !important;
+    font-size: 1.3rem !important;
+
+    &:hover {
+      transform: translateY(50%) scale(1.05);
+    }
+
+    
+  };
+
+  .hr-below-form {
+    display: none !important;
+  }
+
+  .home-page-first-error {
+    position: absolute;
+    top: 1rem;
+    right: 12rem;
+    z-index: 10000;
+  }
+}
+
+// Shared hover animation for all top-row buttons (mobile + desktop)
+.profile-button,
+.hamburger-button,
+.sign-up-button,
+.log-in-button,
+.language-button-home-top,
+.help-button-home-top {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: scale(1.15);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  img {
+    transition: transform 0.25s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
