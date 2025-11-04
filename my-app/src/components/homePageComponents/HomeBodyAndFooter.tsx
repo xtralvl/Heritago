@@ -1,18 +1,20 @@
+import { useState } from "react";
 import leftIcon from "../../assets/left-icon-green.svg";
 import rightIcon from "../../assets/right-icon-green.svg";
 import yellowstonePic from "../../assets/yellowstone-example-pic.jpg";
 import yosemitePic from "../../assets/yosemitePic.avif";
 import grandTetonPic from "../../assets/grandTetonPic.jpg";
-
 import "../../styles/homePageStyles/HomeBodyAndFooter.scss";
 import exploreIcon from "../../assets/explore-icon.svg";
 import reviewIcon from "../../assets/review-icon.svg";
 import growingIcon from "../../assets/growing-icon-blue.svg";
-import downIcon from "../../assets/down-icon.svg";
 import heritagoLogo from "../../assets/heritago-logo.png";
-
+import LoginRegister from "./LoginRegister";
 
 export default function HomeBodyAndFooter() {
+
+const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
+  
   return (
     <div className="home-body-container">
       {/* === HEADER SECTION === */}
@@ -21,6 +23,11 @@ export default function HomeBodyAndFooter() {
         {/* Later: Filter destinations based on the selected continent (Redux hook state) */}
         <p>Most popular travel choices among our visitors.</p>
       </div>
+
+      {/* === LOGIN-REGISTER MENU === */}
+        {isLoginRegisterMenuOpen && (
+          <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)} />
+        )}
 
       {/* === TRENDING DESTINATIONS CAROUSEL === */}
       <div className="trending-destinations-carousel-container">
@@ -123,17 +130,14 @@ export default function HomeBodyAndFooter() {
 
       {/* === SIGN-UP / LOG-IN SECTION (Visible only if user not logged in) === */}
       <div className="sign-up-log-in-section-home-container">
-        <h4>Sign up to access additional features</h4>
+        <h4>Login to access additional features</h4>
         <p>
           Unlock features like marking favorites, viewing insights, leaving
           reviews, and switching to dark mode.
         </p>
-        <div className="sign-up-and-log-in-button-container">
-          <button>
-            <strong>Sign up</strong>
+          <button onClick={() => setIsLoginRegisterMenuOpen(true)} >
+            <strong>Login</strong>
           </button>
-          <button>Log in</button>
-        </div>
       </div>
 
       <hr />
@@ -153,7 +157,7 @@ export default function HomeBodyAndFooter() {
       <footer>
       <div className="navigation-section-home-bottom">
         <button className="language-button-home-bottom">
-          EN <img src={downIcon} alt="Select language" />
+          About
         </button>
         <button>Help</button>
       </div>

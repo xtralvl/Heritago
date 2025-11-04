@@ -1,0 +1,95 @@
+@use '../colors.scss' as *;
+
+body.my-account-menu-open {
+  overflow: hidden; // prevent background scroll
+}
+
+.my-account-menu-container {
+  position: fixed;
+  inset: 0; // full-screen coverage
+  height: 100vh;
+  max-width: 100vw;
+  background: #fff;
+  z-index: 1000;
+  border: none;
+  padding: 1rem;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  /* === CLOSE ICON === */
+  .my-account-menu-close-icon {
+    display: flex;
+    justify-content: flex-end; // moves icon to the right
+    width: 100%;
+
+    img {
+      width: 2rem;
+      cursor: pointer;
+    }
+  };
+
+  h1 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    color: $custom-dark-green;
+  }
+
+  button {
+    border: none;
+    background: none;
+  };
+
+  .my-account-menu-name-and-pic-container {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: $custom-dark-green;
+    margin-bottom: 3rem;
+    
+    .my-account-menu-profile-pic {
+      width: 1.8rem;
+      border: 1px solid $custom-dark-green;
+      border-radius: 50%;
+      padding: .3rem;
+    }
+  };
+
+  .my-account-menu-section {
+    background-color: $custom-dark-green;
+    color: white;
+    padding: .5rem;
+    border-radius: 10px;
+
+    h2 {
+      margin: 0;
+      font-size: .9rem;
+    }
+    
+    .my-account-menu-section-buttons {
+      button {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        color: $custom-dark-green;
+        width: 95%;
+        margin: 1rem auto;
+        border-radius: 5px;
+        padding: .6rem 0;
+      }
+    }
+  };
+
+  .my-account-menu-manage-account-section {
+    margin-bottom: 2rem;
+  };
+
+  .my-account-menu-preferences-section-sign-out-button {
+    margin-top: 3rem;
+    color: $custom-dark-green;
+    font-size: 1rem;
+  }
+
+}

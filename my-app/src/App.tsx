@@ -1,7 +1,11 @@
-import { useState } from 'react'
 import './styles/App.scss';
 import HomePage from './views/HomePage';
+import MobileMenu from './components/homePageComponents/MobileMenu';
 
 export default function App() {
-  return <HomePage />
+  return (
+    <>
+      <HomePage />
+    </>
+  )
 };

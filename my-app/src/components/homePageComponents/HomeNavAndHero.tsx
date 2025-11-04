@@ -7,22 +7,24 @@ import museumIconBlack from "../../assets/museum-icon-black.svg";
 import nationalParkIconBlack from "../../assets/national-park-icon-black.svg";
 import bothIconBlack from "../../assets/both-icon-black.svg";
 import { northAmerica } from "../homePageComponents/Countries";
-import downIcon from "../../assets/down-icon.svg";
-import questionMarkIcon from "../../assets/question-mark-icon.svg";
+import MobileMenu from "./MobileMenu";
+import LoginRegister from "./LoginRegister";
+import MyAccountPage from "../../views/MyAccountPage";
 
 export default function HomeNavAndHero() {
-
   // ==============================
   // STATE HOOKS
   // ==============================
-  const [destinationCategory, setDestinationCategory] = useState<string>(""); // Selected destination category: Museums, National Parks, Both
-  const [continentOpen, setContinentOpen] = useState(false); // Dropdown open/close state for continent
-  const [countryOrStateOpen, setCountryOrStateOpen] = useState(false); // Dropdown open/close state for country/state
-  const [continent, setContinent] = useState("North America"); // Currently selected continent
-  const [countryOrState, setCountryOrState] = useState(""); // Currently selected country or state
-  const [countrySearch, setCountrySearch] = useState(""); // Search input inside country/state dropdown
-  const [destinationError, setDestinationError] = useState(false); // Error state if destination not selected
-  const [countryOrStateError, setCountryOrStateError] = useState(false); // Error state if country/state not selected
+  const [destinationCategory, setDestinationCategory] = useState<string>("");
+  const [continentOpen, setContinentOpen] = useState(false);
+  const [countryOrStateOpen, setCountryOrStateOpen] = useState(false);
+  const [continent, setContinent] = useState("North America");
+  const [countryOrState, setCountryOrState] = useState("");
+  const [countrySearch, setCountrySearch] = useState("");
+  const [destinationError, setDestinationError] = useState(false);
+  const [countryOrStateError, setCountryOrStateError] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
 
   // ==============================
   // CONTINENTS DATA
@@ -34,9 +36,8 @@ export default function HomeNavAndHero() {
     "Asia",
     "Africa",
     "Australia",
-  ]; // List of all continents
+  ];
 
-  // Filter the list of countries based on search input
   const filteredCountries = northAmerica.filter((c) =>
     c.toLowerCase().includes(countrySearch.toLowerCase())
   );
@@ -44,38 +45,34 @@ export default function HomeNavAndHero() {
   // ==============================
   // REFS
   // ==============================
-  const continentRef = useRef<HTMLDivElement | null>(null); // Ref for continent dropdown container
-  const countryRef = useRef<HTMLDivElement | null>(null); // Ref for country/state dropdown container
+  const continentRef = useRef<HTMLDivElement | null>(null);
+  const countryRef = useRef<HTMLDivElement | null>(null);
 
   // ==============================
   // EFFECTS
   // ==============================
-  // Close dropdowns when clicking outside
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (continentRef.current && !continentRef.current.contains(e.target as Node)) {
-        setContinentOpen(false); // Close continent dropdown
+        setContinentOpen(false);
       }
       if (countryRef.current && !countryRef.current.contains(e.target as Node)) {
-        setCountryOrStateOpen(false); // Close country/state dropdown
-        setCountrySearch(""); // Reset search input
+        setCountryOrStateOpen(false);
+        setCountrySearch("");
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside); // Listen for clicks outside
-    return () => document.removeEventListener("mousedown", handleClickOutside); // Cleanup listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // ==============================
   // HANDLERS
   // ==============================
-  /**
-   * Validate mandatory fields and set error states
-   */
   const handleSearchButton = () => {
-    setDestinationError(destinationCategory.length === 0); // Show error if no category selected
+    setDestinationError(destinationCategory.length === 0);
     setCountryOrStateError(
-      countryOrState === "" || countryOrState === "Select Country/State" // Show error if country/state not selected
+      countryOrState === "" || countryOrState === "Select Country/State"
     );
   };
 
@@ -84,7 +81,6 @@ export default function HomeNavAndHero() {
   // ==============================
   return (
     <div className="home-nav-and-hero-container">
-
       {/* ==============================
           TOP NAV BAR
           ============================== */}
@@ -93,235 +89,238 @@ export default function HomeNavAndHero() {
 
         {/* === MOBILE AND TAB === */}
         <div className="top-row-buttons-container-mobile">
-          <button className="profile-button">
+          <button
+            className="profile-button"
+            onClick={() => setIsLoginRegisterMenuOpen(true)}
+          >
             <img src={profileIcon} alt="Show Profile" />
           </button>
-          <button className="hamburger-button">
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="hamburger-button"
+          >
             <img src={hamburgerIcon} alt="Show Menu" />
           </button>
         </div>
 
-        {/* === DESKTOP === */}
-        <div className="top-row-buttons-container-desktop" >
+        {/* === MOBILE MENU === */}
+        {isMobileMenuOpen && (
+          <MyAccountPage onClose={() => setIsMobileMenuOpen(false)} />
+        )}
 
-          <div className="language-and-help-button-container-top" >
-            <button className="language-button-home-top">
-              EN <img src={downIcon} alt="Select language" />
+        {/* === LOGIN-REGISTER MENU === */}
+        {isLoginRegisterMenuOpen && (
+          <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)} />
+        )}
+
+        {/* === DESKTOP === */}
+        <div className="top-row-buttons-container-desktop">
+          <div className="about-and-help-button-container-top">
+            <button className="about-button-home-top">About</button>
+            <button className="help-button-home-top">
+              Help
             </button>
-            <button className="help-button-home-top" ><img src={questionMarkIcon} alt="" /></button>
           </div>
 
           <div className="sign-up-and-log-in-button-container-top">
-            <button className="sign-up-button" >
-              <strong>Sign up</strong>
+            <button
+              className="sign-up-button"
+              onClick={() => setIsLoginRegisterMenuOpen(true)}
+            >
+              <strong>Login</strong>
             </button>
-            <button className="log-in-button" >Log in</button>
-        </div>
+          </div>
         </div>
       </div>
 
-      <hr className="top-hr-line-home"/>
+      <hr className="top-hr-line-home" />
 
       {/* ==============================
           HERO / SEARCH FORM
           ============================== */}
       <div className="hero-form-container">
-
-        {/* Hero Text */}
         <div className="hero-text-container">
-          <div className="hero-text" >
-          <h1>Explore the national parks and museums all over the world!</h1>
-          <p>See the details, reviews and insights for all.</p>
+          <div className="hero-text">
+            <h1>Explore the national parks and museums all over the world!</h1>
+            <p>See the details, reviews and insights for all.</p>
           </div>
         </div>
 
         <h2 className="mobile-hero-subheader">What would you like to visit?</h2>
 
-        {/* Destination Category Buttons */}
-        <div className="form-outermost-container" >
-
-        <div className={`hero-option-buttons ${destinationError ? `home-page-form-error-button` : ""}`}>
-          {/* Museums */}
-          <button
-            className={`option-button ${
-              destinationCategory === "Museums" ? "selected" : ""
+        <div className="form-outermost-container">
+          <div
+            className={`hero-option-buttons ${
+              destinationError ? `home-page-form-error-button` : ""
             }`}
-            onClick={() => setDestinationCategory("Museums")}
           >
-            <img src={museumIconBlack} alt="Museum Icon" />
-            <p>Museums</p>
-          </button>
-
-          {/* National Parks */}
-          <button
-            className={`option-button ${
-              destinationCategory === "National Parks" ? "selected" : ""
-            }`}
-            onClick={() => setDestinationCategory("National Parks")}
-          >
-            <img src={nationalParkIconBlack} alt="National Park Icon" />
-            <p>National Parks</p>
-          </button>
-
-          {/* Both */}
-          <button
-            className={`option-button ${
-              destinationCategory === "Both" ? "selected" : ""
-            }`}
-            onClick={() => setDestinationCategory("Both")}
-          >
-            <img src={bothIconBlack} alt="Both Icon" />
-            <p>Both</p>
-          </button>
-        </div>
-
-        {/* Show error message if no category selected */}
-        {destinationError &&
-          <p className=" home-page-first-error home-page-form-error-msg">
-            Choose a category.
-          </p>
-        }
-
-        {/* ==============================
-            LOCATION FORM
-            ============================== */}
-        <div className="hero-location-form">
-          <h3 className="form-heading">Where?</h3>
-
-          <div className="form-fields">
-
-            {/* Continent Select */}
-            <div className="continent-select form-group custom-select-wrapper" ref={continentRef}>
-              <label htmlFor="continent">Continent</label>
-
-              {/* Dropdown options */}
-              {continentOpen && (
-                <ul className="custom-options">
-                  {continents.map((c) => {
-                    const isDisabled = c !== "North America"; // Only North America enabled
-                    return (
-                      <li
-                        key={c}
-                        className={isDisabled ? "disabled" : ""}
-                        onClick={() => {
-                          if (isDisabled) return;
-                          setContinent(c);
-                          setContinentOpen(false);
-                        }}
-                      >
-                        {c}
-                        {isDisabled && <span className="soon-badge">Soon</span>}
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-
-              {/* Dropdown button */}
-              <div
-                className="custom-select"
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  setContinentOpen((v) => !v);
-                  setCountryOrStateOpen(false); // Close other dropdown
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    setContinentOpen((v) => !v);
-                    e.preventDefault();
-                  }
-                }}
-              >
-                <span>{continent || "Select Continent"}</span>
-                <div className={`arrow ${continentOpen ? "open" : ""}`} />
-              </div>
-            </div>
-
-            {/* Country/State Select */}
-            <div
-              className={`country-or-state-select form-group custom-select-wrapper ${countryOrStateError ? "country-or-state-error-state" : ""}`}
-              ref={countryRef}
-            >
-              <label htmlFor="countryState">Country/State</label>
-
-              {/* Dropdown options */}
-              {countryOrStateOpen && (
-                <ul className="custom-options">
-                  {/* Search input */}
-                  <li className="search-row">
-                    <input
-                      type="text"
-                      className="search-input"
-                      placeholder="Type to search..."
-                      value={countrySearch}
-                      onChange={(e) => setCountrySearch(e.target.value)}
-                      autoFocus
-                    />
-                  </li>
-
-                  {/* Display filtered countries */}
-                  {filteredCountries.length === 0 ? (
-                    <li className="no-results">No results</li>
-                  ) : (
-                    filteredCountries.map((c) => (
-                      <li
-                        key={c}
-                        onClick={() => {
-                          setCountryOrState(c);
-                          setCountryOrStateOpen(false); // Close dropdown
-                          setCountrySearch(""); // Reset search
-                        }}
-                      >
-                        {c}
-                      </li>
-                    ))
-                  )}
-                </ul>
-              )}
-
-              {/* Dropdown button */}
-              <div
-                className="custom-select"
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  setCountryOrStateOpen((v) => !v);
-                  setContinentOpen(false); // Close other dropdown
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    setCountryOrStateOpen((v) => !v);
-                    e.preventDefault();
-                  }
-                }}
-              >
-                <span>{countryOrState || "Select Country/State"}</span>
-                <div className={`arrow ${countryOrStateOpen ? "open" : ""}`} />
-              </div>
-            </div>
-
-            {/* Show error message if country/state not selected */}
-            {countryOrStateError &&
-              <p className="home-page-form-error-msg">Choose a Country/State.</p>
-            }
-
-            {/* Search Button */}
             <button
-              type="button"
-              className="search-button"
-              onClick={handleSearchButton}
+              className={`option-button ${
+                destinationCategory === "Museums" ? "selected" : ""
+              }`}
+              onClick={() => setDestinationCategory("Museums")}
             >
-              Search
+              <img src={museumIconBlack} alt="Museum Icon" />
+              <p>Museums</p>
             </button>
 
+            <button
+              className={`option-button ${
+                destinationCategory === "National Parks" ? "selected" : ""
+              }`}
+              onClick={() => setDestinationCategory("National Parks")}
+            >
+              <img src={nationalParkIconBlack} alt="National Park Icon" />
+              <p>National Parks</p>
+            </button>
+
+            <button
+              className={`option-button ${
+                destinationCategory === "Both" ? "selected" : ""
+              }`}
+              onClick={() => setDestinationCategory("Both")}
+            >
+              <img src={bothIconBlack} alt="Both Icon" />
+              <p>Both</p>
+            </button>
+          </div>
+
+          {destinationError && (
+            <p className="home-page-first-error home-page-form-error-msg">
+              Choose a category.
+            </p>
+          )}
+
+          {/* LOCATION FORM */}
+          <div className="hero-location-form">
+            <h3 className="form-heading">Where?</h3>
+            <div className="form-fields">
+              {/* Continent Select */}
+              <div
+                className="continent-select form-group custom-select-wrapper"
+                ref={continentRef}
+              >
+                <label htmlFor="continent">Continent</label>
+                {continentOpen && (
+                  <ul className="custom-options">
+                    {continents.map((c) => {
+                      const isDisabled = c !== "North America";
+                      return (
+                        <li
+                          key={c}
+                          className={isDisabled ? "disabled" : ""}
+                          onClick={() => {
+                            if (isDisabled) return;
+                            setContinent(c);
+                            setContinentOpen(false);
+                          }}
+                        >
+                          {c}
+                          {isDisabled && <span className="soon-badge">Soon</span>}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+                <div
+                  className="custom-select"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    setContinentOpen((v) => !v);
+                    setCountryOrStateOpen(false);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setContinentOpen((v) => !v);
+                      e.preventDefault();
+                    }
+                  }}
+                >
+                  <span>{continent || "Select Continent"}</span>
+                  <div className={`arrow ${continentOpen ? "open" : ""}`} />
+                </div>
+              </div>
+
+              {/* Country/State Select */}
+              <div
+                className={`country-or-state-select form-group custom-select-wrapper ${
+                  countryOrStateError ? "country-or-state-error-state" : ""
+                }`}
+                ref={countryRef}
+              >
+                <label htmlFor="countryState">Country/State</label>
+                {countryOrStateOpen && (
+                  <ul className="custom-options">
+                    <li className="search-row">
+                      <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Type to search..."
+                        value={countrySearch}
+                        onChange={(e) => setCountrySearch(e.target.value)}
+                        autoFocus
+                      />
+                    </li>
+                    {filteredCountries.length === 0 ? (
+                      <li className="no-results">No results</li>
+                    ) : (
+                      filteredCountries.map((c) => (
+                        <li
+                          key={c}
+                          onClick={() => {
+                            setCountryOrState(c);
+                            setCountryOrStateOpen(false);
+                            setCountrySearch("");
+                          }}
+                        >
+                          {c}
+                        </li>
+                      ))
+                    )}
+                  </ul>
+                )}
+                <div
+                  className="custom-select"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    setCountryOrStateOpen((v) => !v);
+                    setContinentOpen(false);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setCountryOrStateOpen((v) => !v);
+                      e.preventDefault();
+                    }
+                  }}
+                >
+                  <span>{countryOrState || "Select Country/State"}</span>
+                  <div className={`arrow ${countryOrStateOpen ? "open" : ""}`} />
+                </div>
+              </div>
+
+              {countryOrStateError && (
+                <p className="home-page-form-error-msg">Choose a Country/State.</p>
+              )}
+
+              <button
+                type="button"
+                className="search-button"
+                onClick={handleSearchButton}
+              >
+                Search
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      </div>
 
-
-      <hr className={` hr-below-form ${continentOpen || countryOrStateOpen ? "hr-hide" : ""}`}/>
+      <hr
+        className={`hr-below-form ${
+          continentOpen || countryOrStateOpen ? "hr-hide" : ""
+        }`}
+      />
     </div>
   );
 }

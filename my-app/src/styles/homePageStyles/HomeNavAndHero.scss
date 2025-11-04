@@ -251,17 +251,54 @@ hr {
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
           animation: fadeIn 0.15s ease;
 
+          .search-row {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid #e0e0e0;
+            background: #fafafa;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        
+            .search-input {
+              width: 100%;
+              padding: 0.5rem 0.7rem;
+              border: 1px solid #ccc;
+              border-radius: 6px;
+              font-size: 0.9rem;
+              transition: all 0.2s ease;
+              background-color: white;
+              color: #333;
+        
+              &::placeholder {
+                color: #aaa;
+              }
+        
+              &:focus {
+                border-color: $custom-dark-green;
+                outline: none;
+                box-shadow: 0 0 4px rgba(0, 100, 0, 0.2);
+              }
+            }
+          }
+        
+          .no-results {
+            padding: 0.8rem;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            font-size: 0.9rem;
+          }
+
           li {
             position: relative;
-            padding: 0.7rem 0.9rem;
+            padding: 0.7rem 1rem;
             cursor: pointer;
             transition: background 0.2s ease, color 0.2s ease;
             font-size: 0.95rem;
             color: #333;
 
             &:hover {
-              background: #004d40;
-              color: #fff;
+              opacity: 0.6;
             }
 
             &.disabled {
@@ -419,7 +456,7 @@ hr {
     margin-bottom: 1rem;
   }
 
-  .language-and-help-button-container-top {
+  .about-and-help-button-container-top {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 1rem;
@@ -445,7 +482,7 @@ hr {
     }
   }
 
-  .language-button-home-top {
+  .about-button-home-top {
     display: flex;
     align-items: center;
     gap: .2rem;
@@ -453,9 +490,6 @@ hr {
     border: none;
     width: 2.2rem;
 
-    img {
-      width: 0.7rem;
-    }
   }
 
   .help-button-home-top {
@@ -608,8 +642,7 @@ hr {
 .profile-button,
 .hamburger-button,
 .sign-up-button,
-.log-in-button,
-.language-button-home-top,
+.about-button-home-top,
 .help-button-home-top {
   background: none;
   border: none;
@@ -628,12 +661,13 @@ hr {
     transform: scale(0.95);
   }
 
-  img {
-    transition: transform 0.25s ease;
-  }
-
   &:hover img {
     transform: scale(1.05);
   }
+  
+}
+
+.sign-up-button {
+  font-size: 1.2rem !important;
 }
 
