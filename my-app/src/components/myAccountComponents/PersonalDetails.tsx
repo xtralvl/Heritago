@@ -74,7 +74,7 @@ export default function PersonalDetails({ switchToPage }: PersonalDetailsProps) 
   return (
     <div className="personal-details-page-container">
       
-      <img className="personal-details-page-container-logo" src={logo} alt="" />
+      <img onClick={() => switchToPage("home")} className="personal-details-page-container-logo" src={logo} alt="" />
 
       {/* === BACK BUTTON === */}
       <div className="personal-details-page-back-button">
