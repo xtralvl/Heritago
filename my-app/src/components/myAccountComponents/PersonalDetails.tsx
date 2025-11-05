@@ -18,7 +18,7 @@ export default function PersonalDetails({ switchToPage }: PersonalDetailsProps) 
   const [isNameEditOpen, setIsNameEditOpen] = useState(false);
   const [isEmailEditOpen, setIsEmailEditOpen] = useState(false);
 
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [isEmailVerified, _setIsEmailVerified] = useState(false);
 
   // === NAME STATE ===
   const [firstName, setFirstName] = useState("");

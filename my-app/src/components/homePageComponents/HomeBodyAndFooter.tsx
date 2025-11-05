@@ -13,7 +13,6 @@ import LoginRegister from "./LoginRegister";
 import { Pages } from "../myAccountComponents/data/Pages";
 
 interface HomeBodyAndFooter {
-  onClose: () => void;
   switchToPage: (page: Pages) => void;
 };
 

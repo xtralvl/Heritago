@@ -31,11 +31,9 @@ export default function App() {
         />;
       case "search":
         return <SearchResultsPage
-        switchToPage={switchToPage}
         />;
       case "details":
         return <DetailsPage
-        switchToPage={switchToPage}
         />;
       case "my-account":
         return <MyAccountPage
@@ -59,19 +57,15 @@ export default function App() {
         />;
       case "about":
         return <About
-        switchToPage={switchToPage}
         />;
       case "help":
         return <Help
-        switchToPage={switchToPage}
         />;
       case "faq":
         return <FAQ
-        switchToPage={switchToPage}
         />;
       case "newsletter":
         return <Newsletter
-        switchToPage={switchToPage}
         />;
       default:
         return <div>Page not found</div>;
