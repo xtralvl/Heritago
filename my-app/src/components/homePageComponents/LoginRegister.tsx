@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react';
 import closeIcon from '../../assets/close-icon.svg';
 import '../../styles/homePageStyles/LoginRegister.scss';
+import { Pages } from '../myAccountComponents/data/Pages';
+
 
 interface LoginRegisterProps {
   onClose: () => void;
+  switchToPage: (page: Pages) => void;
+
 }
 
-export default function LoginRegister({ onClose }: LoginRegisterProps) {
+export default function LoginRegister({ onClose, switchToPage }: LoginRegisterProps) {
   const [isLogin, setIsLogin] = useState(true);
   const toggleMode = () => setIsLogin((prev) => !prev);
+
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -27,7 +32,7 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
 
         <h1>{isLogin ? 'Log In' : 'Create Account'}</h1>
 
-        <form className="auth-form">
+        <form className="auth-form" onSubmit={e => e.preventDefault()} >
           {!isLogin && (
             <div className="form-group">
               <label htmlFor="name">Name</label>
@@ -45,7 +50,7 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
             <input type="password" id="password" placeholder="••••••••" />
           </div>
 
-          <button type="submit" className="auth-submit-btn">
+          <button onClick={() => switchToPage("my-account")} type="submit" className="auth-submit-btn">
             {isLogin ? 'Log In' : 'Register'}
           </button>
         </form>
@@ -56,6 +61,7 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
             {isLogin ? 'Sign Up' : 'Log In'}
           </button>
         </div>
+
       </div>
     </div>
   );

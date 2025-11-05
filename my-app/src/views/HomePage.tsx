@@ -1,11 +1,21 @@
 import HomeNavAndHero from "../components/homePageComponents/HomeNavAndHero";
 import HomeBodyAndFooter from "../components/homePageComponents/HomeBodyAndFooter";
+import { Pages } from "../components/myAccountComponents/data/Pages";
 
-export default function HomePage() {
+interface HomePageProps {
+    switchToPage: (page: Pages) => void;
+};
+
+export default function HomePage({switchToPage}: HomePageProps) {
+
     return (
         <>
-        <HomeNavAndHero />
-        <HomeBodyAndFooter />
+        <HomeNavAndHero
+        switchToPage = {switchToPage}
+        />
+        <HomeBodyAndFooter
+        switchToPage ={switchToPage}
+        />
         </>
     )
 };

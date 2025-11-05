@@ -1,17 +1,26 @@
 import closeIcon from '../../src/assets/close-icon.svg';
 import '../styles/myAccountPageStyles/MyAccountPage.scss';
 import profilePicPlaceholder from "../assets/prof-pic-placeholder.svg"
+import rightArrow from "../assets/right-arrow.svg"
+import { Pages } from '../components/myAccountComponents/data/Pages';
 
 interface MyAccountPageProps {
-  onClose: () => void;
+
+ switchToPage: (page: Pages) => void;
+};
+
+export default function MyAccountPage({ switchToPage }: MyAccountPageProps) {
+
+const handleSignOut = () => {
+  
+  switchToPage("home");
 }
 
-export default function MyAccountPage({ onClose }: MyAccountPageProps) {
   return (
     <div className="my-account-menu-container">
       {/* Close icon */}
       <div className="my-account-menu-close-icon">
-        <button onClick={onClose} aria-label="Close menu">
+        <button onClick={() => switchToPage("home")} aria-label="Close menu">
           <img src={closeIcon} alt="Close" />
         </button>
       </div>
@@ -22,20 +31,21 @@ export default function MyAccountPage({ onClose }: MyAccountPageProps) {
         <img className='my-account-menu-profile-pic' src={profilePicPlaceholder} alt="" />
         <span>Your name</span>
       </div>
+
       
       <section className='my-account-menu-section my-account-menu-manage-account-section' >
         <h2>Manage Account</h2>
         <div className='my-account-menu-section-buttons'>
-        <button>Personal details</button>
-        <button>Security settings</button>
+        <button onClick={() => switchToPage("personal-details")} >Personal details  <img src={rightArrow} alt="" /></button>
+        <button onClick={() => switchToPage("security-settings")} >Security settings <img src={rightArrow} alt="" /></button>
         </div>
       </section>
 
       <section className='my-account-menu-section my-account-menu-preferences-section' >
         <h2>Preferences</h2>
         <div className='my-account-menu-section-buttons'>
-        <button>Customization preferences</button>
-        <button>Saved destinations</button>
+        <button onClick={() => switchToPage("customization-preferences")} >Customization preferences <img src={rightArrow} alt="" /></button>
+        <button onClick={() => switchToPage("saved-destinations")} >Saved destinations <img src={rightArrow} alt="" /></button>
         </div>
       </section>
 

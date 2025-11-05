@@ -10,10 +10,20 @@ import reviewIcon from "../../assets/review-icon.svg";
 import growingIcon from "../../assets/growing-icon-blue.svg";
 import heritagoLogo from "../../assets/heritago-logo.png";
 import LoginRegister from "./LoginRegister";
+import { Pages } from "../myAccountComponents/data/Pages";
 
-export default function HomeBodyAndFooter() {
+interface HomeBodyAndFooter {
+  onClose: () => void;
+  switchToPage: (page: Pages) => void;
+};
+
+export default function HomeBodyAndFooter({switchToPage}: HomeBodyAndFooter) {
 
 const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
+
+// === DATE TO BE USED IN THE FOOTER === //
+const date = new Date;
+const currentYear = date.getFullYear();
   
   return (
     <div className="home-body-container">
@@ -21,12 +31,14 @@ const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
       <div className="home-body-header-and-paragraph-container">
         <h3>Trending Destinations</h3>
         {/* Later: Filter destinations based on the selected continent (Redux hook state) */}
-        <p>Most popular travel choices among our visitors.</p>
+        <p>Most popular travel choices among travelers.</p>
       </div>
 
       {/* === LOGIN-REGISTER MENU === */}
         {isLoginRegisterMenuOpen && (
-          <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)} />
+          <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)}
+            switchToPage={switchToPage}
+          />
         )}
 
       {/* === TRENDING DESTINATIONS CAROUSEL === */}
@@ -156,15 +168,15 @@ const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
       {/* === FOOTER - BOTTOM NAVIGATION SECTION */}
       <footer>
       <div className="navigation-section-home-bottom">
-        <button className="language-button-home-bottom">
+        <button onClick={() => switchToPage("about")} className="language-button-home-bottom">
           About
         </button>
-        <button>Help</button>
+        <button onClick={() => switchToPage("help")} >Help</button>
       </div>
 
         <div className="logo-and-rights-bottom-container" >
         <img className="logo-bottom" src={heritagoLogo} alt="" />
-        <p>© 2025 Heritago | All rights reserved</p>
+        <p>© {currentYear} Heritago | All rights reserved</p>
         </div>
         
       </footer>

@@ -6,12 +6,17 @@ import hamburgerIcon from "../../assets/hamburger-icon.svg";
 import museumIconBlack from "../../assets/museum-icon-black.svg";
 import nationalParkIconBlack from "../../assets/national-park-icon-black.svg";
 import bothIconBlack from "../../assets/both-icon-black.svg";
-import { northAmerica } from "../homePageComponents/Countries";
+import { northAmerica } from "./data/Countries";
 import MobileMenu from "./MobileMenu";
 import LoginRegister from "./LoginRegister";
-import MyAccountPage from "../../views/MyAccountPage";
+import { Pages } from "../myAccountComponents/data/Pages";
 
-export default function HomeNavAndHero() {
+interface HomeNavAndHeroProps {
+  switchToPage: (page: Pages) => void;
+};
+
+
+export default function HomeNavAndHero({switchToPage}: HomeNavAndHeroProps) {
   // ==============================
   // STATE HOOKS
   // ==============================
@@ -25,6 +30,7 @@ export default function HomeNavAndHero() {
   const [countryOrStateError, setCountryOrStateError] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
+
 
   // ==============================
   // CONTINENTS DATA
@@ -105,12 +111,16 @@ export default function HomeNavAndHero() {
 
         {/* === MOBILE MENU === */}
         {isMobileMenuOpen && (
-          <MyAccountPage onClose={() => setIsMobileMenuOpen(false)} />
+          <MobileMenu onClose={() => setIsMobileMenuOpen(false)}
+          switchToPage = {switchToPage}
+          />
         )}
 
         {/* === LOGIN-REGISTER MENU === */}
         {isLoginRegisterMenuOpen && (
-          <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)} />
+          <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)}
+          switchToPage = {switchToPage}
+          />
         )}
 
         {/* === DESKTOP === */}

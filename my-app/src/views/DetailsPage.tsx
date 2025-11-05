@@ -1,10 +1,10 @@
 import { Pages } from "../components/myAccountComponents/data/Pages";
 
-interface SearchResultsPageProps {
+interface DetailsPageProps {
     switchToPage: (page: Pages) => void;
-}
+};
 
-export default function SearchResultsPage({switchToPage}: SearchResultsPageProps) {
+export default function DetailsPage({switchToPage}: DetailsPageProps) {
     return (
         <div>
 

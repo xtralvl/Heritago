@@ -1,10 +1,10 @@
 import { Pages } from "../myAccountComponents/data/Pages";
 
-interface AboutProps {
+interface NewsletterProps {
     switchToPage: (page: Pages) => void;
 };
 
-export default function About({switchToPage}: AboutProps) {
+export default function Newsletter({switchToPage}: NewsletterProps) {
     return (
         <div>
 

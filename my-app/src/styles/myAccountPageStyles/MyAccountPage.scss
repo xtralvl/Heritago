@@ -5,6 +5,7 @@ body.my-account-menu-open {
 }
 
 .my-account-menu-container {
+  text-align: left;
   position: fixed;
   inset: 0; // full-screen coverage
   height: 100vh;
@@ -71,13 +72,18 @@ body.my-account-menu-open {
     .my-account-menu-section-buttons {
       button {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         background-color: white;
         color: $custom-dark-green;
         width: 95%;
         margin: 1rem auto;
         border-radius: 5px;
-        padding: .6rem 0;
+        padding: .6rem .5rem;
+        justify-content: space-between;
+
+        img {
+          width: .7rem;
+        }
       }
     }
   };
