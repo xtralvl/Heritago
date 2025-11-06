@@ -54,20 +54,20 @@
 
       img {
         width: 100%;
-        height: 100%;
+        height: 160px;
         border-radius: 10px 10px 0 0;
       }
 
       .carousel-destination-preview-name-and-review-container {
         max-width: 100%;
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
         align-items: center;
         background-color: $custom-dark-green;
         color: white;
         border-radius: 0 0 10px 10px;
-        font-size: 0.7rem;
-        padding: .5rem;
+        font-size: 0.8rem;
+        padding: 0.3rem;
       }
     }
   }
@@ -216,7 +216,7 @@
 
       img {
         width: 80%;
-        height: 80%;
+        height: 300px !important;
         border-radius: 10px 10px 0 0;
       }
     }
@@ -403,7 +403,9 @@
     }
   }
 
-  .carousel-destination-preview-states,
+  .carousel-destination-preview-states {
+    font-size: 0.7rem;
+  }
   .carousel-destination-preview-name {
     font-size: .8rem;
   }

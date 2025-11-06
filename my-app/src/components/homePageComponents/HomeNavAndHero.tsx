@@ -26,7 +26,6 @@ export default function HomeNavAndHero() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
 
-
   // ==============================
   // CONTINENTS DATA
   // ==============================

@@ -71,11 +71,11 @@ const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
         <div className="carousel-destination-preview-container-mobile">
         <img
           src={topFiveNationalParks[currentParkPicMobile]?.images?.[0]?.url}
-          alt={topFiveNationalParks[currentParkPicMobile]?.images?.[0]?.altText || topFiveNationalParks[currentParkPicMobile]?.fullName}/>          <div className="carousel-destination-preview-name-and-review-container">
+          alt={topFiveNationalParks[currentParkPicMobile]?.images?.[0]?.altText || topFiveNationalParks[currentParkPicMobile]?.fullName}/>
+          <div className="carousel-destination-preview-name-and-review-container">
             <span className="carousel-destination-preview-name">
             {topFiveNationalParks[currentParkPicMobile]?.fullName}
             </span>
-            <span className="carousel-destination-preview-states">{topFiveNationalParks[currentParkPicMobile]?.states}</span>
           </div>
         </div>
 
