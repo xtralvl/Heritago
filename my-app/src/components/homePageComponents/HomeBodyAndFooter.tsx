@@ -12,7 +12,7 @@ import heritagoLogo from "../../assets/heritago-logo.png";
 import LoginRegister from "./LoginRegister";
 import { useNavigate } from "react-router-dom";
 
-import { fetchParks, fetchTopFiveParks } from "./data/fetchParks";
+import { fetchTopFiveParks } from "./data/fetchParks";
 
 export default function HomeBodyAndFooter() {
 
