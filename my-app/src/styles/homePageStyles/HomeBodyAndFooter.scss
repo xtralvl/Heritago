@@ -59,13 +59,15 @@
       }
 
       .carousel-destination-preview-name-and-review-container {
+        max-width: 100%;
         display: flex;
         justify-content: space-around;
         align-items: center;
         background-color: $custom-dark-green;
         color: white;
         border-radius: 0 0 10px 10px;
-        font-size: 0.9rem;
+        font-size: 0.7rem;
+        padding: .5rem;
       }
     }
   }
@@ -401,7 +403,7 @@
     }
   }
 
-  .carousel-destination-preview-review,
+  .carousel-destination-preview-states,
   .carousel-destination-preview-name {
     font-size: .8rem;
   }

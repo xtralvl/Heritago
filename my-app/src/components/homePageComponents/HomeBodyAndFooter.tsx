@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import leftIcon from "../../assets/left-icon-green.svg";
 import rightIcon from "../../assets/right-icon-green.svg";
 import yellowstonePic from "../../assets/yellowstone-example-pic.jpg";
@@ -12,6 +12,7 @@ import heritagoLogo from "../../assets/heritago-logo.png";
 import LoginRegister from "./LoginRegister";
 import { useNavigate } from "react-router-dom";
 
+import { fetchParks, fetchTopFiveParks } from "./data/fetchParks";
 
 export default function HomeBodyAndFooter() {
 
@@ -19,10 +20,33 @@ const navigate = useNavigate();
 
 const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
 
-// === DATE TO BE USED IN THE FOOTER === //
-const date = new Date;
-const currentYear = date.getFullYear();
-  
+  // ==============================
+  // TOP DESTINATIONS ARRAY FOR CAROUSEL
+  // ==============================
+
+  const [topFiveNationalParks, setTopFiveNationalParks] = useState<any[]>([]);
+  const [currentParkPicMobile, setCurrentParkPicMobile] = useState(0);
+
+  useEffect(() => {
+    async function loadTheFiveParks() {
+      const data = await fetchTopFiveParks();
+      setTopFiveNationalParks(data);
+    }
+    loadTheFiveParks();
+  }, []);
+
+  const handleCurrentPageBack = () => {
+    currentParkPicMobile === 0 ? setCurrentParkPicMobile(4) : setCurrentParkPicMobile(prev => prev - 1);
+  };
+
+  const handleCurrentPageForward = () => {
+    currentParkPicMobile === 4 ? setCurrentParkPicMobile(0) : setCurrentParkPicMobile(prev => prev + 1);
+  };
+
+  // === DATE TO BE USED IN THE FOOTER === //
+  const date = new Date;
+  const currentYear = date.getFullYear();
+
   return (
     <div className="home-body-container">
       {/* === HEADER SECTION === */}
@@ -40,18 +64,18 @@ const currentYear = date.getFullYear();
 
       {/* === TRENDING DESTINATIONS CAROUSEL === */}
       <div className="trending-destinations-carousel-container">
-        <button className="stepper-button-carousel carousel-left-button">
+        <button onClick={handleCurrentPageBack} className="stepper-button-carousel carousel-left-button">
           <img src={leftIcon} alt="Previous destination" />
         </button>
 
-        {/* Later: Replace with API-driven destination data */}
         <div className="carousel-destination-preview-container-mobile">
-          <img src={yellowstonePic} alt="Yellowstone National Park" />
-          <div className="carousel-destination-preview-name-and-review-container">
+        <img
+          src={topFiveNationalParks[currentParkPicMobile]?.images?.[0]?.url}
+          alt={topFiveNationalParks[currentParkPicMobile]?.images?.[0]?.altText || topFiveNationalParks[currentParkPicMobile]?.fullName}/>          <div className="carousel-destination-preview-name-and-review-container">
             <span className="carousel-destination-preview-name">
-              Yellowstone National Park
+            {topFiveNationalParks[currentParkPicMobile]?.fullName}
             </span>
-            <span className="carousel-destination-preview-review">4.8 / 5</span>
+            <span className="carousel-destination-preview-states">{topFiveNationalParks[currentParkPicMobile]?.states}</span>
           </div>
         </div>
 
@@ -89,7 +113,7 @@ const currentYear = date.getFullYear();
 
       </div>
 
-        <button className="stepper-button-carousel carousel-right-button">
+        <button onClick={handleCurrentPageForward} className="stepper-button-carousel carousel-right-button">
           <img src={rightIcon} alt="Next destination" />
         </button>
       </div>
