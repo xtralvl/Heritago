@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Pages } from './data/Pages';
 import logo from "../../assets/heritago-logo.png";
-import leftIcon from "../../assets/left-icon.svg";
 import museumIconBlack from "../../assets/museum-icon-black.svg";
 import nationalParkIconBlack from "../../assets/national-park-icon-black.svg";
 import bothIconBlack from "../../assets/both-icon-black.svg";
 import "../../styles/myAccountPageStyles/SavedDestinations.scss";
+import { useNavigate } from "react-router-dom";
+import BackButton from "../BackButton";
 
 // Dummy data for destinations
 const destinations = [
@@ -15,11 +15,11 @@ const destinations = [
   { id: 4, name: "Metropolitan Museum", type: "Museum", img: "https://via.placeholder.com/150" },
 ];
 
-interface SavedDestinationsProps {
-    switchToPage: (page: Pages) => void;
-}
 
-export default function SavedDestinations({ switchToPage }: SavedDestinationsProps) {
+export default function SavedDestinations() {
+
+    const navigate = useNavigate();
+
     const [filter, setFilter] = useState<"Both" | "National Park" | "Museum">("Both");
 
     const filteredDestinations = destinations.filter(dest => 
@@ -31,19 +31,14 @@ export default function SavedDestinations({ switchToPage }: SavedDestinationsPro
 
             {/* LOGO */}
             <img
-                onClick={() => switchToPage("home")}
+                onClick={() => navigate(-2)}
                 className="saved-destinations-page-container-logo"
                 src={logo}
                 alt="Logo"
             />
 
             {/* BACK BUTTON */}
-            <div className="saved-destinations-page-back-button">
-                <button onClick={() => switchToPage("my-account")} aria-label="Go back to My Account">
-                    <img src={leftIcon} alt="Back" />
-                    <p>My account</p>
-                </button>
-            </div>
+            <BackButton/>
 
             {/* HEADER */}
             <div className="saved-destinations-page-header-section">

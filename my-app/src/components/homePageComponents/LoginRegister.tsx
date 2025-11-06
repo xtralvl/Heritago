@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react';
 import closeIcon from '../../assets/close-icon.svg';
 import '../../styles/homePageStyles/LoginRegister.scss';
-import { Pages } from '../myAccountComponents/data/Pages';
-
+import { useNavigate } from 'react-router-dom';
 
 interface LoginRegisterProps {
   onClose: () => void;
-  switchToPage: (page: Pages) => void;
-
 }
 
-export default function LoginRegister({ onClose, switchToPage }: LoginRegisterProps) {
+export default function LoginRegister({ onClose }: LoginRegisterProps) {
   const [isLogin, setIsLogin] = useState(true);
   const toggleMode = () => setIsLogin((prev) => !prev);
-
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -21,8 +17,9 @@ export default function LoginRegister({ onClose, switchToPage }: LoginRegisterPr
       document.body.style.overflow = "auto";
     };
   }, []);
-  
-  
+
+  const navigate = useNavigate();
+
   return (
     <div className="auth-overlay">
       <div className="auth-card">
@@ -50,7 +47,7 @@ export default function LoginRegister({ onClose, switchToPage }: LoginRegisterPr
             <input type="password" id="password" placeholder="••••••••" />
           </div>
 
-          <button onClick={() => switchToPage("my-account")} type="submit" className="auth-submit-btn">
+          <button onClick={() => navigate("my-account")} type="submit" className="auth-submit-btn">
             {isLogin ? 'Log In' : 'Register'}
           </button>
         </form>

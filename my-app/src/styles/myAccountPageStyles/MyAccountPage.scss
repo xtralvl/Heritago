@@ -15,7 +15,6 @@ body.my-account-menu-open {
   border: none;
   padding: 1rem;
   transition: transform 0.3s ease-in-out;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
   overscroll-behavior: contain;
 
@@ -168,5 +167,13 @@ body.my-account-menu-open {
   to { transform: translateY(0); }
 }
 
+}
 
+@media (min-width: 650px) {
+  .my-account-menu-container {
+    padding: 1rem;
+    max-width: 700px;
+    margin: 3rem auto;
+    
+    }
 }

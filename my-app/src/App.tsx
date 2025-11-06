@@ -1,5 +1,5 @@
 import './styles/App.scss';
-
+import { Routes, Route } from "react-router-dom";
 import HomePage from './views/HomePage';
 import SearchResultsPage from './views/SearchResultsPage';
 import DetailsPage from './views/DetailsPage';
@@ -12,69 +12,31 @@ import About from './components/homePageComponents/About';
 import Help from './components/homePageComponents/Help';
 import FAQ from './components/homePageComponents/FAQ';
 import Newsletter from './components/homePageComponents/Newsletter';
-
-import { Pages } from './components/myAccountComponents/data/Pages';
-import { useState } from "react";
+import NotFoundPage from './views/NotFoundPage';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Pages>("home");
-
-  const switchToPage = (page: Pages) => {
-    setCurrentPage(page);
-  };
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case "home":
-        return <HomePage
-        switchToPage={switchToPage}
-        />;
-      case "search":
-        return <SearchResultsPage
-        />;
-      case "details":
-        return <DetailsPage
-        />;
-      case "my-account":
-        return <MyAccountPage
-        switchToPage={switchToPage}
-        />;
-      case "personal-details":
-        return <PersonalDetails
-        switchToPage={switchToPage}
-        />;
-      case "security-settings":
-        return <SecuritySettings
-        switchToPage={switchToPage}
-        />;
-      case "customization-preferences":
-        return <CustomizationPreferences
-        switchToPage={switchToPage}
-        />;
-      case "saved-destinations":
-        return <SavedDestinations
-        switchToPage={switchToPage}
-        />;
-      case "about":
-        return <About
-        />;
-      case "help":
-        return <Help
-        />;
-      case "faq":
-        return <FAQ
-        />;
-      case "newsletter":
-        return <Newsletter
-        />;
-      default:
-        return <div>Page not found</div>;
-    }
-  };
 
   return (
-    <>
-      {renderPage()}
-    </>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/search" element={<SearchResultsPage />} />
+      <Route path="/details" element={<DetailsPage />} />
+
+      {/* My Account nested routes */}
+      <Route path="/my-account" element={<MyAccountPage  />} />
+      <Route path="/my-account/personal-details" element={<PersonalDetails />} />
+      <Route path="/my-account/security-settings" element={<SecuritySettings />} />
+      <Route path="/my-account/customization-preferences" element={<CustomizationPreferences />} />
+      <Route path="/my-account/saved-destinations" element={<SavedDestinations />} />
+
+      {/* Info pages */}
+      <Route path="/about" element={<About />} />
+      <Route path="/help" element={<Help />} />
+      <Route path="/faq" element={<FAQ />} />
+      <Route path="/newsletter" element={<Newsletter />} />
+
+      {/* Fallback */}
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }

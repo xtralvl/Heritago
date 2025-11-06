@@ -354,7 +354,7 @@
       flex-direction: column;
       align-items: center; // ✅ ensures the image and text below are centered
       width: 80%;
-      max-width: 500px; // optional for consistent sizing
+      max-width: 500px; 
       border: none; // remove debug border if no longer needed
 
       img {

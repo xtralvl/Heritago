@@ -10,13 +10,12 @@ import reviewIcon from "../../assets/review-icon.svg";
 import growingIcon from "../../assets/growing-icon-blue.svg";
 import heritagoLogo from "../../assets/heritago-logo.png";
 import LoginRegister from "./LoginRegister";
-import { Pages } from "../myAccountComponents/data/Pages";
+import { useNavigate } from "react-router-dom";
 
-interface HomeBodyAndFooter {
-  switchToPage: (page: Pages) => void;
-};
 
-export default function HomeBodyAndFooter({switchToPage}: HomeBodyAndFooter) {
+export default function HomeBodyAndFooter() {
+
+const navigate = useNavigate();
 
 const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
 
@@ -36,7 +35,6 @@ const currentYear = date.getFullYear();
       {/* === LOGIN-REGISTER MENU === */}
         {isLoginRegisterMenuOpen && (
           <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)}
-            switchToPage={switchToPage}
           />
         )}
 
@@ -167,10 +165,10 @@ const currentYear = date.getFullYear();
       {/* === FOOTER - BOTTOM NAVIGATION SECTION */}
       <footer>
       <div className="navigation-section-home-bottom">
-        <button onClick={() => switchToPage("about")} className="language-button-home-bottom">
+        <button onClick={() => navigate("about")} className="language-button-home-bottom">
           About
         </button>
-        <button onClick={() => switchToPage("help")} >Help</button>
+        <button onClick={() => navigate("help")} >Help</button>
       </div>
 
         <div className="logo-and-rights-bottom-container" >

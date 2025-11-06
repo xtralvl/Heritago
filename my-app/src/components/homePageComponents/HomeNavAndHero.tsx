@@ -9,14 +9,9 @@ import bothIconBlack from "../../assets/both-icon-black.svg";
 import { northAmerica } from "./data/Countries";
 import MobileMenu from "./MobileMenu";
 import LoginRegister from "./LoginRegister";
-import { Pages } from "../myAccountComponents/data/Pages";
 
-interface HomeNavAndHeroProps {
-  switchToPage: (page: Pages) => void;
-};
+export default function HomeNavAndHero() {
 
-
-export default function HomeNavAndHero({switchToPage}: HomeNavAndHeroProps) {
   // ==============================
   // STATE HOOKS
   // ==============================
@@ -112,14 +107,12 @@ export default function HomeNavAndHero({switchToPage}: HomeNavAndHeroProps) {
         {/* === MOBILE MENU === */}
         {isMobileMenuOpen && (
           <MobileMenu onClose={() => setIsMobileMenuOpen(false)}
-          switchToPage = {switchToPage}
           />
         )}
 
         {/* === LOGIN-REGISTER MENU === */}
         {isLoginRegisterMenuOpen && (
           <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)}
-          switchToPage = {switchToPage}
           />
         )}
 

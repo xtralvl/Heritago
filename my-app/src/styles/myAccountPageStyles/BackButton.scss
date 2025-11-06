@@ -1,0 +1,22 @@
+@use '../colors.scss' as *;
+
+.back-button {
+    align-self: flex-start;
+    margin-bottom: 1rem;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: $custom-dark-green;
+      font-weight: 500;
+      font-size: 1rem;
+
+      img {
+        width: .5rem;
+      }
+    }
+  }

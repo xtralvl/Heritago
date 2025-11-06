@@ -1,14 +1,14 @@
-import { Pages } from './data/Pages';
 import { useState, useEffect } from 'react';
-import leftIcon from '../../assets/left-icon.svg';
 import logo from "../../assets/heritago-logo.png";
 import "../../styles/myAccountPageStyles/SecuritySettings.scss";
+import { useNavigate } from 'react-router-dom';
+import BackButton from '../BackButton';
 
-interface SecuritySettingsProps {
-  switchToPage: (page: Pages) => void;
-}
 
-export default function SecuritySettings({ switchToPage }: SecuritySettingsProps) {
+export default function SecuritySettings() {
+
+  const navigate = useNavigate();
+
   // === MODALS ===
   const [isPasswordEditOpen, setIsPasswordEditOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -47,19 +47,14 @@ export default function SecuritySettings({ switchToPage }: SecuritySettingsProps
   return (
     <div className="security-settings-page-container">
       <img
-        onClick={() => switchToPage("home")}
+        onClick={() => navigate(-2)}
         className="security-settings-page-container-logo"
         src={logo}
         alt="Logo"
       />
 
       {/* BACK BUTTON */}
-      <div className="security-settings-page-back-button">
-        <button onClick={() => switchToPage('my-account')} aria-label="Go back to My Account">
-          <img src={leftIcon} alt="Back" />
-          <p>My account</p>
-        </button>
-      </div>
+        <BackButton/>
 
       {/* HEADER */}
       <div className="security-settings-page-header-section">

@@ -1,15 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import closeIcon from '../../assets/close-icon.svg';
 import questionMarkIcon from '../../assets/question-mark-icon.svg';
 import '../../styles/homePageStyles/MobileMenu.scss';
-import { Pages } from '../myAccountComponents/data/Pages';
 
 interface MobileMenuProps {
   onClose: () => void;
-  switchToPage: (page: Pages) => void;
-
 }
 
-export default function MobileMenu({ onClose, switchToPage }: MobileMenuProps) {
+export default function MobileMenu({ onClose }: MobileMenuProps) {
+
+  const navigate = useNavigate();
+
   return (
     <div className="mobile-menu-container">
       {/* Close icon */}
@@ -22,7 +23,7 @@ export default function MobileMenu({ onClose, switchToPage }: MobileMenuProps) {
       <h1>More</h1>
 
       <div className="help-container-mobile-menu">
-        <button onClick={() => switchToPage("help")} >
+        <button onClick={() => navigate("help")} >
           <img src={questionMarkIcon} alt="Help" />
           <p>Help</p>
         </button>

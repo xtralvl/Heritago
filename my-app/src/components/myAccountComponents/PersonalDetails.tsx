@@ -1,16 +1,15 @@
 import { useRef, useState, useEffect } from 'react';
-import leftIcon from '../../assets/left-icon.svg';
-import { Pages } from './data/Pages';
 import '../../styles/myAccountPageStyles/PersonalDetails.scss';
 import profilePicPlaceholder from '../../assets/prof-pic-placeholder.svg';
 import profilePicEditBadge from '../../assets/prof-pic-edit-badge.svg';
 import logo from "../../assets/heritago-logo.png"
+import { useNavigate } from 'react-router-dom';
+import BackButton from '../BackButton';
 
-interface PersonalDetailsProps {
-  switchToPage: (page: Pages) => void;
-}
+export default function PersonalDetails() {
 
-export default function PersonalDetails({ switchToPage }: PersonalDetailsProps) {
+  const navigate = useNavigate();
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [profileImage, setProfileImage] = useState<string>(profilePicPlaceholder);
 
@@ -74,15 +73,10 @@ export default function PersonalDetails({ switchToPage }: PersonalDetailsProps) 
   return (
     <div className="personal-details-page-container">
       
-      <img onClick={() => switchToPage("home")} className="personal-details-page-container-logo" src={logo} alt="" />
+      <img onClick={() => navigate(-2)} className="personal-details-page-container-logo" src={logo} alt="" />
 
-      {/* === BACK BUTTON === */}
-      <div className="personal-details-page-back-button">
-        <button onClick={() => switchToPage('my-account')} aria-label="Go back to My Account">
-          <img src={leftIcon} alt="Back" />
-          <p>My account</p>
-        </button>
-      </div>
+            {/* BACK BUTTON */}
+            <BackButton/>
 
       {/* === HEADER === */}
       <div className="personal-details-page-header-section">
