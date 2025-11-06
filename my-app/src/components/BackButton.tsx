@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import leftIcon from '../../src/assets/left-icon-green.svg'
+import leftIcon from '../../src/assets/left-icon.svg'
 import '../styles/myAccountPageStyles/BackButton.scss'
 
 

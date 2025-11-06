@@ -1,0 +1,44 @@
+@use '../styles/colors.scss' as *;
+
+.not-found-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+  min-height: 100vh;
+  padding-top: 6rem; 
+  text-align: center;
+
+  .not-found-logo {
+    width: 9rem; // larger logo
+    margin-bottom: 2rem;
+    cursor: pointer;
+  }
+
+  h1 {
+    font-size: 2rem;
+    color: $custom-dark-green;
+    margin-bottom: 1rem;
+  }
+
+  .not-found-message {
+    font-size: 1rem;
+    color: $custom-dark-green;
+    max-width: 400px;
+    margin-bottom: 2rem;
+  }
+
+  .not-found-back-button {
+    background-color: $custom-dark-green;
+    color: white;
+    padding: 0.7rem 1.4rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: hsl(61, 70%, 40%);
+    }
+  }
+}
