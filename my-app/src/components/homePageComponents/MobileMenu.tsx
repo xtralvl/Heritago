@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import closeIcon from '../../assets/close-icon.svg';
 import questionMarkIcon from '../../assets/question-mark-icon.svg';
+import infoIcon from '../../assets/info-icon.svg'; 
 import '../../styles/homePageStyles/MobileMenu.scss';
 
 interface MobileMenuProps {
@@ -8,7 +9,6 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ onClose }: MobileMenuProps) {
-
   const navigate = useNavigate();
 
   return (
@@ -22,10 +22,29 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
 
       <h1>More</h1>
 
+      {/* Help */}
       <div className="help-container-mobile-menu">
-        <button onClick={() => navigate("help")} >
+        <button
+          onClick={() => {
+            navigate("help");
+            onClose();
+          }}
+        >
           <img src={questionMarkIcon} alt="Help" />
           <p>Help</p>
+        </button>
+      </div>
+
+      {/* About */}
+      <div className="about-container-mobile-menu">
+        <button
+          onClick={() => {
+            navigate("about");
+            onClose();
+          }}
+        >
+          <img src={infoIcon} alt="About" />
+          <p>About</p>
         </button>
       </div>
     </div>

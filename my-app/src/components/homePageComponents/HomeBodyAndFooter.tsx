@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import leftIcon from "../../assets/left-icon-green.svg";
 import rightIcon from "../../assets/right-icon-green.svg";
-import yellowstonePic from "../../assets/yellowstone-example-pic.jpg";
-import yosemitePic from "../../assets/yosemitePic.avif";
-import grandTetonPic from "../../assets/grandTetonPic.jpg";
 import "../../styles/homePageStyles/HomeBodyAndFooter.scss";
 import exploreIcon from "../../assets/explore-icon.svg";
 import reviewIcon from "../../assets/review-icon.svg";
@@ -11,40 +8,44 @@ import growingIcon from "../../assets/growing-icon-blue.svg";
 import heritagoLogo from "../../assets/heritago-logo.png";
 import LoginRegister from "./LoginRegister";
 import { useNavigate } from "react-router-dom";
-
-import { fetchTopFiveParks } from "./data/fetchParks";
+import DesktopCarousel from "./DesktopCarousel";
+import { fetchTopSixParks } from "./data/fetchParks";
+import Newsletter from "./Newsletter";
 
 export default function HomeBodyAndFooter() {
+  const navigate = useNavigate();
 
-const navigate = useNavigate();
+  const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
+  const [topSixNationalParks, setTopSixNationalParks] = useState<any[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
 
-const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
-
-  // ==============================
-  // TOP DESTINATIONS ARRAY FOR CAROUSEL
-  // ==============================
-
-  const [topFiveNationalParks, setTopFiveNationalParks] = useState<any[]>([]);
-  const [currentParkPicMobile, setCurrentParkPicMobile] = useState(0);
-
+  // === FETCH TOP DESTINATIONS ===
   useEffect(() => {
-    async function loadTheFiveParks() {
-      const data = await fetchTopFiveParks();
-      setTopFiveNationalParks(data);
+    async function loadTheSixParks() {
+      const data = await fetchTopSixParks();
+      setTopSixNationalParks(data);
     }
-    loadTheFiveParks();
+    loadTheSixParks();
   }, []);
 
-  const handleCurrentPageBack = () => {
-    currentParkPicMobile === 0 ? setCurrentParkPicMobile(4) : setCurrentParkPicMobile(prev => prev - 1);
+  // === CAROUSEL NAVIGATION ===
+  const handlePrev = () => {
+    if (topSixNationalParks.length === 0) return;
+    setCurrentIndex((prev) =>
+      prev === 0 ? topSixNationalParks.length - 3 : prev - 1
+    );
   };
 
-  const handleCurrentPageForward = () => {
-    currentParkPicMobile === 4 ? setCurrentParkPicMobile(0) : setCurrentParkPicMobile(prev => prev + 1);
+  const handleNext = () => {
+    if (topSixNationalParks.length === 0) return;
+    setCurrentIndex((prev) =>
+      prev >= topSixNationalParks.length - 3 ? 0 : prev + 1
+    );
   };
 
-  // === DATE TO BE USED IN THE FOOTER === //
-  const date = new Date;
+  // === DATE FOR FOOTER ===
+  const date = new Date();
   const currentYear = date.getFullYear();
 
   return (
@@ -52,68 +53,53 @@ const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
       {/* === HEADER SECTION === */}
       <div className="home-body-header-and-paragraph-container">
         <h3>Trending Destinations</h3>
-        {/* Later: Filter destinations based on the selected continent (Redux hook state) */}
         <p>Most popular travel choices among travelers.</p>
       </div>
 
       {/* === LOGIN-REGISTER MENU === */}
-        {isLoginRegisterMenuOpen && (
-          <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)}
-          />
-        )}
+      {isLoginRegisterMenuOpen && (
+        <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)} />
+      )}
 
       {/* === TRENDING DESTINATIONS CAROUSEL === */}
       <div className="trending-destinations-carousel-container">
-        <button onClick={handleCurrentPageBack} className="stepper-button-carousel carousel-left-button">
+        <button
+          onClick={handlePrev}
+          className="stepper-button-carousel carousel-left-button"
+        >
           <img src={leftIcon} alt="Previous destination" />
         </button>
 
+        {/* === MOBILE / TABLET === */}
         <div className="carousel-destination-preview-container-mobile">
-        <img
-          src={topFiveNationalParks[currentParkPicMobile]?.images?.[0]?.url}
-          alt={topFiveNationalParks[currentParkPicMobile]?.images?.[0]?.altText || topFiveNationalParks[currentParkPicMobile]?.fullName}/>
+          <img
+            src={topSixNationalParks[currentIndex]?.images?.[0]?.url}
+            alt={
+              topSixNationalParks[currentIndex]?.images?.[0]?.altText ||
+              topSixNationalParks[currentIndex]?.fullName
+            }
+          />
           <div className="carousel-destination-preview-name-and-review-container">
             <span className="carousel-destination-preview-name">
-            {topFiveNationalParks[currentParkPicMobile]?.fullName}
+              {topSixNationalParks[currentIndex]?.fullName}
             </span>
           </div>
         </div>
 
-      <div className="carousel-destination-preview-container-desktop-container">
-
-        <div className="carousel-destination-preview-container-desktop">
-          <img src={yellowstonePic} alt="Yellowstone National Park" />
-          <div className="carousel-destination-preview-name-and-review-container">
-            <span className="carousel-destination-preview-name">
-              Yellowstone National Park
-            </span>
-            <span className="carousel-destination-preview-review">4.8 / 5</span>
+        {/* === DESKTOP === */}
+        <div className="carousel-destination-preview-container-desktop-container">
+          <div className="carousel-destination-preview-container-desktop">
+            <DesktopCarousel
+              parks={topSixNationalParks}
+              startIndex={currentIndex}
+            />
           </div>
         </div>
 
-        <div className="carousel-destination-preview-container-desktop">
-          <img src={yosemitePic} alt="Yellowstone National Park" />
-          <div className="carousel-destination-preview-name-and-review-container">
-            <span className="carousel-destination-preview-name">
-              Yosemite National Park
-            </span>
-            <span className="carousel-destination-preview-review">4.3 / 5</span>
-          </div>
-        </div>
-
-        <div className="carousel-destination-preview-container-desktop">
-          <img src={grandTetonPic} alt="Yellowstone National Park" />
-          <div className="carousel-destination-preview-name-and-review-container">
-            <span className="carousel-destination-preview-name">
-              Grand Teton National Park
-            </span>
-            <span className="carousel-destination-preview-review">4.4 / 5</span>
-          </div>
-        </div>
-
-      </div>
-
-        <button onClick={handleCurrentPageForward} className="stepper-button-carousel carousel-right-button">
+        <button
+          onClick={handleNext}
+          className="stepper-button-carousel carousel-right-button"
+        >
           <img src={rightIcon} alt="Next destination" />
         </button>
       </div>
@@ -122,55 +108,46 @@ const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
 
       {/* === FEATURE SECTION === */}
       <div className="home-features-container">
-      <div className="home-features home-features-first">
-      <img
-        className="features-icon"
-        src={exploreIcon}
-        alt="Destination icon"
-      />
-      <p>
-        Explore hundreds of breathtaking parks <br />
-        Discover inspiring museums around the world
-      </p>
-    </div>
+        <div className="home-features home-features-first">
+          <img className="features-icon" src={exploreIcon} alt="Destination icon" />
+          <p>
+            Explore hundreds of breathtaking parks <br />
+            Discover inspiring museums around the world
+          </p>
+        </div>
 
-    <div className="home-features home-features-second">
-      <img
-        className="features-icon"
-        src={reviewIcon}
-        alt="Review icon"
-      />
-      <p>
-        Read detailed insights and honest reviews <br />
-        Find opinions shared by travelers worldwide
-      </p>
-    </div>
+        <div className="home-features home-features-second">
+          <img className="features-icon" src={reviewIcon} alt="Review icon" />
+          <p>
+            Read detailed insights and honest reviews <br />
+            Find opinions shared by travelers worldwide
+          </p>
+        </div>
 
-    <div className="home-features home-features-third">
-      <img
-        className="features-icon"
-        src={growingIcon}
-        alt="Growing database icon"
-      />
-      <p>
-        We’re constantly expanding our database <br />
-        Soon, new destinations will join from every region
-      </p>
-    </div>
+        <div className="home-features home-features-third">
+          <img
+            className="features-icon"
+            src={growingIcon}
+            alt="Growing database icon"
+          />
+          <p>
+            We’re constantly expanding our database <br />
+            Soon, new destinations will join from every region
+          </p>
+        </div>
       </div>
 
       <hr />
 
-      {/* === SIGN-UP / LOG-IN SECTION (Visible only if user not logged in) === */}
+      {/* === SIGN-UP / LOG-IN SECTION === */}
       <div className="sign-up-log-in-section-home-container">
         <h4>Login to access additional features</h4>
         <p>
-          Unlock features like marking favorites, viewing insights, leaving
-          reviews, and switching to dark mode.
+          Unlock features like marking favorites, viewing insights, changing font size and switching to dark mode.
         </p>
-          <button onClick={() => setIsLoginRegisterMenuOpen(true)} >
-            <strong>Login</strong>
-          </button>
+        <button onClick={() => setIsLoginRegisterMenuOpen(true)}>
+          <strong>Login</strong>
+        </button>
       </div>
 
       <hr />
@@ -181,28 +158,34 @@ const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
           Subscribe to our monthly newsletter to receive the best travel tips
           and stay updated on the latest site improvements.
         </p>
-        <a href="">
+        <button
+          className="newsletter-open-btn"
+          onClick={() => setIsNewsletterModalOpen(true)}
+        >
           <p>Sign up for the newsletter here</p>
-        </a>
-      </div>
-
-      {/* === FOOTER - BOTTOM NAVIGATION SECTION */}
-      <footer>
-      <div className="navigation-section-home-bottom">
-        <button onClick={() => navigate("about")} className="language-button-home-bottom">
-          About
         </button>
-        <button onClick={() => navigate("help")} >Help</button>
       </div>
 
-        <div className="logo-and-rights-bottom-container" >
-        <img className="logo-bottom" src={heritagoLogo} alt="" />
-        <p>© {currentYear} Heritago | All rights reserved</p>
+      {isNewsletterModalOpen && (
+        <Newsletter onClose={() => setIsNewsletterModalOpen(false)} />
+      )}
+      {/* === FOOTER === */}
+      <footer>
+        <div className="navigation-section-home-bottom">
+          <button
+            onClick={() => navigate("about")}
+            className="language-button-home-bottom"
+          >
+            About
+          </button>
+          <button onClick={() => navigate("help")}>Help</button>
         </div>
-        
+
+        <div className="logo-and-rights-bottom-container">
+          <img className="logo-bottom" src={heritagoLogo} alt="Heritago logo" />
+          <p>© {currentYear} Heritago | All rights reserved</p>
+        </div>
       </footer>
     </div>
-
-
   );
 }

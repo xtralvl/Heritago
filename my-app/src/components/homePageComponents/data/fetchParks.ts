@@ -15,9 +15,9 @@ export async function fetchParks() {
   }
 }
 
-export async function fetchTopFiveParks() {
+export async function fetchTopSixParks() {
   try {
-    const parkCodes = ["grsm", "zion", "grca", "yell", "romo"];
+    const parkCodes = ["yose", "zion", "grca", "yell", "romo", "glac"];
     const res = await fetch(`${BASE_URL}?parkCode=${parkCodes.join(",")}&api_key=${myApiKey}`);
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 

@@ -5,7 +5,7 @@
 }
 
 .home-body-container {
-  padding: 1rem;
+  padding: 1rem !important;
 
   // ======== HEADERS & PARAGRAPHS =========
   h3,
@@ -130,6 +130,7 @@
   .newsletter-section-home-container {
     margin-bottom: 2rem;
     margin-top: 1.8rem;
+    
 
     p {
       margin-bottom: 0.5rem;
@@ -137,8 +138,12 @@
       padding-right: 2rem !important;
     }
 
-    a {
+    button {
       color: $custom-dark-green;
+      border: none;
+      background: none;
+      text-decoration: underline;
+      padding: 0;
     }
 
   }
@@ -346,17 +351,16 @@
 
   .carousel-destination-preview-container-desktop-container {
     display: flex;
-    justify-content: center; // ✅ centers horizontally
-    align-items: center; // ✅ vertically centers if needed
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    gap: 2rem; // optional spacing between carousel items
+    gap: 2rem; 
 
     .carousel-destination-preview-container-desktop {
       display: flex;
       flex-direction: column;
       align-items: center; // ✅ ensures the image and text below are centered
       width: 80%;
-      max-width: 500px; 
       border: none; // remove debug border if no longer needed
 
       img {
@@ -397,8 +401,7 @@
     transition: .3s ease all;
     cursor: pointer;
 
-    &:hover {
-      scale: (1.03);
+    img:hover {
       opacity: 0.8;
     }
   }

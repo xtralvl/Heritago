@@ -9,6 +9,7 @@ import bothIconBlack from "../../assets/both-icon-black.svg";
 import { northAmerica } from "./data/Countries";
 import MobileMenu from "./MobileMenu";
 import LoginRegister from "./LoginRegister";
+import { useNavigate } from "react-router-dom";
 
 export default function HomeNavAndHero() {
 
@@ -25,6 +26,7 @@ export default function HomeNavAndHero() {
   const [countryOrStateError, setCountryOrStateError] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
+
 
   // ==============================
   // CONTINENTS DATA
@@ -76,11 +78,13 @@ export default function HomeNavAndHero() {
     );
   };
 
+  const navigate = useNavigate();
 
   // ==============================
   // RENDER
   // ==============================
   return (
+
     <div className="home-nav-and-hero-container">
       {/* ==============================
           TOP NAV BAR
@@ -119,8 +123,8 @@ export default function HomeNavAndHero() {
         {/* === DESKTOP === */}
         <div className="top-row-buttons-container-desktop">
           <div className="about-and-help-button-container-top">
-            <button className="about-button-home-top">About</button>
-            <button className="help-button-home-top">
+            <button onClick={() => navigate("about")} className="about-button-home-top">About</button>
+            <button onClick={() => navigate("help")} className="help-button-home-top">
               Help
             </button>
           </div>

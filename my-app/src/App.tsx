@@ -11,7 +11,6 @@ import SavedDestinations from './components/myAccountComponents/SavedDestination
 import About from './components/homePageComponents/About';
 import Help from './components/homePageComponents/Help';
 import FAQ from './components/homePageComponents/FAQ';
-import Newsletter from './components/homePageComponents/Newsletter';
 import NotFoundPage from './views/NotFoundPage';
 
 export default function App() {
@@ -33,7 +32,6 @@ export default function App() {
       <Route path="/about" element={<About />} />
       <Route path="/help" element={<Help />} />
       <Route path="/faq" element={<FAQ />} />
-      <Route path="/newsletter" element={<Newsletter />} />
 
       {/* Fallback */}
       <Route path="*" element={<NotFoundPage />} />

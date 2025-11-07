@@ -1,0 +1,37 @@
+@use '../colors.scss' as *;
+
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+
+
+  .carousel-track {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    transition: transform 0.4s ease;
+  }
+
+  .carousel-item {
+    flex: 0 0 calc(33.333% - 1rem);
+    text-align: center;
+    
+    img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    p {
+      margin-top: 0.6rem;
+      font-weight: 500;
+      color: #333;
+      padding: 0;
+    }
+  }
+}
