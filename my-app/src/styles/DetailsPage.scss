@@ -1,0 +1,393 @@
+@use "../styles/colors.scss" as *;
+
+/* =========================
+   DETAILS PAGE - MAIN
+   ========================= */
+.details-page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: "Inter", sans-serif;
+  padding: 1rem;
+  color: $custom-dark-green;
+  box-sizing: border-box;
+}
+
+/* =========================
+   TOP ROW / NAV BAR
+   ========================= */
+.top-row-details-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;              // ensures vertical centering
+  padding: 0;
+  margin-bottom: 1rem;
+  background: #fff;
+  z-index: 50;
+
+  // Logo
+  .homepage-logo {
+    width: 5rem !important;
+    height: auto;
+    display: block;
+    cursor: pointer;
+
+    // If you use <img> inside an element, keep it explicit
+    &,
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+  }
+
+  // Mobile buttons (profile / hamburger)
+  .top-row-buttons-container-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    height: 100%;
+
+    button {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+
+      // enforce consistent clickable area
+      min-width: 2.6rem;
+      min-height: 2.6rem;
+      border-radius: 6px;
+
+      &:active,
+      &:focus {
+        outline: none;
+      }
+
+      img {
+        display: block;
+        width: 1.6rem;
+        height: 1.6rem;
+        object-fit: contain;
+      }
+    }
+  }
+
+  // Desktop buttons placeholder (hidden on mobile)
+  .top-row-buttons-container-desktop {
+    display: none;
+  }
+}
+
+/* =========================
+   DETAILS PAGE CONTENT
+   ========================= */
+.details-page-content {
+  margin-top: 1rem;
+
+  // Title / actions area
+  .details-page-title-container {
+    display: grid;
+    grid-template-columns: 1fr auto; // title column + narrow column for favorite
+    gap: 0.6rem;
+    align-items: start;
+
+    // Left column: title + meta + action links
+    .details-page-title-and-paragraph {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+
+      h1 {
+        font-size: 1.25rem;
+        margin: 0;
+        color: $custom-dark-green;
+        line-height: 1.15;
+      }
+
+      p {
+        font-size: 0.85rem;
+        margin: 0;
+        color: $custom-dark-green;
+      }
+
+      .details-page-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.6rem;
+
+        button {
+          border: none;
+          background: none;
+          color: $custom-dark-green;
+          padding: 0;
+          cursor: pointer;
+          font-size: 0.9rem;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    // Right column: favorite button (keeps consistent size)
+    .details-page-add-to-favorite-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin-left: 0.6rem;
+      min-width: 44px;
+      min-height: 44px;
+
+      img {
+        display: block;
+        width: 1.6rem;
+        height: 1.6rem;
+        object-fit: contain;
+      }
+    }
+  }
+
+  /* ===== CAROUSEL ===== */
+  .details-page-carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    position: relative;
+
+    img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+      display: block;
+    }
+
+    button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: rgba(255,255,255,0.9);
+      padding: 0.35rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 1.6rem;
+        height: 1.6rem;
+        display: block;
+        object-fit: contain;
+      }
+    }
+
+    .details-page-carousel-left-button { left: 0.5rem; }
+    .details-page-carousel-right-button { right: 0.5rem; }
+
+    .details-page-carousel-pic-counter {
+      position: absolute;
+      bottom: 0.8rem;
+      right: 1rem;
+      background-color: rgba(255,255,255,0.85);
+      color: $custom-dark-green;
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+/* =========================
+   FACILITIES & SERVICES
+   ========================= */
+.details-page-facilities-and-services-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1rem 0;
+
+  span {
+    background-color: $custom-dark-green;
+    color: white;
+    border-radius: 10px;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.85rem;
+    display: inline-block;
+  }
+}
+
+/* small generic button style (used for "Show all facilities..." placeholder) */
+.show-all-facilities-btn,
+.details-page-show-on-map-button,
+.details-see-their-website-container {
+  border: none;
+  background: none;
+  color: $custom-dark-green;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-size: 0.95rem;
+}
+
+/* =========================
+   ABOUT SECTION
+   ========================= */
+.details-page-about-container {
+  margin: 2rem 0;
+
+  h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+/* =========================
+   NEWSLETTER BLOCK
+   ========================= */
+.details-page-newsletter-container {
+  border-radius: 10px;
+  margin: 2rem 0;
+  text-align: left;
+
+  p {
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+    color: $custom-dark-green;
+  }
+
+  .newsletter-open-btn {
+    background: none;
+    border: none;
+    color: $custom-dark-green;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0;
+  }
+}
+
+/* =========================
+   FOOTER (full-width)
+   ========================= */
+footer {
+  margin-top: 2rem;
+
+  .navigation-section-details-bottom {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background-color: $custom-dark-green;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    height: 3rem;
+    align-items: center;
+
+    button {
+      background: none;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.45rem 0;
+    }
+  }
+
+  .logo-and-rights-bottom-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+
+    .logo-bottom {
+      width: 40%;
+      display: block;
+    }
+
+    p {
+      font-size: 0.7rem;
+      color: $custom-dark-green;
+      margin: 0.4rem 0 0 0;
+    }
+  }
+}
+
+/* =========================
+   RESPONSIVE ADJUSTMENTS
+   ========================= */
+@media (min-width: 600px) {
+  .details-page-container { padding: 1.5rem; }
+
+  .top-row-details-page {
+    height: 4.5rem;
+    padding: 0.5rem 1.25rem;
+  }
+
+  .homepage-logo { width: 6rem; }
+
+  .top-row-buttons-container-mobile button img { width: 1.9rem; height: 1.9rem; }
+
+  .details-page-title-container .details-page-add-to-favorite-button img { width: 1.8rem; height: 1.8rem; }
+}
+
+@media (min-width: 1024px) {
+  .details-page-container { padding: 2rem; }
+
+  .top-row-details-page {
+    height: 5rem;
+    padding: 0.6rem 1.5rem;
+  }
+
+  .homepage-logo { width: 7.5rem; }
+
+  // show desktop buttons area (if you use it)
+  .top-row-buttons-container-mobile { display: none !important; }
+
+  .top-row-buttons-container-desktop {
+    display: grid;
+    grid-auto-rows: auto;
+    gap: 0.4rem;
+    align-items: center;
+
+    button img { width: 2.1rem; height: 2.1rem; }
+  }
+
+  // layout: left column (title + links), favorite stays in same column
+  .details-page-title-container {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  .details-page-carousel-container img {
+    max-height: 420px;
+  }
+}
+
+/* small helper to avoid accidental horizontal scroll */
+html, body {
+  overflow-x: hidden;
+}
