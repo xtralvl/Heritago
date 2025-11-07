@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, use } from "react";
+import { useState } from "react";
 import '../styles/SearchResultsPage.scss';
 import logo from '../assets/heritago-logo.png';
 import profileIcon from "../assets/profile-icon.svg";
@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import filterIcon from '../assets/filter-icon.svg';
 import sortIcon from '../assets/sort-icon.svg';
 import heartIconGreen from '../assets/heart-icon.svg'
-import heartIconRed from '../assets/heart-icon-red.svg'
 import mockPic from '../assets/yellowstone-example-pic.jpg'
 import downIcon from '../../src/assets/down-icon.svg'
 import MobileFilterMenu from "../components/MobileFilterMenu";

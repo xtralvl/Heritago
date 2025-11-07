@@ -16,7 +16,9 @@ export default function HomeNavAndHero() {
   // ==============================
   // STATE HOOKS
   // ==============================
-  const [destinationCategory, setDestinationCategory] = useState<string>("");
+  type category = "National Park" | "Museum" | "Both";
+
+  const [destinationCategory, setDestinationCategory] = useState<category | null>(null);
   const [continentOpen, setContinentOpen] = useState(false);
   const [countryOrStateOpen, setCountryOrStateOpen] = useState(false);
   const [continent, setContinent] = useState("North America");
@@ -26,7 +28,6 @@ export default function HomeNavAndHero() {
   const [countryOrStateError, setCountryOrStateError] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
-
 
   // ==============================
   // CONTINENTS DATA
@@ -72,7 +73,7 @@ export default function HomeNavAndHero() {
   // HANDLERS
   // ==============================
   const handleSearchButton = () => {
-    setDestinationError(destinationCategory.length === 0);
+    setDestinationError(destinationCategory?.length === 0);
     setCountryOrStateError(
       countryOrState === "" || countryOrState === "Select Country/State"
     );
@@ -163,9 +164,9 @@ export default function HomeNavAndHero() {
           >
             <button
               className={`option-button ${
-                destinationCategory === "Museums" ? "selected" : ""
+                destinationCategory === "Museum" ? "selected" : ""
               }`}
-              onClick={() => setDestinationCategory("Museums")}
+              onClick={() => setDestinationCategory("Museum")}
             >
               <img src={museumIconBlack} alt="Museum Icon" />
               <p>Museums</p>
@@ -173,9 +174,9 @@ export default function HomeNavAndHero() {
 
             <button
               className={`option-button ${
-                destinationCategory === "National Parks" ? "selected" : ""
+                destinationCategory === "National Park" ? "selected" : ""
               }`}
-              onClick={() => setDestinationCategory("National Parks")}
+              onClick={() => setDestinationCategory("National Park")}
             >
               <img src={nationalParkIconBlack} alt="National Park Icon" />
               <p>National Parks</p>

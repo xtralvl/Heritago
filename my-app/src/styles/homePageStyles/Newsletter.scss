@@ -56,9 +56,8 @@
       outline: none;
 
       &:focus {
-        border-color: hsl(61, 70%, 52%);
-        box-shadow: 0 0 0 2px hsla(61, 70%, 52%, 0.3);
-      }
+        border: 2px solid $custom-dark-green;
+     }
     }
 
     button {

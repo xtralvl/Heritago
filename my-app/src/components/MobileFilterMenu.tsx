@@ -9,7 +9,7 @@ export default function MobileFilterMenu({ onClose }: MobileFilterMenuProps) {
     <div className="mobile-filter-overlay" onClick={onClose}>
       <div
         className="mobile-filter-menu"
-        onClick={(e) => e.stopPropagation()} // Prevent close when clicking inside
+        onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
       >
         <div className="filter-header">
           <h2>Filters</h2>
@@ -19,44 +19,44 @@ export default function MobileFilterMenu({ onClose }: MobileFilterMenuProps) {
         </div>
 
         <div className="filter-sections">
-          <ul className="filter-category">
-            <li className="filter-category-title">Landscape</li>
-            <li>Mountains</li>
-            <li>Forests</li>
-            <li>Lakes</li>
-            <li>Coastal</li>
-          </ul>
+          <div className="filter-category">
+            <h3>Landscape</h3>
+            <label><input type="checkbox" /> Mountains</label>
+            <label><input type="checkbox" /> Forests</label>
+            <label><input type="checkbox" /> Lakes</label>
+            <label><input type="checkbox" /> Coastal</label>
+          </div>
 
-          <ul className="filter-category">
-            <li className="filter-category-title">Activities</li>
-            <li>Hiking</li>
-            <li>Cycling</li>
-            <li>Wildlife Watching</li>
-            <li>Camping</li>
-          </ul>
+          <div className="filter-category">
+            <h3>Activities</h3>
+            <label><input type="checkbox" /> Hiking</label>
+            <label><input type="checkbox" /> Cycling</label>
+            <label><input type="checkbox" /> Wildlife Watching</label>
+            <label><input type="checkbox" /> Camping</label>
+          </div>
 
-          <ul className="filter-category">
-            <li className="filter-category-title">Accessibility</li>
-            <li>Wheelchair Access</li>
-            <li>Guided Tours</li>
-            <li>Accessible Parking</li>
-          </ul>
+          <div className="filter-category">
+            <h3>Accessibility</h3>
+            <label><input type="checkbox" /> Wheelchair Access</label>
+            <label><input type="checkbox" /> Guided Tours</label>
+            <label><input type="checkbox" /> Accessible Parking</label>
+          </div>
 
-          <ul className="filter-category">
-            <li className="filter-category-title">Features</li>
-            <li>Waterfalls</li>
-            <li>Historic Sites</li>
-            <li>Scenic Viewpoints</li>
-            <li>Picnic Areas</li>
-          </ul>
+          <div className="filter-category">
+            <h3>Features</h3>
+            <label><input type="checkbox" /> Waterfalls</label>
+            <label><input type="checkbox" /> Historic Sites</label>
+            <label><input type="checkbox" /> Scenic Viewpoints</label>
+            <label><input type="checkbox" /> Picnic Areas</label>
+          </div>
 
-          <ul className="filter-category">
-            <li className="filter-category-title">Facilities / Services</li>
-            <li>Visitor Center</li>
-            <li>Restrooms</li>
-            <li>Cafeteria</li>
-            <li>Parking</li>
-          </ul>
+          <div className="filter-category">
+            <h3>Facilities / Services</h3>
+            <label><input type="checkbox" /> Visitor Center</label>
+            <label><input type="checkbox" /> Restrooms</label>
+            <label><input type="checkbox" /> Cafeteria</label>
+            <label><input type="checkbox" /> Parking</label>
+          </div>
         </div>
 
         <div className="apply-filters-container">

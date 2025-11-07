@@ -18,13 +18,40 @@ export default function MobileSortMenu({ onClose }: MobileSortMenuProps) {
           </button>
         </div>
 
-        <ul className="sort-options-list">
-          <li>Rating / Reviews</li>
-          <li>Size — Largest to Smallest</li>
-          <li>Size — Smallest to Largest</li>
-          <li>Popularity of Activities</li>
-          <li>Date Established</li>
-        </ul>
+        <div className="sort-options">
+          <ul className="sort-category">
+            <li>
+              <label>
+                <input type="checkbox" name="sort" value="rating" />
+                Rating / Reviews
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" name="sort" value="largest" />
+                Size — Largest to Smallest
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" name="sort" value="smallest" />
+                Size — Smallest to Largest
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" name="sort" value="popularity" />
+                Popularity of Activities
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" name="sort" value="date" />
+                Date Established
+              </label>
+            </li>
+          </ul>
+        </div>
 
         <div className="apply-sort-container">
           <button className="apply-sort-button">Apply Sort</button>

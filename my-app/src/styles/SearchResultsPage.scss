@@ -281,6 +281,7 @@ hr {
     margin-bottom: 0.5rem;
     font-size: 0.8rem !important;
     padding-right: 2rem !important;
+    color: $custom-dark-green;
   }
 
   a {
@@ -316,12 +317,13 @@ hr {
   justify-content: center;
 
   .logo-bottom {
-    width: 40% !important;
+    width: 7rem !important;
   }
 
   p {
     padding: 0;
-    font-size: 0.7rem !important;
+    font-size: 0.6rem !important;
+    color: $custom-dark-green;
   }
 }
 

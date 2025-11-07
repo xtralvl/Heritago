@@ -278,10 +278,12 @@
 
   // ======== NEWSLETTER SECTION =========
   .newsletter-section-home-container {
+    padding: 0;
 
     p {
       font-size: 1rem;
       transition: 0.3s ease all;
+      text-align: left;
     }
 
     a {
