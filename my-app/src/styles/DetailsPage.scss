@@ -3,8 +3,26 @@
 /* =========================
    DETAILS PAGE - MAIN
    ========================= */
+
+.show-map-button-desktop {
+  display: none;
+}
+
+.desktop-hr-details-page {
+  display: none;
+}
+
+.top-row-buttons-container-desktop-details-page {
+  display: none;
+}
+
+.details-page-images-container-desktop {
+  /* default: hidden on mobile & tablet */
+  display: none !important;
+}
+
 .details-page-container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   font-family: "Inter", sans-serif;
   padding: 1rem;
@@ -121,28 +139,25 @@
         grid-row: 2;
         grid-column: 1;
       }
-
     }
 
     .details-page-buttons-container {
-        display: flex;
-        gap: 1rem;
-        margin-top: 0.6rem;
-        grid-row: 2;
-        grid-column: 1;
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.6rem;
+      grid-row: 2;
+      grid-column: 1;
 
-        button {
-          border: none;
-          background: none;
-          color: $custom-dark-green;
-          padding: 0;
-          cursor: pointer;
-          font-size: 0.9rem;
-          text-decoration: underline;
-        }
-        
+      button {
+        border: none;
+        background: none;
+        color: $custom-dark-green;
+        padding: 0;
+        cursor: pointer;
+        font-size: 0.9rem;
+        text-decoration: underline;
       }
-
+    }
 
     // Right column: favorite button (keeps consistent size)
     .details-page-add-to-favorite-button {
@@ -158,7 +173,7 @@
       width: 3rem;
       height: 3rem;
       grid-column: 2;
-      grid-row: 1/ 3;
+      grid-row: 1/3;
 
       img {
         display: block;
@@ -191,7 +206,7 @@
       top: 50%;
       transform: translateY(-50%);
       border: none;
-      background: rgba(255,255,255,0.9);
+      background: rgba(255, 255, 255, 0.9);
       padding: 0.35rem;
       border-radius: 5px;
       cursor: pointer;
@@ -207,14 +222,18 @@
       }
     }
 
-    .details-page-carousel-left-button { left: 0.3rem; }
-    .details-page-carousel-right-button { right: 0.3rem; }
+    .details-page-carousel-left-button {
+      left: 0.3rem;
+    }
+    .details-page-carousel-right-button {
+      right: 0.3rem;
+    }
 
     .details-page-carousel-pic-counter {
       position: absolute;
       bottom: 0.8rem;
       right: 1rem;
-      background-color: rgba(255,255,255,0.85);
+      background-color: rgba(255, 255, 255, 0.85);
       color: $custom-dark-green;
       padding: 0.3rem 0.7rem;
       border-radius: 5px;
@@ -228,9 +247,9 @@
    ========================= */
 
 .details-page-facilities-section {
-    h2 {
-        font-size: 1.1rem;
-    }
+  h2 {
+    font-size: 1.1rem;
+  }
 }
 
 .details-page-facilities-and-services-container {
@@ -305,6 +324,30 @@
   }
 }
 
+// ======== SIGN-UP / LOG-IN SECTION =========
+.sign-up-log-in-section-details-page-container {
+  color: $custom-dark-green;
+  margin: 2rem 0;
+
+  h4 {
+    margin-top: 0;
+    font-size: 1rem !important;
+  }
+
+  p {
+    font-size: 0.8rem !important;
+    padding-right: 2rem !important;
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: $custom-dark-green;
+    font-size: 0.9rem !important;
+    padding: 0;
+  }
+}
+
 /* =========================
    FOOTER (full-width)
    ========================= */
@@ -359,88 +402,118 @@ footer {
    RESPONSIVE ADJUSTMENTS
    ========================= */
 @media (min-width: 600px) {
-
   .top-row-details-page {
     height: 4.5rem;
   }
 
   .top-row-details-page {
     .homepage-logo {
-        width: 7rem !important; 
+      width: 7rem !important;
     }
-
   }
 
   .top-row-buttons-container-mobile button img {
     width: 2rem !important;
     height: 2rem !important;
-}
+  }
 
-.details-page-carousel-container {
+  .details-page-carousel-container {
     button {
-        border: 1px solid $custom-dark-green !important;
-        width: 2.5rem;
+      border: 1px solid $custom-dark-green !important;
+      width: 2.5rem;
     }
 
     img {
-        width: 80% !important;
+      width: 80% !important;
     }
-    
-}
-
-.details-page-carousel-pic-counter {
-    right: 4.7rem !important;
   }
 
+  .details-page-carousel-pic-counter {
+    right: 4.7rem !important;
+  }
 
   .details-page-title-container .details-page-add-to-favorite-button img {
     width: 1.8rem;
     height: 1.8rem;
     margin-right: 7rem;
-}
+  }
 }
 
+/* small adjustments for intermediate widths */
 @media (min-width: 750px) {
-    .details-page-carousel-pic-counter {
-        right: 5.5rem !important;
-      }
-    
+  .details-page-carousel-pic-counter {
+    right: 5.5rem !important;
+  }
 }
 
 @media (min-width: 842px) {
+  .details-page-carousel-pic-counter {
+    right: 6rem !important;
+  }
 
-    .details-page-carousel-pic-counter {
-        right: 6rem !important;
-      }
-
-    .details-page-facilities-section {
-        margin-top: 2rem !important;
-    }
-
+  .details-page-facilities-section {
+    margin-top: 2rem !important;
+  }
 }
 
-
-
+/* ---------- KEY: Desktop behavior ---------- */
+/* On desktop (>=1024px) we:
+   - hide mobile carousel
+   - show desktop image grid
+   - make desktop images fill their grid spaces (using .img-wrap)
+*/
 @media (min-width: 1024px) {
-  .details-page-container { padding: 2rem; }
+  .details-page-container {
+    padding: 2rem;
+  }
 
   .top-row-details-page {
     height: 5rem;
-    padding: 0.6rem 1.5rem;
+    display: flex !important;
+
+    .homepage-logo {
+      width: 9rem !important;
+    }
   }
 
-  .homepage-logo { width: 7.5rem; }
+  .desktop-hr-details-page {
+    display: inline-flex;
+  }
 
-  // show desktop buttons area (if you use it)
-  .top-row-buttons-container-mobile { display: none !important; }
+  // hide mobile carousel on desktop
+  .details-page-carousel-container {
+    display: none !important;
+  }
 
-  .top-row-buttons-container-desktop {
-    display: grid;
-    grid-auto-rows: auto;
+  // show desktop buttons area
+  .top-row-buttons-container-mobile {
+    display: none !important;
+  }
+
+  .top-row-buttons-container-desktop-details-page {
+    display: flex !important;
+    flex-direction: column;
     gap: 0.4rem;
     align-items: center;
 
-    button img { width: 2.1rem; height: 2.1rem; }
+    .sign-up-and-log-in-button-container-top {
+      align-self: flex-end;
+      margin-right: -0.2rem;
+    }
+
+    button img {
+      width: 2.1rem;
+      height: 2.1rem;
+    }
+  }
+
+  .show-map-button-mobile {
+    display: none;
+  }
+
+  .show-map-button-desktop {
+    display: inline-flex;
+    font-weight: bold;
   }
 
   // layout: left column (title + links), favorite stays in same column
@@ -452,9 +525,81 @@ footer {
   .details-page-carousel-container img {
     max-height: 420px;
   }
+
+  /* Desktop images grid — visible on desktop only */
+  .details-page-images-container-desktop {
+    display: grid !important;
+    grid-template-columns: 1.4fr 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 0.5rem;
+    align-items: stretch;
+    width: 100%;
+    margin-top: 1rem;
+    /* make grid scale with available width */
+  }
+
+  .details-page-images-desktop-first-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 0.5rem;
+    height: 60vh; /* lets images scale with viewport; you can tweak this */
+    min-height: 300px;
+    max-height: 520px;
+  }
+
+  .details-page-images-desktop-first-row-first-column,
+  .details-page-images-desktop-first-row-second-column {
+    display: grid;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  /* The .img-wrap ensures imgs fill the container and preserve cover behavior */
+  .img-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .img-wrap img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* second column in first row stacks two images vertically */
+  .details-page-images-desktop-first-row-second-column {
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .details-page-images-desktop-second-row {
+    grid-column: 1 / 3;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    height: 18vh;
+    min-height: 90px;
+  }
+
+  /* ensure each thumbnail fills its cell */
+  .details-page-images-desktop-second-row .img-wrap {
+    height: 100%;
+  }
+
+  .details-page-images-desktop-second-row .img-wrap img {
+    object-position: center;
+  }
 }
 
 /* small helper to avoid accidental horizontal scroll */
-html, body {
+html,
+body {
   overflow-x: hidden;
 }

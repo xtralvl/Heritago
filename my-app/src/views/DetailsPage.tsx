@@ -34,21 +34,22 @@ export default function DetailsPage() {
           alt="Heritago Logo"
           className="homepage-logo"
         />
-        
 
         {/* === MOBILE & TABLET === */}
         <div className="top-row-buttons-container-mobile">
           <button
             className="profile-button"
             onClick={() => setIsLoginRegisterMenuOpen(true)}
+            aria-label="Open profile"
           >
-            <img src={profileIcon} alt="Show Profile" />
+            <img src={profileIcon} alt="Profile" />
           </button>
           <button
             onClick={() => setIsMobileMenuOpen(true)}
             className="hamburger-button"
+            aria-label="Open menu"
           >
-            <img src={hamburgerIcon} alt="Show Menu" />
+            <img src={hamburgerIcon} alt="Menu" />
           </button>
         </div>
 
@@ -63,7 +64,7 @@ export default function DetailsPage() {
         )}
 
         {/* === DESKTOP === */}
-        <div className="top-row-buttons-container-desktop">
+        <div className="top-row-buttons-container-desktop-details-page">
           <div className="about-and-help-button-container-top">
             <button
               className="about-button-home-top"
@@ -90,45 +91,71 @@ export default function DetailsPage() {
         </div>
       </div>
 
+      <hr className="desktop-hr-details-page" />
+
       {/* ==============================
           MAIN CONTENT
           ============================== */}
       <div className="details-page-content">
         <div className="details-page-title-container">
-
-            <div className="details-page-title-and-paragraph" >
-                <h1>Yellowstone National Park</h1>
-                <p>2 Officers Row, Yellowstone National Park, WY 82190</p>
-            </div>
+          <div className="details-page-title-and-paragraph">
+            <h1>Yellowstone National Park</h1>
+            <p>
+              2 Officers Row, Yellowstone National Park, WY 82190{" "}
+              <button className="details-page-show-on-map-button show-map-button-desktop">
+                Show on map
+              </button>
+            </p>
+          </div>
 
           <div className="details-page-buttons-container">
-
-            <button className="details-page-show-on-map-button">
+            <button className="details-page-show-on-map-button show-map-button-mobile">
               <p>Show on map</p>
             </button>
 
             <button className="details-see-their-website-container">
               <p>See their website</p>
             </button>
-
           </div>
 
-          <button className="details-page-add-to-favorite-button">
-              <img src={heartIcon} alt="Add to favorites" />
-            </button>
-
+          <button className="details-page-add-to-favorite-button" aria-label="Add to favorites">
+            <img src={heartIcon} alt="Add to favorites" />
+          </button>
         </div>
 
         {/* === CAROUSEL === */}
+        {/* mobile/tablet carousel — will be hidden on desktop via CSS */}
         <div className="details-page-carousel-container">
-          <button className="details-page-carousel-left-button">
+          <button className="details-page-carousel-left-button" aria-label="Previous image">
             <img src={previousIcon} alt="Previous image" />
           </button>
           <img src={mockPic} alt="Yellowstone National Park" />
-          <button className="details-page-carousel-right-button">
+          <button className="details-page-carousel-right-button" aria-label="Next image">
             <img src={nextIcon} alt="Next image" />
           </button>
           <div className="details-page-carousel-pic-counter">1 / 6</div>
+        </div>
+
+        {/* === DESKTOP IMAGES === */}
+        {/* hidden on mobile & tablet via CSS; fills their grid on desktop */}
+        <div className="details-page-images-container-desktop">
+          <div className="details-page-images-desktop-first-row">
+            <div className="details-page-images-desktop-first-row-first-column img-wrap">
+              <img src={mockPic} alt="Main view" />
+            </div>
+
+            <div className="details-page-images-desktop-first-row-second-column">
+              <div className="img-wrap"><img src={mockPic} alt="Secondary 1" /></div>
+              <div className="img-wrap"><img src={mockPic} alt="Secondary 2" /></div>
+            </div>
+          </div>
+
+          <div className="details-page-images-desktop-second-row">
+            <div className="img-wrap"><img src={mockPic} alt="Thumb 1" /></div>
+            <div className="img-wrap"><img src={mockPic} alt="Thumb 2" /></div>
+            <div className="img-wrap"><img src={mockPic} alt="Thumb 3" /></div>
+            <div className="img-wrap"><img src={mockPic} alt="Thumb 4" /></div>
+          </div>
         </div>
 
         {/* === FACILITIES === */}
@@ -188,6 +215,19 @@ export default function DetailsPage() {
       {isNewsletterModalOpen && (
         <Newsletter onClose={() => setIsNewsletterModalOpen(false)} />
       )}
+
+      <hr />
+
+      {/* === SIGN-UP / LOG-IN SECTION === */}
+      <div className="sign-up-log-in-section-details-page-container">
+        <h4>Login to access additional features</h4>
+        <p>
+          Unlock features like marking favorites, viewing insights, changing font size and switching to dark mode.
+        </p>
+        <button onClick={() => setIsLoginRegisterMenuOpen(true)}>
+          <strong>Login</strong>
+        </button>
+      </div>
 
       {/* ==============================
           FOOTER
