@@ -12,6 +12,7 @@ import MobileMenu from "../components/homePageComponents/MobileMenu";
 import LoginRegister from "../components/homePageComponents/LoginRegister";
 import Newsletter from "../components/homePageComponents/Newsletter";
 import { useNavigate } from "react-router-dom";
+import mockMapPic from '../assets/map-mock-pic.png'
 
 export default function DetailsPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -98,29 +99,32 @@ export default function DetailsPage() {
           ============================== */}
       <div className="details-page-content">
         <div className="details-page-title-container">
-          <div className="details-page-title-and-paragraph">
+            
+        {/* Left column: title */}
+        <div className="details-page-title-and-paragraph">
             <h1>Yellowstone National Park</h1>
             <p>
-              2 Officers Row, Yellowstone National Park, WY 82190{" "}
-              <button className="details-page-show-on-map-button show-map-button-desktop">
+            2 Officers Row, Yellowstone National Park, WY 82190 <span></span>
+            <button className="details-page-show-on-map-button show-map-button-desktop">
                 Show on map
-              </button>
+            </button>
             </p>
-          </div>
+        </div>
 
-          <div className="details-page-buttons-container">
-            <button className="details-page-show-on-map-button show-map-button-mobile">
-              <p>Show on map</p>
-            </button>
+        {/* Row 2, left column: website button */}
+        <div className="details-page-buttons-container">
+            <button className="details-see-their-website-container">See their website</button>
+        </div>
 
-            <button className="details-see-their-website-container">
-              <p>See their website</p>
-            </button>
-          </div>
-
-          <button className="details-page-add-to-favorite-button" aria-label="Add to favorites">
+        {/* Row 3, right column: favorite button */}
+        <button className="details-page-add-to-favorite-button-desktop" aria-label="Add to favorites">
             <img src={heartIcon} alt="Add to favorites" />
-          </button>
+        </button>
+
+        {/* Mobile-only favorite button remains outside */}
+        <button className="details-page-add-to-favorite-button-mobile" aria-label="Add to favorites">
+            <img src={heartIcon} alt="Add to favorites" />
+        </button>
         </div>
 
         {/* === CAROUSEL === */}
