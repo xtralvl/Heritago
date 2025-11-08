@@ -128,7 +128,7 @@ export default function DetailsPage() {
           <button className="details-page-carousel-right-button">
             <img src={nextIcon} alt="Next image" />
           </button>
-          <div className="details-page-carousel-pic-counter"></div>
+          <div className="details-page-carousel-pic-counter">1 / 6</div>
         </div>
 
         {/* === FACILITIES === */}

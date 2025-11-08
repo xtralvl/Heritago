@@ -217,7 +217,7 @@
       background-color: rgba(255,255,255,0.85);
       color: $custom-dark-green;
       padding: 0.3rem 0.7rem;
-      border-radius: 20px;
+      border-radius: 5px;
       font-size: 0.8rem;
     }
   }
@@ -232,6 +232,7 @@
         font-size: 1.1rem;
     }
 }
+
 .details-page-facilities-and-services-container {
   display: flex;
   flex-wrap: wrap;
@@ -358,19 +359,67 @@ footer {
    RESPONSIVE ADJUSTMENTS
    ========================= */
 @media (min-width: 600px) {
-  .details-page-container { padding: 1.5rem; }
 
   .top-row-details-page {
     height: 4.5rem;
-    padding: 0.5rem 1.25rem;
   }
 
-  .homepage-logo { width: 6rem; }
+  .top-row-details-page {
+    .homepage-logo {
+        width: 7rem !important; 
+    }
 
-  .top-row-buttons-container-mobile button img { width: 1.9rem; height: 1.9rem; }
+  }
 
-  .details-page-title-container .details-page-add-to-favorite-button img { width: 1.8rem; height: 1.8rem; }
+  .top-row-buttons-container-mobile button img {
+    width: 2rem !important;
+    height: 2rem !important;
 }
+
+.details-page-carousel-container {
+    button {
+        border: 1px solid $custom-dark-green !important;
+        width: 2.5rem;
+    }
+
+    img {
+        width: 80% !important;
+    }
+    
+}
+
+.details-page-carousel-pic-counter {
+    right: 4.7rem !important;
+  }
+
+
+  .details-page-title-container .details-page-add-to-favorite-button img {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-right: 7rem;
+}
+}
+
+@media (min-width: 750px) {
+    .details-page-carousel-pic-counter {
+        right: 5.5rem !important;
+      }
+    
+}
+
+@media (min-width: 842px) {
+
+    .details-page-carousel-pic-counter {
+        right: 6rem !important;
+      }
+
+    .details-page-facilities-section {
+        margin-top: 2rem !important;
+    }
+
+}
+
+
 
 @media (min-width: 1024px) {
   .details-page-container { padding: 2rem; }
