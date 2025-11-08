@@ -19,7 +19,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 4rem;              // ensures vertical centering
+  height: 4rem;
   padding: 0;
   margin-bottom: 1rem;
   background: #fff;
@@ -32,7 +32,6 @@
     display: block;
     cursor: pointer;
 
-    // If you use <img> inside an element, keep it explicit
     &,
     img {
       display: block;
@@ -95,7 +94,8 @@
   // Title / actions area
   .details-page-title-container {
     display: grid;
-    grid-template-columns: 1fr auto; // title column + narrow column for favorite
+    grid-template-columns: 75% auto; // title column + narrow column for favorite
+    grid-template-rows: auto auto;
     gap: 0.6rem;
     align-items: start;
 
@@ -110,18 +110,26 @@
         margin: 0;
         color: $custom-dark-green;
         line-height: 1.15;
+        grid-row: 1;
+        grid-column: 1;
       }
 
       p {
         font-size: 0.85rem;
         margin: 0;
         color: $custom-dark-green;
+        grid-row: 2;
+        grid-column: 1;
       }
 
-      .details-page-links {
+    }
+
+    .details-page-buttons-container {
         display: flex;
         gap: 1rem;
         margin-top: 0.6rem;
+        grid-row: 2;
+        grid-column: 1;
 
         button {
           border: none;
@@ -132,11 +140,13 @@
           font-size: 0.9rem;
           text-decoration: underline;
         }
+        
       }
-    }
+
 
     // Right column: favorite button (keeps consistent size)
     .details-page-add-to-favorite-button {
+      justify-self: flex-end;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -145,13 +155,15 @@
       cursor: pointer;
       padding: 0;
       margin-left: 0.6rem;
-      min-width: 44px;
-      min-height: 44px;
+      width: 3rem;
+      height: 3rem;
+      grid-column: 2;
+      grid-row: 1/ 3;
 
       img {
         display: block;
-        width: 1.6rem;
-        height: 1.6rem;
+        width: 2rem;
+        height: 2rem;
         object-fit: contain;
       }
     }
@@ -181,22 +193,22 @@
       border: none;
       background: rgba(255,255,255,0.9);
       padding: 0.35rem;
-      border-radius: 8px;
+      border-radius: 5px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
 
       img {
-        width: 1.6rem;
-        height: 1.6rem;
+        width: 1.8rem;
+        height: 1.8rem;
         display: block;
         object-fit: contain;
       }
     }
 
-    .details-page-carousel-left-button { left: 0.5rem; }
-    .details-page-carousel-right-button { right: 0.5rem; }
+    .details-page-carousel-left-button { left: 0.3rem; }
+    .details-page-carousel-right-button { right: 0.3rem; }
 
     .details-page-carousel-pic-counter {
       position: absolute;
@@ -214,6 +226,12 @@
 /* =========================
    FACILITIES & SERVICES
    ========================= */
+
+.details-page-facilities-section {
+    h2 {
+        font-size: 1.1rem;
+    }
+}
 .details-page-facilities-and-services-container {
   display: flex;
   flex-wrap: wrap;
@@ -223,9 +241,9 @@
   span {
     background-color: $custom-dark-green;
     color: white;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 0.3rem 0.7rem;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     display: inline-block;
   }
 }
@@ -302,7 +320,7 @@ footer {
     background-color: $custom-dark-green;
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 5rem;
     height: 3rem;
     align-items: center;
 
@@ -329,7 +347,7 @@ footer {
     }
 
     p {
-      font-size: 0.7rem;
+      font-size: 0.75rem !important;
       color: $custom-dark-green;
       margin: 0.4rem 0 0 0;
     }

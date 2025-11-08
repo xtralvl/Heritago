@@ -4,8 +4,8 @@ import logo from "../assets/heritago-logo.png";
 import profileIcon from "../assets/profile-icon.svg";
 import hamburgerIcon from "../assets/hamburger-icon.svg";
 import heartIcon from "../assets/heart-icon.svg";
-import leftIcon from "../assets/left-icon-green.svg";
-import rightIcon from "../assets/right-icon-green.svg";
+import previousIcon from "../assets/previous-icon.svg";
+import nextIcon from "../assets/next-icon.svg";
 import mockPic from "../assets/yellowstone-example-pic.jpg";
 import heritagoLogo from "../assets/heritago-logo.png";
 import MobileMenu from "../components/homePageComponents/MobileMenu";
@@ -122,11 +122,11 @@ export default function DetailsPage() {
         {/* === CAROUSEL === */}
         <div className="details-page-carousel-container">
           <button className="details-page-carousel-left-button">
-            <img src={leftIcon} alt="Previous image" />
+            <img src={previousIcon} alt="Previous image" />
           </button>
           <img src={mockPic} alt="Yellowstone National Park" />
           <button className="details-page-carousel-right-button">
-            <img src={rightIcon} alt="Next image" />
+            <img src={nextIcon} alt="Next image" />
           </button>
           <div className="details-page-carousel-pic-counter"></div>
         </div>
@@ -193,7 +193,7 @@ export default function DetailsPage() {
           FOOTER
           ============================== */}
       <footer className="details-page-footer">
-        <div className="navigation-section-home-bottom">
+        <div className="navigation-section-details-bottom">
           <button
             onClick={() => navigate("/about")}
             className="language-button-home-bottom"
