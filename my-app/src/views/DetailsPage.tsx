@@ -12,7 +12,6 @@ import MobileMenu from "../components/homePageComponents/MobileMenu";
 import LoginRegister from "../components/homePageComponents/LoginRegister";
 import Newsletter from "../components/homePageComponents/Newsletter";
 import { useNavigate } from "react-router-dom";
-import mockMapPic from '../assets/map-mock-pic.png'
 
 export default function DetailsPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
