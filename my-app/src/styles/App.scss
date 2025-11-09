@@ -9,5 +9,16 @@ body, html {
 
     button {
         cursor: pointer;
-    }
+    };
+   
+}
+
+.font-small, 
+.font-small * {
+  font-size: 14px !important;
+}
+
+.font-large, 
+.font-large * {
+  font-size: 18px !important;
 }

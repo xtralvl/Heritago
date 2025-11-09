@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useContext } from "react";
 import logo from "../../assets/heritago-logo.png";
 import "../../styles/myAccountPageStyles/CustomizationPreferences.scss"
 import { useNavigate } from "react-router-dom";
 import BackButton from "../BackButton";
+import { FontSizeContext } from "../../context/FontSizeContext";
 
 export default function CustomizationPreferences() {
 
-    const navigate = useNavigate();
+    const { fontSize, setFontSize } = useContext(FontSizeContext)!;
 
-    const [theme, setTheme] = useState<"light" | "dark">("light");
-    const [fontSize, setFontSize] = useState<"small" | "medium" | "large">("medium");
+    const navigate = useNavigate();
 
     return (
         <div className={`customization-preferences-page-container font-${fontSize}`}>
@@ -35,26 +35,6 @@ export default function CustomizationPreferences() {
 
             <hr />
 
-            {/* THEME CHANGER */}
-            <section className="customization-preferences-section">
-                <div className="customization-preferences-info">
-                    <h2>Theme</h2>
-                    <span>Choose light or dark theme for your account.</span>
-                </div>
-                <div className="customization-preferences-buttons">
-                    <button 
-                        className={theme === "light" ? "active" : ""}
-                        onClick={() => setTheme("light")}
-                    >Light</button>
-                    <button 
-                        className={theme === "dark" ? "active" : ""}
-                        onClick={() => setTheme("dark")}
-                    >Dark</button>
-                </div>
-            </section>
-
-            <hr />
-
             {/* FONT SIZE */}
             <section className="customization-preferences-section">
                 <div className="customization-preferences-info">
@@ -67,9 +47,9 @@ export default function CustomizationPreferences() {
                         onClick={() => setFontSize("small")}
                     >Small</button>
                     <button
-                        className={fontSize === "medium" ? "active" : ""}
-                        onClick={() => setFontSize("medium")}
-                    >Medium</button>
+                        className={fontSize === "default" ? "active" : ""}
+                        onClick={() => setFontSize("default")}
+                    >Default</button>
                     <button
                         className={fontSize === "large" ? "active" : ""}
                         onClick={() => setFontSize("large")}

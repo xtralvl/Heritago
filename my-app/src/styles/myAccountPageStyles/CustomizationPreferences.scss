@@ -12,10 +12,6 @@
   overscroll-behavior: contain;
   text-align: left;
 
-  &.font-small { font-size: 0.85rem; }
-  &.font-medium { font-size: 1rem; }
-  &.font-large { font-size: 1.2rem; }
-
   .customization-preferences-page-container-logo {
     width: 5rem;
     cursor: pointer;
@@ -121,5 +117,10 @@
         }
       }
     }
+  }
+
+
+  &.dark-theme {
+    background-color: $custom-dark-green;
   }
 }
