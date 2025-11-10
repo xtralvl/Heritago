@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '../styles/SearchResultsPage.scss';
 import logo from '../assets/heritago-logo.png';
 import profileIcon from "../assets/profile-icon.svg";
@@ -13,6 +13,10 @@ import mockPic from '../assets/yellowstone-example-pic.jpg'
 import downIcon from '../../src/assets/down-icon.svg'
 import MobileFilterMenu from "../components/MobileFilterMenu";
 import MobileSortMenu from "../components/MobileSortMenu";
+import { useContext } from "react";
+import { SearchedCountryOrStateContext } from "../context/SearchedCountryOrStateContext";
+import { fetchParks } from "../components/API/fetchParks";
+import { northAmerica } from "../components/homePageComponents/data/Countries";
 
 export default function SearchResultsPage() {
 
@@ -23,7 +27,33 @@ export default function SearchResultsPage() {
   const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
   const [isMobileFilterMenuOpen, setIsMobileFilterMenuOpen] = useState(false);
   const [isMobileSortMenuOpen, setIsMobileSortMenuOpen] = useState(false);
+  const [filteredFetchResults, setFilteredFetchResults] = useState<any[]>([]);
 
+  const context = useContext(SearchedCountryOrStateContext);
+  if (!context) {
+    throw new Error("SearchedCountryOrStateContext must be used within SearchedCountryOrStateProvider");
+  }
+  const { searchedCountryOrState, setSearchedCountryOrState } = context;
+
+  useEffect(() => {
+    async function loadFilteredFetchResults() {
+      const data = await fetchParks();
+  
+      if (!searchedCountryOrState) return;
+  
+      const selectedAbbr = northAmerica[searchedCountryOrState]; // full name → abbr
+  
+      // Some parks can have multiple states: check if any match
+      const filteredResult = data.filter((park: any) =>
+        park.states.split(",").includes(selectedAbbr)
+      );
+  
+      setFilteredFetchResults(filteredResult);
+    }
+  
+    loadFilteredFetchResults();
+  }, [searchedCountryOrState]);
+    
     // === DATE FOR FOOTER ===
     const date = new Date();
     const currentYear = date.getFullYear();
@@ -101,7 +131,7 @@ export default function SearchResultsPage() {
         </div>
     </div>
 
-    <p className="result-paragraph-search-result-page" >Alaska: 63 national parks found</p>
+    <p className="result-paragraph-search-result-page" >{searchedCountryOrState}: {filteredFetchResults.length - 1} national parks found</p>
 
         <div className="search-result-page-inner-container" >
 
@@ -121,32 +151,35 @@ export default function SearchResultsPage() {
 
             <hr />
 
-            <div className="search-result-page-listed-results-container">
+            {filteredFetchResults.map(result => {
+              return (
+                <div className="search-result-page-listed-results-container">
+                  <div className="search-result-page-listed-results-container-result" >
+                    <img className="result-image" src={result.images[0].url} alt="" />
+                    <h2 className="result-title" >{result.fullName}</h2>
+                    <p className="result-address">{result.addresses[0].line1}{result.addresses[0].city}, {result.addresses[0].stateCode} {result.addresses[0].postalCode}</p>
+                  
 
-                <div className="search-result-page-listed-results-container-result" >
-                    <img className="result-image" src={mockPic} alt="" />
-
-                    <h2 className="result-title" >Grand Teton National Park</h2>
-                    <p className="result-address">115 E Pearl Ave Ste 201 Jackson, WY 83001</p>
-
-                    <div className="map-link-website-link-and-heart-icon-container" >
+                  <div className="map-link-website-link-and-heart-icon-container" >
                         <div className="result-map" >
-                            <a href=""><p>Show on map</p></a>
+                            <a href="#"><p>Show on map</p></a>
                         </div>
 
                         <div className="result-website" >
-                            <a href=""><p>Website</p></a>
+                            <a href="#"><p>Website</p></a>
                         </div>
 
                     <button className="result-add-to-favorite-button" ><img src={heartIconGreen} alt="" /></button>
                     </div>
 
+                    <button className="result-see-details-button" >See details</button>
+                    </div>
+
                 </div>
-
-                <button className="result-see-details-button" >See details</button>
-            </div>
-
-            <hr />
+                
+              )
+            })}
+            
 
         </div>
 

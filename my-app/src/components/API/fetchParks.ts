@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import SearchedCountryOrState from "../../context/SearchedCountryOrStateContext";
+
 const myApiKey = "od5RIysPVukEVOhEVpB8rAZDi4yCv0vwRoCCBnod";
 const BASE_URL = "https://developer.nps.gov/api/v1/parks";
 
@@ -7,8 +10,9 @@ export async function fetchParks() {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     const data = await response.json();
-    console.log("All parks:", data);
+    console.log(data.data)
     return data.data; // array of parks
+
   } catch (error) {
     console.error("Error fetching parks:", error);
     return [];
@@ -22,8 +26,8 @@ export async function fetchTopSixParks() {
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
     const data = await res.json();
-    console.log("Top 5 parks:", data.data);
     return data.data; // ✅ this will be your 5 parks array
+
   } catch (error) {
     console.error("Error fetching top 5 parks:", error);
     return [];

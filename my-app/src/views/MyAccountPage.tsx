@@ -18,6 +18,7 @@ export default function MyAccountPage() {
   return (
     <div className="my-account-menu-container">
       {/* Close icon */}
+
       <div className="my-account-menu-close-icon">
         <button onClick={() => navigate(-1)} aria-label="Close menu">
           <img src={closeIcon} alt="Close" />

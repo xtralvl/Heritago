@@ -9,7 +9,7 @@ import heritagoLogo from "../../assets/heritago-logo.png";
 import LoginRegister from "./LoginRegister";
 import { useNavigate } from "react-router-dom";
 import DesktopCarousel from "./DesktopCarousel";
-import { fetchTopSixParks } from "./data/fetchParks";
+import { fetchParks, fetchTopSixParks } from "../API/fetchParks";
 import Newsletter from "./Newsletter";
 
 export default function HomeBodyAndFooter() {
@@ -28,6 +28,15 @@ export default function HomeBodyAndFooter() {
     }
     loadTheSixParks();
   }, []);
+
+  useEffect(() => {
+    async function loadParks() {
+      const data = await fetchParks();
+      console.log(data);
+    }
+    loadParks();
+  }, []);
+
 
   // === CAROUSEL NAVIGATION ===
   const handlePrev = () => {

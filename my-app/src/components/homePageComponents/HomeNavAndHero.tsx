@@ -10,6 +10,9 @@ import { northAmerica } from "./data/Countries";
 import MobileMenu from "./MobileMenu";
 import LoginRegister from "./LoginRegister";
 import { useNavigate } from "react-router-dom";
+import SearchResultsPage from "../../views/SearchResultsPage";
+import { useContext } from "react";
+import { SearchedCountryOrStateContext } from "../../context/SearchedCountryOrStateContext";
 
 export default function HomeNavAndHero() {
 
@@ -22,12 +25,13 @@ export default function HomeNavAndHero() {
   const [continentOpen, setContinentOpen] = useState(false);
   const [countryOrStateOpen, setCountryOrStateOpen] = useState(false);
   const [continent, setContinent] = useState("North America");
-  const [countryOrState, setCountryOrState] = useState("");
   const [countrySearch, setCountrySearch] = useState("");
   const [destinationError, setDestinationError] = useState(false);
   const [countryOrStateError, setCountryOrStateError] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
+  const { searchedCountryOrState, setSearchedCountryOrState } = useContext(SearchedCountryOrStateContext)!;
+  
 
   // ==============================
   // CONTINENTS DATA
@@ -41,10 +45,10 @@ export default function HomeNavAndHero() {
     "Australia",
   ];
 
-  const filteredCountries = northAmerica.filter((c) =>
+  const filteredCountries = Object.keys(northAmerica).filter((c) =>
     c.toLowerCase().includes(countrySearch.toLowerCase())
   );
-
+  
   // ==============================
   // REFS
   // ==============================
@@ -73,12 +77,18 @@ export default function HomeNavAndHero() {
   // HANDLERS
   // ==============================
   const handleSearchButton = () => {
-    setDestinationError(destinationCategory?.length === 0);
+    setDestinationError(!destinationCategory);
     setCountryOrStateError(
-      countryOrState === "" || countryOrState === "Select Country/State"
+      !searchedCountryOrState || searchedCountryOrState === "Select Country/State"
     );
-  };
+  
+    if (destinationCategory && searchedCountryOrState && searchedCountryOrState !== "Select Country/State") {
+      navigate("/search");
+    }
 
+    console.log(searchedCountryOrState)
+  };
+  
   const navigate = useNavigate();
 
   // ==============================
@@ -277,7 +287,7 @@ export default function HomeNavAndHero() {
                         <li
                           key={c}
                           onClick={() => {
-                            setCountryOrState(c);
+                            setSearchedCountryOrState(c);
                             setCountryOrStateOpen(false);
                             setCountrySearch("");
                           }}
@@ -303,7 +313,7 @@ export default function HomeNavAndHero() {
                     }
                   }}
                 >
-                  <span>{countryOrState || "Select Country/State"}</span>
+                  <span>{searchedCountryOrState || "Select Country/State"}</span>
                   <div className={`arrow ${countryOrStateOpen ? "open" : ""}`} />
                 </div>
               </div>
