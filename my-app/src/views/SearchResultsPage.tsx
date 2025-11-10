@@ -16,6 +16,7 @@ import { useContext } from "react";
 import { SearchedCountryOrStateContext } from "../context/SearchedCountryOrStateContext";
 import { fetchParks } from "../components/API/fetchParks";
 import { northAmerica } from "../components/homePageComponents/data/Countries";
+import { SelectedResultIdContext } from "../context/SelectedResultIdContext";
 
 export default function SearchResultsPage() {
 
@@ -52,8 +53,12 @@ export default function SearchResultsPage() {
   
     loadFilteredFetchResults();
   }, [searchedCountryOrState]);
+
+  const parkContext = useContext(SelectedResultIdContext);
+  if (!parkContext) throw new Error("Must be used inside SelectedParkProvider");
+  const { setSelectedResultId } = parkContext;
+
  
-    
     // === DATE FOR FOOTER ===
     const date = new Date();
     const currentYear = date.getFullYear();
@@ -70,7 +75,7 @@ export default function SearchResultsPage() {
           TOP NAV BAR
           ============================== */}
       <div className="top-row-search-results-page">
-        <img src={logo} alt="Heritago Logo" className="homepage-logo" />
+        <img src={logo} alt="Heritago Logo" className="homepage-logo" onClick={() => navigate(-1)} />
 
         {/* === MOBILE AND TAB === */}
         <div className="top-row-buttons-container-mobile">
@@ -176,17 +181,22 @@ export default function SearchResultsPage() {
             </button>
           </div>
 
-          <button className="result-see-details-button">See details</button>
+          <button onClick={() => {
+            setSelectedResultId(result.id)
+            navigate(`/details`)
+          }
+          } className="result-see-details-button">
+            See details
+            </button>
+            
         </div>
       </div>
-
-      {/* add hr after every result */}
       <hr />
     </div>
   );
 })}
 
-        </div>
+</div>
 
         <button className="search-result-page-load-more-results-button" >
                 Load more results <img src={downIcon} alt="" />

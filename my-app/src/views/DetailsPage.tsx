@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import "../styles/DetailsPage.scss";
 import logo from "../assets/heritago-logo.png";
 import profileIcon from "../assets/profile-icon.svg";
@@ -12,18 +12,46 @@ import MobileMenu from "../components/homePageComponents/MobileMenu";
 import LoginRegister from "../components/homePageComponents/LoginRegister";
 import Newsletter from "../components/homePageComponents/Newsletter";
 import { useNavigate } from "react-router-dom";
+import { SelectedResultIdContext } from "../context/SelectedResultIdContext";
+import { fetchParks } from "../components/API/fetchParks";
 
 export default function DetailsPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
   const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
+  const [selectedResultDetails, setSelectedResultDetails] = useState<any>(undefined);
+  const [selectedResultImages, setSelectedResultImages] = useState<any[]>([])
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+
+  const { selectedResultId } = useContext(SelectedResultIdContext)!;
+
+  useEffect(() => {
+    async function loadDetails() {
+      const allParks = await fetchParks();
+      const foundPark = allParks.find((p: any) => p.id === selectedResultId);
+      setSelectedResultDetails(foundPark);
+      setSelectedResultImages(foundPark.images)
+    };
+    loadDetails();
+  }, [selectedResultId]);
+  
 
   const navigate = useNavigate();
   const date = new Date();
   const currentYear = date.getFullYear();
 
+  if (!selectedResultDetails) {
+    return (
+      <div className="details-page-container">
+        <p>Loading park details…</p>
+      </div>
+    );
+  }
+  
   return (
     <div className="details-page-container">
+      
       {/* ==============================
           HEADER / NAVIGATION
           ============================== */}
@@ -101,9 +129,9 @@ export default function DetailsPage() {
             
         {/* Left column: title */}
         <div className="details-page-title-and-paragraph">
-            <h1>Yellowstone National Park</h1>
+            <h1>{selectedResultDetails?.fullName}</h1>
             <p>
-            2 Officers Row, Yellowstone National Park, WY 82190 <span></span>
+            {selectedResultDetails.addresses[0]?.line1}, {selectedResultDetails.addresses[0]?.city}, {selectedResultDetails.addresses[0]?.stateCode} {selectedResultDetails.addresses[0]?.postalCode} <span></span>
             <button className="details-page-show-on-map-button show-map-button-desktop">
                 Show on map
             </button>
@@ -112,7 +140,7 @@ export default function DetailsPage() {
 
         {/* Row 2, left column: website button */}
         <div className="details-page-buttons-container">
-            <button className="details-see-their-website-container">See their website</button>
+            <button className="details-see-their-website-container"><a href={selectedResultDetails.url}>See their website</a></button>
         </div>
 
         {/* Row 3, right column: favorite button */}
@@ -128,15 +156,42 @@ export default function DetailsPage() {
 
         {/* === CAROUSEL === */}
         {/* mobile/tablet carousel — will be hidden on desktop via CSS */}
-        <div className="details-page-carousel-container">
-          <button className="details-page-carousel-left-button" aria-label="Previous image">
+
+        {/* === MOBILE CAROUSEL === */}
+        <div className="details-page-carousel-container-mobile">
+          <button
+            className="details-page-carousel-left-button"
+            aria-label="Previous image"
+            onClick={() =>
+              setCurrentImageIndex((prev) =>
+                prev === 0 ? selectedResultImages.length - 1 : prev - 1
+              )
+            }
+          >
             <img src={previousIcon} alt="Previous image" />
           </button>
-          <img src={mockPic} alt="Yellowstone National Park" />
-          <button className="details-page-carousel-right-button" aria-label="Next image">
+
+          <img
+            className=""
+            src={selectedResultImages[currentImageIndex]?.url || mockPic}
+            alt={selectedResultImages[currentImageIndex]?.alt || "Image"}
+          />
+
+          <button
+            className="details-page-carousel-right-button"
+            aria-label="Next image"
+            onClick={() =>
+              setCurrentImageIndex((prev) =>
+                prev === selectedResultImages.length - 1 ? 0 : prev + 1
+              )
+            }
+          >
             <img src={nextIcon} alt="Next image" />
           </button>
-          <div className="details-page-carousel-pic-counter">1 / 6</div>
+
+          <div className="details-page-carousel-pic-counter">
+            {currentImageIndex + 1} / {selectedResultImages.length}
+          </div>
         </div>
 
         {/* === DESKTOP IMAGES === */}
@@ -165,34 +220,24 @@ export default function DetailsPage() {
         <section className="details-page-facilities-section">
           <h2>Facilities & Services</h2>
           <div className="details-page-facilities-and-services-container">
-            <span>World’s first national park</span>
-            <span>Old Faithful Geyser</span>
-            <span>Hiking</span>
-            <span>Ranger-led programs</span>
-            <span>Restrooms & Food Services</span>
+
+            {selectedResultDetails.activities.map((act: any) => {
+              return (
+                <span>{act.name}</span>
+              )
+            })}
           </div>
-          <button className="show-all-facilities-btn">
+          {/* <button className="show-all-facilities-btn">
             Show all facilities and services
-          </button>
+          </button> */}
         </section>
+        <hr />
 
         {/* === ABOUT SECTION === */}
         <section className="details-page-about-container">
-          <h3>About this national park:</h3>
+          <h3>About:</h3>
           <p>
-            First in the World — Established in 1872, Yellowstone is recognized
-            as the first national park on Earth. Supervolcano Below — The park
-            sits atop a massive supervolcano that powers more than 10,000
-            geothermal features, including geysers and hot springs. Wildlife
-            Wonderland — One of the only places in the U.S. where grizzly bears,
-            wolves, and bison still coexist in their natural habitat. Old
-            Faithful Geyser — Erupts roughly every 90 minutes, shooting water
-            over 40 meters (130 feet) high. Grand Prismatic Spring — The largest
-            hot spring in the U.S., known for its rainbow-like colors caused by
-            heat-loving bacteria. Massive Size — Yellowstone spans about 8,983
-            km² (3,468 mi²) — larger than Delaware and Rhode Island combined.
-            Ancient History — Native American tribes have lived in and around
-            Yellowstone for over 11,000 years.
+            {selectedResultDetails.description}
           </p>
         </section>
 

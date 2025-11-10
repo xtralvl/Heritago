@@ -5,11 +5,11 @@
    ========================= */
 
 .details-page-add-to-favorite-button-desktop {
-    display: none;
+  display: none;
 }   
 
 .map-container-desktop {
-    display: none;
+  display: none;
 }
 
 .show-map-button-desktop {
@@ -85,8 +85,6 @@
       align-items: center;
       justify-content: center;
       height: 100%;
-
-      // enforce consistent clickable area
       min-width: 2.6rem;
       min-height: 2.6rem;
       border-radius: 6px;
@@ -120,12 +118,11 @@
   // Title / actions area
   .details-page-title-container {
     display: grid;
-    grid-template-columns: 75% auto; // title column + narrow column for favorite
+    grid-template-columns: 75% auto;
     grid-template-rows: auto auto;
     gap: 0.6rem;
     align-items: start;
 
-    // Left column: title + meta + action links
     .details-page-title-and-paragraph {
       display: flex;
       flex-direction: column;
@@ -167,7 +164,6 @@
       }
     }
 
-    // Right column: favorite button (keeps consistent size)
     .details-page-add-to-favorite-button-mobile {
       justify-self: flex-end;
       display: inline-flex;
@@ -193,7 +189,7 @@
   }
 
   /* ===== CAROUSEL ===== */
-  .details-page-carousel-container {
+  .details-page-carousel-container-mobile {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -202,8 +198,8 @@
 
     img {
       width: 100%;
-      max-width: 800px;
-      height: auto;
+      max-width: 500px;
+      height: 18rem;
       border-radius: 10px;
       object-fit: cover;
       display: block;
@@ -276,7 +272,6 @@
   }
 }
 
-/* small generic button style (used for "Show all facilities..." placeholder) */
 .show-all-facilities-btn,
 .details-page-show-on-map-button,
 .details-see-their-website-container {
@@ -287,6 +282,12 @@
   text-decoration: underline;
   padding: 0;
   font-size: 0.95rem;
+
+    a {
+      color: $custom-dark-green;
+    }
+ 
+  
 }
 
 /* =========================
@@ -332,7 +333,9 @@
   }
 }
 
-// ======== SIGN-UP / LOG-IN SECTION =========
+/* =========================
+   SIGN-UP / LOG-IN SECTION
+   ========================= */
 .sign-up-log-in-section-details-page-container {
   color: $custom-dark-green;
   margin: 2rem 0;
@@ -412,9 +415,7 @@ footer {
 @media (min-width: 600px) {
   .top-row-details-page {
     height: 4.5rem;
-  }
 
-  .top-row-details-page {
     .homepage-logo {
       width: 7rem !important;
     }
@@ -425,7 +426,7 @@ footer {
     height: 2rem !important;
   }
 
-  .details-page-carousel-container {
+  .details-page-carousel-container-mobile {
     button {
       border: 1px solid $custom-dark-green !important;
       width: 2.5rem;
@@ -433,6 +434,7 @@ footer {
 
     img {
       width: 80% !important;
+      max-height: 10rem;
     }
   }
 
@@ -447,7 +449,6 @@ footer {
   }
 }
 
-/* small adjustments for intermediate widths */
 @media (min-width: 750px) {
   .details-page-carousel-pic-counter {
     right: 5.5rem !important;
@@ -464,14 +465,10 @@ footer {
   }
 }
 
-/* ---------- KEY: Desktop behavior ---------- */
-/* On desktop (>=1024px) we:
-   - hide mobile carousel
-   - show desktop image grid
-   - make desktop images fill their grid spaces (using .img-wrap)
-*/
+/* =========================
+   DESKTOP LAYOUT
+   ========================= */
 @media (min-width: 1024px) {
-    
 
   .details-page-add-to-favorite-button-desktop {
     display: inline-flex;
@@ -493,7 +490,6 @@ footer {
       height: 2rem;
       object-fit: contain;
     }
-
   }  
 
   .map-container-desktop {
@@ -502,28 +498,26 @@ footer {
     grid-column: 2 !important;
 
     img {
-        width: 100%;
-        height: 100%;
+      width: 100%;
+      height: 100%;
     }
-    
   }
 
   .details-page-title-container {
     grid-template-columns: 1fr auto !important;
     grid-template-rows: auto auto auto;
   }
-  
+
   .details-page-add-to-favorite-button-mobile {
     display: none !important;
   }
-    
+
   .details-page-container {
     padding: 2rem;
   }
 
   .top-row-details-page {
     height: 5rem;
-    display: flex !important;
 
     .homepage-logo {
       width: 9rem !important;
@@ -534,12 +528,10 @@ footer {
     display: inline-flex;
   }
 
-  // hide mobile carousel on desktop
-  .details-page-carousel-container {
+  .details-page-carousel-container-mobile {
     display: none !important;
   }
 
-  // show desktop buttons area
   .top-row-buttons-container-mobile {
     display: none !important;
   }
@@ -571,11 +563,7 @@ footer {
     font-size: 0.8rem;
   }
 
-  .details-page-carousel-container img {
-    max-height: 420px;
-  }
-
-  /* Desktop images grid — visible on desktop only */
+  /* Desktop images grid */
   .details-page-images-container-desktop {
     display: grid !important;
     grid-template-columns: 1.4fr 1fr;
@@ -584,7 +572,6 @@ footer {
     align-items: stretch;
     width: 100%;
     margin-top: 1rem;
-    /* make grid scale with available width */
   }
 
   .details-page-images-desktop-first-row {
@@ -592,7 +579,7 @@ footer {
     display: grid;
     grid-template-columns: 1.4fr 1fr;
     gap: 0.5rem;
-    height: 60vh; /* lets images scale with viewport; you can tweak this */
+    height: 60vh;
     min-height: 300px;
     max-height: 520px;
   }
@@ -604,25 +591,23 @@ footer {
     align-items: stretch;
   }
 
-  /* The .img-wrap ensures imgs fill the container and preserve cover behavior */
   .img-wrap {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
     border-radius: 8px;
+
+    img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
   }
 
-  .img-wrap img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* second column in first row stacks two images vertically */
   .details-page-images-desktop-first-row-second-column {
     grid-template-rows: 1fr 1fr;
   }
@@ -637,7 +622,6 @@ footer {
     min-height: 90px;
   }
 
-  /* ensure each thumbnail fills its cell */
   .details-page-images-desktop-second-row .img-wrap {
     height: 100%;
   }
@@ -647,7 +631,9 @@ footer {
   }
 }
 
-/* small helper to avoid accidental horizontal scroll */
+/* =========================
+   PREVENT HORIZONTAL SCROLL
+   ========================= */
 html,
 body {
   overflow-x: hidden;
