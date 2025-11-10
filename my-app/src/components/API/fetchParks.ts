@@ -1,6 +1,3 @@
-import { useContext } from "react";
-import SearchedCountryOrState from "../../context/SearchedCountryOrStateContext";
-
 const myApiKey = "od5RIysPVukEVOhEVpB8rAZDi4yCv0vwRoCCBnod";
 const BASE_URL = "https://developer.nps.gov/api/v1/parks";
 

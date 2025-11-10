@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import filterIcon from '../assets/filter-icon.svg';
 import sortIcon from '../assets/sort-icon.svg';
 import heartIconGreen from '../assets/heart-icon.svg'
-import mockPic from '../assets/yellowstone-example-pic.jpg'
 import downIcon from '../../src/assets/down-icon.svg'
 import MobileFilterMenu from "../components/MobileFilterMenu";
 import MobileSortMenu from "../components/MobileSortMenu";
@@ -33,7 +32,7 @@ export default function SearchResultsPage() {
   if (!context) {
     throw new Error("SearchedCountryOrStateContext must be used within SearchedCountryOrStateProvider");
   }
-  const { searchedCountryOrState, setSearchedCountryOrState } = context;
+  const { searchedCountryOrState } = context;
 
   useEffect(() => {
     async function loadFilteredFetchResults() {
@@ -53,6 +52,7 @@ export default function SearchResultsPage() {
   
     loadFilteredFetchResults();
   }, [searchedCountryOrState]);
+ 
     
     // === DATE FOR FOOTER ===
     const date = new Date();
@@ -152,34 +152,39 @@ export default function SearchResultsPage() {
             <hr />
 
             {filteredFetchResults.map(result => {
-              return (
-                <div className="search-result-page-listed-results-container">
-                  <div className="search-result-page-listed-results-container-result" >
-                    <img className="result-image" src={result.images[0].url} alt="" />
-                    <h2 className="result-title" >{result.fullName}</h2>
-                    <p className="result-address">{result.addresses[0].line1}{result.addresses[0].city}, {result.addresses[0].stateCode} {result.addresses[0].postalCode}</p>
-                  
+  return (
+    <div key={result.id}>
+      <div className="search-result-page-listed-results-container">
+        <div className="search-result-page-listed-results-container-result" >
+          <img className="result-image" src={result.images[0].url} alt="" />
+          <h2 className="result-title">{result.fullName}</h2>
+          <p className="result-address">
+            {result.addresses[0].line1}, {result.addresses[0].city}, {result.addresses[0].stateCode} {result.addresses[0].postalCode}
+          </p>
 
-                  <div className="map-link-website-link-and-heart-icon-container" >
-                        <div className="result-map" >
-                            <a href="#"><p>Show on map</p></a>
-                        </div>
+          <div className="map-link-website-link-and-heart-icon-container">
+            <div className="result-map">
+              <a href="#"><p>Show on map</p></a>
+            </div>
 
-                        <div className="result-website" >
-                            <a href="#"><p>Website</p></a>
-                        </div>
+            <div className="result-website">
+              <a href="#"><p>Website</p></a>
+            </div>
 
-                    <button className="result-add-to-favorite-button" ><img src={heartIconGreen} alt="" /></button>
-                    </div>
+            <button className="result-add-to-favorite-button">
+              <img src={heartIconGreen} alt="" />
+            </button>
+          </div>
 
-                    <button className="result-see-details-button" >See details</button>
-                    </div>
+          <button className="result-see-details-button">See details</button>
+        </div>
+      </div>
 
-                </div>
-                
-              )
-            })}
-            
+      {/* add hr after every result */}
+      <hr />
+    </div>
+  );
+})}
 
         </div>
 

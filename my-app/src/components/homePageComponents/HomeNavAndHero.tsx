@@ -10,7 +10,6 @@ import { northAmerica } from "./data/Countries";
 import MobileMenu from "./MobileMenu";
 import LoginRegister from "./LoginRegister";
 import { useNavigate } from "react-router-dom";
-import SearchResultsPage from "../../views/SearchResultsPage";
 import { useContext } from "react";
 import { SearchedCountryOrStateContext } from "../../context/SearchedCountryOrStateContext";
 
