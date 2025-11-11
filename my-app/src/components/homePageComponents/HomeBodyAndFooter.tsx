@@ -10,6 +10,7 @@ import LoginRegister from "./LoginRegister";
 import { useNavigate } from "react-router-dom";
 import DesktopCarousel from "./DesktopCarousel";
 import { fetchTopSixParks } from "../API/fetchParks";
+import { fetchTopUnescos } from "../API/fetchUnescos";
 import Newsletter from "./Newsletter";
 
 export default function HomeBodyAndFooter() {
@@ -17,51 +18,69 @@ export default function HomeBodyAndFooter() {
 
   const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
   const [topSixNationalParks, setTopSixNationalParks] = useState<any[]>([]);
+  const [topSixUnescos, setTopSixUnescos] = useState<any[]>([]);
+  const [topDestinations, setTopDestinations] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
 
-  // === FETCH TOP DESTINATIONS ===
+  // === FETCH TOP PARKS ===
   useEffect(() => {
-    async function loadTheSixParks() {
+    async function loadTopParks() {
       const data = await fetchTopSixParks();
-      setTopSixNationalParks(data);
+      setTopSixNationalParks(data || []);
     }
-    loadTheSixParks();
+    loadTopParks();
   }, []);
+
+  // === FETCH TOP UNESCO SITES ===
+  useEffect(() => {
+    async function loadTopUnescos() {
+      const data = await fetchTopUnescos();
+      setTopSixUnescos(data || []);
+    }
+    loadTopUnescos();
+  }, []);
+
+  // === COMBINE PARKS + UNESCOs ===
+  useEffect(() => {
+    // Only update when both have data
+    if (topSixNationalParks.length || topSixUnescos.length) {
+      setTopDestinations([...topSixNationalParks, ...topSixUnescos]);
+    }
+  }, [topSixNationalParks, topSixUnescos]);
 
   // === CAROUSEL NAVIGATION ===
   const handlePrev = () => {
-    if (topSixNationalParks.length === 0) return;
+    if (topDestinations.length === 0) return;
     setCurrentIndex((prev) =>
-      prev === 0 ? topSixNationalParks.length - 3 : prev - 1
+      prev === 0 ? topDestinations.length - 1 : prev - 1
     );
   };
 
   const handleNext = () => {
-    if (topSixNationalParks.length === 0) return;
+    if (topDestinations.length === 0) return;
     setCurrentIndex((prev) =>
-      prev >= topSixNationalParks.length - 3 ? 0 : prev + 1
+      prev === topDestinations.length - 1 ? 0 : prev + 1
     );
   };
 
-  // === DATE FOR FOOTER ===
-  const date = new Date();
-  const currentYear = date.getFullYear();
+  // === FOOTER YEAR ===
+  const currentYear = new Date().getFullYear();
 
   return (
     <div className="home-body-container">
-      {/* === HEADER SECTION === */}
+      {/* === HEADER === */}
       <div className="home-body-header-and-paragraph-container">
         <h3>Trending Destinations</h3>
         <p>Most popular travel choices among travelers.</p>
       </div>
 
-      {/* === LOGIN-REGISTER MENU === */}
+      {/* === LOGIN MODAL === */}
       {isLoginRegisterMenuOpen && (
         <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)} />
       )}
 
-      {/* === TRENDING DESTINATIONS CAROUSEL === */}
+      {/* === CAROUSEL === */}
       <div className="trending-destinations-carousel-container">
         <button
           onClick={handlePrev}
@@ -70,27 +89,36 @@ export default function HomeBodyAndFooter() {
           <img src={leftIcon} alt="Previous destination" />
         </button>
 
-        {/* === MOBILE / TABLET === */}
+        {/* === MOBILE === */}
         <div className="carousel-destination-preview-container-mobile">
-          <img
-            src={topSixNationalParks[currentIndex]?.images?.[0]?.url}
-            alt={
-              topSixNationalParks[currentIndex]?.images?.[0]?.altText ||
-              topSixNationalParks[currentIndex]?.fullName
-            }
-          />
-          <div className="carousel-destination-preview-name-and-review-container">
-            <span className="carousel-destination-preview-name">
-              {topSixNationalParks[currentIndex]?.fullName}
-            </span>
-          </div>
+          {topDestinations.length > 0 && (
+            <>
+              <img
+                src={
+                  topDestinations[currentIndex]?.images?.[0]?.url ||
+                  topDestinations[currentIndex]?.main_image_url.url
+                }
+                alt={
+                  topDestinations[currentIndex]?.images?.[0]?.altText ||
+                  topDestinations[currentIndex]?.fullName ||
+                  topDestinations[currentIndex]?.name_en
+                }
+              />
+              <div className="carousel-destination-preview-name-and-review-container">
+                <span className="carousel-destination-preview-name">
+                  {topDestinations[currentIndex]?.fullName ||
+                    topDestinations[currentIndex]?.name_en}
+                </span>
+              </div>
+            </>
+          )}
         </div>
 
         {/* === DESKTOP === */}
         <div className="carousel-destination-preview-container-desktop-container">
           <div className="carousel-destination-preview-container-desktop">
             <DesktopCarousel
-              parks={topSixNationalParks}
+              parks={topDestinations}
               startIndex={currentIndex}
             />
           </div>
@@ -106,7 +134,7 @@ export default function HomeBodyAndFooter() {
 
       <hr />
 
-      {/* === FEATURE SECTION === */}
+      {/* === FEATURES === */}
       <div className="home-features-container">
         <div className="home-features home-features-first">
           <img className="features-icon" src={exploreIcon} alt="Destination icon" />
@@ -139,7 +167,7 @@ export default function HomeBodyAndFooter() {
 
       <hr />
 
-      {/* === SIGN-UP / LOG-IN SECTION === */}
+      {/* === SIGN-IN SECTION === */}
       <div className="sign-up-log-in-section-home-container">
         <h4>Login to access additional features</h4>
         <p>
@@ -152,7 +180,7 @@ export default function HomeBodyAndFooter() {
 
       <hr />
 
-      {/* === NEWSLETTER SECTION === */}
+      {/* === NEWSLETTER === */}
       <div className="newsletter-section-home-container">
         <p>
           Subscribe to our monthly newsletter to receive the best travel tips
@@ -169,15 +197,11 @@ export default function HomeBodyAndFooter() {
       {isNewsletterModalOpen && (
         <Newsletter onClose={() => setIsNewsletterModalOpen(false)} />
       )}
+
       {/* === FOOTER === */}
       <footer>
         <div className="navigation-section-home-bottom">
-          <button
-            onClick={() => navigate("about")}
-            className="language-button-home-bottom"
-          >
-            About
-          </button>
+          <button onClick={() => navigate("about")}>About</button>
           <button onClick={() => navigate("help")}>Help</button>
         </div>
 

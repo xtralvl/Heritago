@@ -6,6 +6,7 @@ import hamburgerIcon from "../../assets/hamburger-icon.svg";
 import museumIconBlack from "../../assets/museum-icon-black.svg";
 import nationalParkIconBlack from "../../assets/national-park-icon-black.svg";
 import bothIconBlack from "../../assets/both-icon-black.svg";
+import infoIcon from '../../assets/info-icon.svg';
 import { northAmerica } from "./data/Countries";
 import MobileMenu from "./MobileMenu";
 import LoginRegister from "./LoginRegister";
@@ -331,7 +332,13 @@ export default function HomeNavAndHero() {
             <span className="unesco-only-info-home-page" >
               {isCountrySelectDisabled
                 ? "Currently, there’s no option to filter by state or country when UNESCO is the only category selected."
-                : searchedCountryOrState || ""}
+                : ""}
+            </span>
+
+            <span className="unesco-only-info-home-page" >
+              {searchedDestinationType === "Both"
+                ? "Please note that we always list all UNESCO World Heritage sites of the continent, regardless of the country or state selected."
+                : ""}
             </span>
 
               {countryOrStateError && (

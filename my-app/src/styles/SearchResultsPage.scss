@@ -167,6 +167,7 @@ hr {
       display: grid;
       grid-template-columns: auto auto;
       grid-template-rows: auto auto;
+      justify-content: flex-start;
     }
 
     .result-title {
@@ -194,7 +195,6 @@ hr {
       color: white;
       grid-template-columns: 1;
       grid-template-rows: 2;
-
     };
 
     .unesco-title-badge {

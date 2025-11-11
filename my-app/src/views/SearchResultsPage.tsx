@@ -19,6 +19,7 @@ import { fetchParks } from "../components/API/fetchParks";
 import { fetchUsaUnescos } from "../components/API/fetchUnescos";
 import { northAmerica } from "../components/homePageComponents/data/Countries";
 import { SelectedResultIdContext } from "../context/SelectedResultIdContext";
+import BackButton from "../components/BackButton";
 
 export default function SearchResultsPage() {
 
@@ -145,6 +146,7 @@ export default function SearchResultsPage() {
           </button>
         </div>
 
+
         {/* === MOBILE MENU === */}
         {isMobileMenuOpen && (
           <MobileMenu onClose={() => setIsMobileMenuOpen(false)}
@@ -193,6 +195,9 @@ export default function SearchResultsPage() {
     </p>
     <div className="search-result-page-inner-container">
 
+    <BackButton />
+
+
 <div className="search-result-page-filtering-options-container">
   <button onClick={() => setIsMobileFilterMenuOpen(true)}>
     <img src={filterIcon} alt="" />Filter
@@ -223,7 +228,7 @@ export default function SearchResultsPage() {
     ? `${result.addresses?.[0]?.line1 || ""}, ${result.addresses?.[0]?.city || ""}, ${
         result.addresses?.[0]?.stateCode || ""
       } ${result.addresses?.[0]?.postalCode || ""}`
-    : `${result.states_names?.[0] || ""}, ${result.iso_codes || ""}`;
+    : `${result.iso_codes || ""}`;
 
   return (
     <div key={result.id || result.uuid}>
@@ -231,7 +236,7 @@ export default function SearchResultsPage() {
         <div className="search-result-page-listed-results-container-result">
           <img className="result-image" src={imageUrl} alt={title} />
           <div className="title-and-badge-container" >
-          <h2 className="result-title">{title}</h2> <div  className={`${result.id ? "park-title-badge" : "unesco-title-badge"}`} ><span >{result.id ? "nat.park" : "unesco"}</span></div>
+          <h2 className="result-title">{title}</h2> {searchedDestinationType === "Both" && <div  className={`${result.id ? "park-title-badge" : "unesco-title-badge"}`} ><span >{result.id ? "nat.park" : "unesco"}</span></div>}
           </div>
           <p className="result-address">{address || "Location unavailable"}</p>
 
