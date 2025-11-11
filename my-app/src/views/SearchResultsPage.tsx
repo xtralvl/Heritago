@@ -28,6 +28,7 @@ export default function SearchResultsPage() {
   const [isMobileFilterMenuOpen, setIsMobileFilterMenuOpen] = useState(false);
   const [isMobileSortMenuOpen, setIsMobileSortMenuOpen] = useState(false);
   const [filteredFetchResults, setFilteredFetchResults] = useState<any[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(10);
 
   const context = useContext(SearchedCountryOrStateContext);
   if (!context) {
@@ -58,6 +59,15 @@ export default function SearchResultsPage() {
   if (!parkContext) throw new Error("Must be used inside SelectedParkProvider");
   const { setSelectedResultId } = parkContext;
 
+  const handleLoadMoreResultsButton = () => {
+    setCurrentIndex(prev => {
+      const nextIndex = prev + 10;
+      return nextIndex > filteredFetchResults.length
+      ? filteredFetchResults.length
+      : nextIndex;
+    });
+  };
+
  
     // === DATE FOR FOOTER ===
     const date = new Date();
@@ -69,6 +79,15 @@ export default function SearchResultsPage() {
   // ==============================
   // RENDER
   // ==============================
+
+  if (filteredFetchResults.length === 0) {
+    return (
+      <div className="details-page-container">
+        <p>Loading results…</p>
+      </div>
+    );
+  }
+
   return (
     <div className="search-results-page-container">
       {/* ==============================
@@ -136,7 +155,7 @@ export default function SearchResultsPage() {
         </div>
     </div>
 
-    <p className="result-paragraph-search-result-page" >{searchedCountryOrState}: {filteredFetchResults.length - 1} national parks found</p>
+    <p className="result-paragraph-search-result-page" >{searchedCountryOrState}: {filteredFetchResults.length} national parks found</p>
 
         <div className="search-result-page-inner-container" >
 
@@ -156,51 +175,54 @@ export default function SearchResultsPage() {
 
             <hr />
 
-            {filteredFetchResults.map(result => {
-  return (
-    <div key={result.id}>
-      <div className="search-result-page-listed-results-container">
-        <div className="search-result-page-listed-results-container-result" >
-          <img className="result-image" src={result.images[0].url} alt="" />
-          <h2 className="result-title">{result.fullName}</h2>
-          <p className="result-address">
-            {result.addresses[0].line1}, {result.addresses[0].city}, {result.addresses[0].stateCode} {result.addresses[0].postalCode}
-          </p>
+          {filteredFetchResults.slice(0, currentIndex).map(result => (
+            <div key={result.id}>
+              <div className="search-result-page-listed-results-container">
+                <div className="search-result-page-listed-results-container-result">
+                  <img className="result-image" src={result.images[0].url} alt="" />
+                  <h2 className="result-title">{result.fullName}</h2>
+                  <p className="result-address">
+                    {result.addresses[0].line1}, {result.addresses[0].city}, {result.addresses[0].stateCode}{" "}
+                    {result.addresses[0].postalCode}
+                  </p>
 
-          <div className="map-link-website-link-and-heart-icon-container">
-            <div className="result-map">
-              <a href="#"><p>Show on map</p></a>
+                  <div className="map-link-website-link-and-heart-icon-container">
+                    <div className="result-map">
+                      <a href="#"><p>Show on map</p></a>
+                    </div>
+
+                    <div className="result-website">
+                      <a href="#"><p>Website</p></a>
+                    </div>
+
+                    <button className="result-add-to-favorite-button">
+                      <img src={heartIconGreen} alt="" />
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setSelectedResultId(result.id);
+                      navigate(`/details`);
+                    }}
+                    className="result-see-details-button"
+                  >
+                    See details
+                  </button>
+                </div>
+              </div>
+              <hr />
             </div>
+          ))}
 
-            <div className="result-website">
-              <a href="#"><p>Website</p></a>
-            </div>
-
-            <button className="result-add-to-favorite-button">
-              <img src={heartIconGreen} alt="" />
-            </button>
           </div>
 
-          <button onClick={() => {
-            setSelectedResultId(result.id)
-            navigate(`/details`)
-          }
-          } className="result-see-details-button">
-            See details
-            </button>
-            
-        </div>
-      </div>
-      <hr />
-    </div>
-  );
-})}
-
-</div>
-
-        <button className="search-result-page-load-more-results-button" >
-                Load more results <img src={downIcon} alt="" />
+      {filteredFetchResults.length > currentIndex && 
+        <button onClick={handleLoadMoreResultsButton} className="search-result-page-load-more-results-button" >
+          Load more results <img src={downIcon} alt="" />
         </button>
+
+      }
 
     {/* === NEWSLETTER SECTION === */}
       <div className="newsletter-section-home-container">

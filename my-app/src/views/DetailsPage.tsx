@@ -14,6 +14,7 @@ import Newsletter from "../components/homePageComponents/Newsletter";
 import { useNavigate } from "react-router-dom";
 import { SelectedResultIdContext } from "../context/SelectedResultIdContext";
 import { fetchParks } from "../components/API/fetchParks";
+import BackButton from "../components/BackButton";
 
 export default function DetailsPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -44,7 +45,7 @@ export default function DetailsPage() {
   if (!selectedResultDetails) {
     return (
       <div className="details-page-container">
-        <p>Loading park details…</p>
+        <p>Loading details…</p>
       </div>
     );
   }
@@ -125,8 +126,12 @@ export default function DetailsPage() {
           MAIN CONTENT
           ============================== */}
       <div className="details-page-content">
+
+        {/* BACK BUTTON */}
+          <BackButton/>
+
         <div className="details-page-title-container">
-            
+ 
         {/* Left column: title */}
         <div className="details-page-title-and-paragraph">
             <h1>{selectedResultDetails?.fullName}</h1>
@@ -220,6 +225,7 @@ export default function DetailsPage() {
         <section className="details-page-facilities-section">
           <h2>Facilities & Services</h2>
           <div className="details-page-facilities-and-services-container">
+            
 
             {selectedResultDetails.activities.map((act: any) => {
               return (
@@ -227,6 +233,7 @@ export default function DetailsPage() {
               )
             })}
           </div>
+          
           {/* <button className="show-all-facilities-btn">
             Show all facilities and services
           </button> */}
