@@ -65,7 +65,6 @@ export default function DetailsPage() {
 
   // ====== Helper variables for conditional rendering ======
   const isPark = searchedDestinationType === "National Park";
-  const isUnesco = searchedDestinationType === "UNESCO";
 
   return (
     <div className="details-page-container">
