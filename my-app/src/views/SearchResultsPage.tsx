@@ -14,7 +14,9 @@ import MobileFilterMenu from "../components/MobileFilterMenu";
 import MobileSortMenu from "../components/MobileSortMenu";
 import { useContext } from "react";
 import { SearchedCountryOrStateContext } from "../context/SearchedCountryOrStateContext";
+import { SearchedDestinationTypeContext } from "../context/SearchedDestinationTypeContext";
 import { fetchParks } from "../components/API/fetchParks";
+import { fetchUsaUnescos } from "../components/API/fetchUnescos";
 import { northAmerica } from "../components/homePageComponents/data/Countries";
 import { SelectedResultIdContext } from "../context/SelectedResultIdContext";
 
@@ -30,30 +32,61 @@ export default function SearchResultsPage() {
   const [filteredFetchResults, setFilteredFetchResults] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(10);
 
-  const context = useContext(SearchedCountryOrStateContext);
-  if (!context) {
+  const countryStateContext = useContext(SearchedCountryOrStateContext);
+  if (!countryStateContext) {
     throw new Error("SearchedCountryOrStateContext must be used within SearchedCountryOrStateProvider");
   }
-  const { searchedCountryOrState } = context;
+  const { searchedCountryOrState } = countryStateContext;
+
+
+  const destinationTypeContext = useContext(SearchedDestinationTypeContext);
+  if (!destinationTypeContext) {
+    throw new Error("SearchedDestinationTypeContext must be used within SearchedDestinationTypeProvider");
+  }
+  const { searchedDestinationType } = destinationTypeContext;
+
 
   useEffect(() => {
     async function loadFilteredFetchResults() {
-      const data = await fetchParks();
+      if (!searchedDestinationType) return;
   
-      if (!searchedCountryOrState) return;
+      if (searchedDestinationType === "UNESCO") {
+        const unescoData = await fetchUsaUnescos();
+        setFilteredFetchResults(unescoData);
+        console.log(unescoData)
+
+      } else if (searchedDestinationType === "National Park") {
+        const parkData = await fetchParks();
+        if (!searchedCountryOrState) return;
   
-      const selectedAbbr = northAmerica[searchedCountryOrState]; // full name → abbr
+        const selectedAbbr = northAmerica[searchedCountryOrState];
+        const filteredParks = parkData.filter((park: any) =>
+          park.states.split(",").includes(selectedAbbr)
+        );
+        setFilteredFetchResults(filteredParks);
+
+      } else if (searchedDestinationType === "Both") {
+        const parkData = await fetchParks();
+        const unescoData = await fetchUsaUnescos();
+        let combinedResults: any[] = [];
   
-      // Some parks can have multiple states: check if any match
-      const filteredResult = data.filter((park: any) =>
-        park.states.split(",").includes(selectedAbbr)
-      );
+        if (searchedCountryOrState) {
+          const selectedAbbr = northAmerica[searchedCountryOrState];
+          const filteredParks = parkData.filter((park: any) =>
+            park.states.split(",").includes(selectedAbbr)
+          );
+          combinedResults = [...filteredParks, ...unescoData];
+        } else {
+          combinedResults = [...parkData, ...unescoData];
+        }
   
-      setFilteredFetchResults(filteredResult);
+        setFilteredFetchResults(combinedResults);
+      }
     }
   
     loadFilteredFetchResults();
-  }, [searchedCountryOrState]);
+  }, [searchedDestinationType, searchedCountryOrState]);
+  
 
   const parkContext = useContext(SelectedResultIdContext);
   if (!parkContext) throw new Error("Must be used inside SelectedParkProvider");
@@ -155,67 +188,109 @@ export default function SearchResultsPage() {
         </div>
     </div>
 
-    <p className="result-paragraph-search-result-page" >{searchedCountryOrState}: {filteredFetchResults.length} national parks found</p>
+    <p className="result-paragraph-search-result-page" >
+    {/* {searchedDestinationType === "National Park" | "UNESCO" ? {searchedCountryOrState} {filteredFetchResults.length} {searchedDestinationType}"found" : */}
+    </p>
+    <div className="search-result-page-inner-container">
 
-        <div className="search-result-page-inner-container" >
+<div className="search-result-page-filtering-options-container">
+  <button onClick={() => setIsMobileFilterMenuOpen(true)}>
+    <img src={filterIcon} alt="" />Filter
+  </button>
+  <button onClick={() => setIsMobileSortMenuOpen(true)}>
+    <img src={sortIcon} alt="" />Sort
+  </button>
+</div>
 
-            <div className="search-result-page-filtering-options-container">
-                <button onClick={() => setIsMobileFilterMenuOpen(true)} ><img src={filterIcon} alt="" />Filter</button>
-                <button onClick={() => setIsMobileSortMenuOpen(true)} ><img src={sortIcon} alt="" />Sort</button>
-            </div>
+{isMobileFilterMenuOpen && (
+  <MobileFilterMenu onClose={() => setIsMobileFilterMenuOpen(false)} />
+)}
 
-            {isMobileFilterMenuOpen &&
-                <MobileFilterMenu onClose={() => setIsMobileFilterMenuOpen(false)} />
-            }
+{isMobileSortMenuOpen && (
+  <MobileSortMenu onClose={() => setIsMobileSortMenuOpen(false)} />
+)}
 
-            {isMobileSortMenuOpen &&
-                <MobileSortMenu onClose={() => setIsMobileSortMenuOpen(false)} />
-            }
+<hr />
 
+{/* ========== RESULTS ========== */}
+{filteredFetchResults.slice(0, currentIndex).map((result: any) => {
+  const isPark = searchedDestinationType === "National Park" || result.fullName;
+  const imageUrl = isPark
+    ? result.images?.[0]?.url
+    : result.main_image_url?.url || result.images_urls?.split(",")[0];
+  const title = isPark ? result.fullName : result.name_en;
+  const address = isPark
+    ? `${result.addresses?.[0]?.line1 || ""}, ${result.addresses?.[0]?.city || ""}, ${
+        result.addresses?.[0]?.stateCode || ""
+      } ${result.addresses?.[0]?.postalCode || ""}`
+    : `${result.states_names?.[0] || ""}, ${result.iso_codes || ""}`;
 
-            <hr />
-
-          {filteredFetchResults.slice(0, currentIndex).map(result => (
-            <div key={result.id}>
-              <div className="search-result-page-listed-results-container">
-                <div className="search-result-page-listed-results-container-result">
-                  <img className="result-image" src={result.images[0].url} alt="" />
-                  <h2 className="result-title">{result.fullName}</h2>
-                  <p className="result-address">
-                    {result.addresses[0].line1}, {result.addresses[0].city}, {result.addresses[0].stateCode}{" "}
-                    {result.addresses[0].postalCode}
-                  </p>
-
-                  <div className="map-link-website-link-and-heart-icon-container">
-                    <div className="result-map">
-                      <a href="#"><p>Show on map</p></a>
-                    </div>
-
-                    <div className="result-website">
-                      <a href="#"><p>Website</p></a>
-                    </div>
-
-                    <button className="result-add-to-favorite-button">
-                      <img src={heartIconGreen} alt="" />
-                    </button>
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      setSelectedResultId(result.id);
-                      navigate(`/details`);
-                    }}
-                    className="result-see-details-button"
-                  >
-                    See details
-                  </button>
-                </div>
-              </div>
-              <hr />
-            </div>
-          ))}
-
+  return (
+    <div key={result.id || result.uuid}>
+      <div className="search-result-page-listed-results-container">
+        <div className="search-result-page-listed-results-container-result">
+          <img className="result-image" src={imageUrl} alt={title} />
+          <div className="title-and-badge-container" >
+          <h2 className="result-title">{title}</h2> <div  className={`${result.id ? "park-title-badge" : "unesco-title-badge"}`} ><span >{result.id ? "nat.park" : "unesco"}</span></div>
           </div>
+          <p className="result-address">{address || "Location unavailable"}</p>
+
+          <div className="map-link-website-link-and-heart-icon-container">
+            <div className="result-map">
+              {/* For UNESCO: you can generate Google Maps link from coordinates */}
+              {isPark ? (
+                <a href="#">
+                  <p>Show on map</p>
+                </a>
+              ) : result.coordinates ? (
+                <a
+                  href={`https://www.google.com/maps?q=${result.coordinates.lat},${result.coordinates.lon}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <p>Show on map</p>
+                </a>
+              ) : (
+                <p>Show on map</p>
+              )}
+            </div>
+
+            <div className="result-website">
+              <a
+                href={
+                  isPark
+                    ? result.url || "#"
+                    : `https://whc.unesco.org/en/list/${result.id_no || ""}`
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <p>Website</p>
+              </a>
+            </div>
+
+            <button className="result-add-to-favorite-button">
+              <img src={heartIconGreen} alt="Add to favorites" />
+            </button>
+          </div>
+
+          <button
+            onClick={() => {
+              setSelectedResultId(result.id || result.uuid);
+              navigate(`/details`);
+            }}
+            className="result-see-details-button"
+          >
+            See details
+          </button>
+        </div>
+      </div>
+      <hr />
+    </div>
+  );
+})}
+</div>
+
 
       {filteredFetchResults.length > currentIndex && 
         <button onClick={handleLoadMoreResultsButton} className="search-result-page-load-more-results-button" >
@@ -252,10 +327,6 @@ export default function SearchResultsPage() {
           <p>© {currentYear} Heritago | All rights reserved</p>
         </div>
       </footer>
-
-
-
-        
     </div>
   );
 }

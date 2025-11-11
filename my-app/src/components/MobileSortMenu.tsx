@@ -22,12 +22,6 @@ export default function MobileSortMenu({ onClose }: MobileSortMenuProps) {
           <ul className="sort-category">
             <li>
               <label>
-                <input type="checkbox" name="sort" value="rating" />
-                Rating / Reviews
-              </label>
-            </li>
-            <li>
-              <label>
                 <input type="checkbox" name="sort" value="largest" />
                 Size — Largest to Smallest
               </label>

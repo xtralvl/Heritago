@@ -637,6 +637,12 @@ hr {
     right: 12rem;
     z-index: 10000;
   }
+};
+
+.unesco-only-info-home-page {
+  font-size: 0.7rem;
+  color: $custom-dark-green;
+  opacity: 0.8;
 }
 
 // Shared hover animation for all top-row buttons (mobile + desktop)

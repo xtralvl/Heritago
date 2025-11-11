@@ -24,7 +24,6 @@ export default function DetailsPage() {
   const [selectedResultImages, setSelectedResultImages] = useState<any[]>([])
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-
   const { selectedResultId } = useContext(SelectedResultIdContext)!;
 
   useEffect(() => {

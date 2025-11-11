@@ -7,7 +7,6 @@ export async function fetchParks() {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     const data = await response.json();
-    console.log(data.data)
     return data.data; // array of parks
 
   } catch (error) {
