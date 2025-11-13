@@ -29,13 +29,28 @@
   display: none !important;
 }
 
-.details-page-container {
+.details-page-container,
+.loading-container {
   max-width: 1100px;
   margin: 0 auto;
   font-family: "Inter", sans-serif;
   padding: 1rem;
   color: $custom-dark-green;
   box-sizing: border-box;
+}
+
+.loading-container {
+  padding: 10rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  gap: 1rem;
+
+  img {
+    width: 10rem;
+  }
 }
 
 /* =========================
@@ -130,7 +145,7 @@
 
       h1 {
         font-size: 1.25rem;
-        margin: 0;
+        margin: 1rem 0 0 0 ;
         color: $custom-dark-green;
         line-height: 1.15;
         grid-row: 1;
@@ -269,6 +284,13 @@
     padding: 0.3rem 0.7rem;
     font-size: 0.8rem;
     display: inline-block;
+  }
+
+  button {
+    border: none;
+    text-decoration: underline;
+    color: $custom-dark-green;
+    background: none;
   }
 }
 

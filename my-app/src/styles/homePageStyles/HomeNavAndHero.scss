@@ -122,12 +122,14 @@ hr {
         }
       }
 
-      .museum-select-button {
+      .unesco-select-button {
         border-radius: 10px 0 0 10px;
+        border-right: none;
       }
 
       .both-select-button {
         border-radius: 0 10px 10px 0;
+        border-left: none;
       }
 
       button {

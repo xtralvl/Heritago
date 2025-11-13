@@ -64,6 +64,11 @@ export default function HomeBodyAndFooter() {
     );
   };
 
+  function slugify(name: string) {
+    return name.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
+  }
+
+
   // === FOOTER YEAR ===
   const currentYear = new Date().getFullYear();
 
@@ -94,6 +99,10 @@ export default function HomeBodyAndFooter() {
           {topDestinations.length > 0 && (
             <>
               <img
+                onClick={() => {
+                  const slug = slugify(topDestinations[currentIndex]?.fullName || topDestinations[currentIndex]?.name_en);
+                  navigate(`/details/${slug}`);
+                }}
                 src={
                   topDestinations[currentIndex]?.images?.[0]?.url ||
                   topDestinations[currentIndex]?.main_image_url.url

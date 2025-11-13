@@ -14,7 +14,6 @@ import { SearchedCountryOrStateContext } from "../../context/SearchedCountryOrSt
 import { SearchedDestinationTypeContext } from "../../context/SearchedDestinationTypeContext";
 
 export default function HomeNavAndHero() {
-
   type category = "National Park" | "UNESCO" | "Both";
 
   // ==============================
@@ -29,8 +28,10 @@ export default function HomeNavAndHero() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
 
-  const { searchedCountryOrState, setSearchedCountryOrState } = useContext(SearchedCountryOrStateContext)!;
-  const { searchedDestinationType, setSearchedDestinationType } = useContext(SearchedDestinationTypeContext)!;
+  const { searchedCountryOrState, setSearchedCountryOrState } =
+    useContext(SearchedCountryOrStateContext)!;
+  const { searchedDestinationType, setSearchedDestinationType } =
+    useContext(SearchedDestinationTypeContext)!;
 
   const navigate = useNavigate();
 
@@ -47,7 +48,6 @@ export default function HomeNavAndHero() {
   ];
 
   const isCountrySelectDisabled = searchedDestinationType === "UNESCO";
-
 
   const filteredCountries = Object.keys(northAmerica).filter((c) =>
     c.toLowerCase().includes(countrySearch.toLowerCase())
@@ -81,24 +81,21 @@ export default function HomeNavAndHero() {
   // HANDLERS
   // ==============================
   const handleSearchButton = () => {
-    // Check if a destination type is selected
     const hasDestination = Boolean(searchedDestinationType);
     setDestinationError(!hasDestination);
-  
-    // Check if country/state is required and valid
+
     const requiresCountry = searchedDestinationType !== "UNESCO";
     const hasValidCountry = searchedCountryOrState && searchedCountryOrState !== "Select Country/State";
-  
+
     setCountryOrStateError(requiresCountry && !hasValidCountry);
-  
-    // If everything is valid, navigate
+
     if (hasDestination && (searchedDestinationType === "UNESCO" || hasValidCountry)) {
       navigate("/search");
     }
   };
-    const handleDestinationCategory = (category: category) => {
-    setSearchedDestinationType(category); // update context
 
+  const handleDestinationCategory = (category: category) => {
+    setSearchedDestinationType(category);
   };
 
   // ==============================
@@ -106,16 +103,15 @@ export default function HomeNavAndHero() {
   // ==============================
   return (
     <div className="home-nav-and-hero-container">
-      {/* ==============================
-          TOP NAV BAR
-          ============================== */}
+      {/* TOP NAV BAR */}
       <div className="top-row-home-page">
         <img src={logo} alt="Heritago Logo" className="homepage-logo" />
 
-        {/* === MOBILE AND TAB === */}
+        {/* MOBILE AND TAB */}
         <div className="top-row-buttons-container-mobile">
           <button
             className="profile-button"
+            aria-label="Open Profile Menu"
             onClick={() => setIsLoginRegisterMenuOpen(true)}
           >
             <img src={profileIcon} alt="Show Profile" />
@@ -123,21 +119,24 @@ export default function HomeNavAndHero() {
           <button
             onClick={() => setIsMobileMenuOpen(true)}
             className="hamburger-button"
+            aria-label="Open Mobile Menu"
           >
             <img src={hamburgerIcon} alt="Show Menu" />
           </button>
         </div>
 
-        {/* === MOBILE MENU === */}
+        {/* MOBILE MENU */}
         {isMobileMenuOpen && <MobileMenu onClose={() => setIsMobileMenuOpen(false)} />}
 
-        {/* === LOGIN-REGISTER MENU === */}
+        {/* LOGIN-REGISTER MENU */}
         {isLoginRegisterMenuOpen && <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)} />}
 
-        {/* === DESKTOP === */}
+        {/* DESKTOP */}
         <div className="top-row-buttons-container-desktop">
           <div className="about-and-help-button-container-top">
-            <button onClick={() => navigate("about")} className="about-button-home-top">About</button>
+            <button onClick={() => navigate("about")} className="about-button-home-top">
+              About
+            </button>
             <button onClick={() => navigate("help")} className="help-button-home-top">
               Help
             </button>
@@ -156,14 +155,12 @@ export default function HomeNavAndHero() {
 
       <hr className="top-hr-line-home" />
 
-      {/* ==============================
-          HERO / SEARCH FORM
-          ============================== */}
+      {/* HERO / SEARCH FORM */}
       <div className="hero-form-container">
         <div className="hero-text-container">
           <div className="hero-text">
-            <h1>Explore the national parks and UNESCO World Heritage all over the world!</h1>
-            <p>See the details, reviews and insights for all.</p>
+            <h1>Explore national parks and UNESCO World Heritage sites around the world!</h1>
+            <p>Discover detailed insights, reviews, and information for every destination.</p>
           </div>
         </div>
 
@@ -171,15 +168,14 @@ export default function HomeNavAndHero() {
 
         <div className="form-outermost-container">
           <div
-            className={`hero-option-buttons ${
-              destinationError ? `home-page-form-error-button` : ""
-            }`}
+            className={`hero-option-buttons ${destinationError ? `home-page-form-error-button` : ""}`}
           >
             <button
-              className={`option-button ${
+              className={`option-button unesco-select-button ${
                 searchedDestinationType === "UNESCO" ? "selected" : ""
               }`}
               onClick={() => handleDestinationCategory("UNESCO")}
+              aria-pressed={searchedDestinationType === "UNESCO"}
             >
               <img src={museumIconBlack} alt="UNESCO Icon" />
               <p>UNESCO</p>
@@ -190,16 +186,18 @@ export default function HomeNavAndHero() {
                 searchedDestinationType === "National Park" ? "selected" : ""
               }`}
               onClick={() => handleDestinationCategory("National Park")}
+              aria-pressed={searchedDestinationType === "National Park"}
             >
               <img src={nationalParkIconBlack} alt="National Park Icon" />
               <p>National Parks</p>
             </button>
 
             <button
-              className={`option-button ${
+              className={`option-button both-select-button ${
                 searchedDestinationType === "Both" ? "selected" : ""
               }`}
               onClick={() => handleDestinationCategory("Both")}
+              aria-pressed={searchedDestinationType === "Both"}
             >
               <img src={bothIconBlack} alt="Both Icon" />
               <p>Both</p>
@@ -207,8 +205,11 @@ export default function HomeNavAndHero() {
           </div>
 
           {destinationError && (
-            <p className="home-page-first-error home-page-form-error-msg">
-              Choose a category.
+            <p
+              className="home-page-first-error home-page-form-error-msg"
+              id="destination-error"
+            >
+              Please choose a category.
             </p>
           )}
 
@@ -223,12 +224,14 @@ export default function HomeNavAndHero() {
               >
                 <label htmlFor="continent">Continent</label>
                 {continentOpen && (
-                  <ul className="custom-options">
+                  <ul className="custom-options" role="listbox" aria-label="Continents">
                     {continents.map((c) => {
                       const isDisabled = c !== "North America";
                       return (
                         <li
                           key={c}
+                          role="option"
+                          aria-selected={continent === c}
                           className={isDisabled ? "disabled" : ""}
                           onClick={() => {
                             if (isDisabled) return;
@@ -247,6 +250,9 @@ export default function HomeNavAndHero() {
                   className="custom-select"
                   role="button"
                   tabIndex={0}
+                  aria-haspopup="listbox"
+                  aria-expanded={continentOpen}
+                  aria-label={`Select continent, currently ${continent}`}
                   onClick={() => {
                     setContinentOpen((v) => !v);
                     setCountryOrStateOpen(false);
@@ -264,90 +270,104 @@ export default function HomeNavAndHero() {
               </div>
 
               {/* Country/State Select */}
-              {!isCountrySelectDisabled &&               <div
-              className={`country-or-state-select form-group custom-select-wrapper ${
-                countryOrStateError ? "country-or-state-error-state" : ""
-              } ${isCountrySelectDisabled ? "disabled-select" : ""}`}
-              ref={countryRef}
-            >
-              <label htmlFor="countryState">Country/State</label>
-              {countryOrStateOpen && !isCountrySelectDisabled && (
-                <ul className="custom-options">
-                  <li className="search-row">
-                    <input
-                      type="text"
-                      className="search-input"
-                      placeholder="Type to search..."
-                      value={countrySearch}
-                      onChange={(e) => setCountrySearch(e.target.value)}
-                      autoFocus
-                    />
-                  </li>
-                  {filteredCountries.length === 0 ? (
-                    <li className="no-results">No results</li>
-                  ) : (
-                    filteredCountries.map((c) => (
-                      <li
-                        key={c}
-                        onClick={() => {
-                          setSearchedCountryOrState(c);
-                          setCountryOrStateOpen(false);
-                          setCountrySearch("");
-                        }}
-                      >
-                        {c}
+              {!isCountrySelectDisabled && (
+                <div
+                  className={`country-or-state-select form-group custom-select-wrapper ${
+                    countryOrStateError ? "country-or-state-error-state" : ""
+                  } ${isCountrySelectDisabled ? "disabled-select" : ""}`}
+                  ref={countryRef}
+                >
+                  <label htmlFor="countryState">Country/State</label>
+                  {countryOrStateOpen && (
+                    <ul className="custom-options" role="listbox" aria-label="Countries or States">
+                      <li className="search-row">
+                        <input
+                          type="text"
+                          className="search-input"
+                          placeholder="Type to search..."
+                          value={countrySearch}
+                          onChange={(e) => setCountrySearch(e.target.value)}
+                          autoFocus
+                          aria-label="Search country or state"
+                        />
                       </li>
-                    ))
+                      {filteredCountries.length === 0 ? (
+                        <li className="no-results">No results</li>
+                      ) : (
+                        filteredCountries.map((c) => (
+                          <li
+                            key={c}
+                            role="option"
+                            aria-selected={searchedCountryOrState === c}
+                            onClick={() => {
+                              setSearchedCountryOrState(c);
+                              setCountryOrStateOpen(false);
+                              setCountrySearch("");
+                            }}
+                          >
+                            {c}
+                          </li>
+                        ))
+                      )}
+                    </ul>
                   )}
-                </ul>
+                  <div
+                    className="custom-select"
+                    role="button"
+                    tabIndex={0}
+                    aria-haspopup="listbox"
+                    aria-expanded={countryOrStateOpen}
+                    aria-label={`Select country or state, currently ${searchedCountryOrState || "none"}`}
+                    onClick={() => {
+                      if (isCountrySelectDisabled) return;
+                      setCountryOrStateOpen((v) => !v);
+                      setContinentOpen(false);
+                    }}
+                    onKeyDown={(e) => {
+                      if (isCountrySelectDisabled) return;
+                      if (e.key === "Enter" || e.key === " ") {
+                        setCountryOrStateOpen((v) => !v);
+                        e.preventDefault();
+                      }
+                    }}
+                  >
+                    <span>
+                      {isCountrySelectDisabled
+                        ? "Disabled for UNESCO"
+                        : searchedCountryOrState || "Select Country/State"}
+                    </span>
+                    <div className={`arrow ${countryOrStateOpen ? "open" : ""}`} />
+                  </div>
+                </div>
               )}
-              <div
-                className="custom-select"
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  if (isCountrySelectDisabled) return;
-                  setCountryOrStateOpen((v) => !v);
-                  setContinentOpen(false);
-                }}
-                onKeyDown={(e) => {
-                  if (isCountrySelectDisabled) return;
-                  if (e.key === "Enter" || e.key === " ") {
-                    setCountryOrStateOpen((v) => !v);
-                    e.preventDefault();
-                  }
-                }}
-              >
-                <span>
-                  {isCountrySelectDisabled
-                    ? "Disabled for UNESCO"
-                    : searchedCountryOrState || "Select Country/State"}
-                </span>
-                <div className={`arrow ${countryOrStateOpen ? "open" : ""}`} />
-              </div>
-              
-            </div> }
 
-            <span className="unesco-only-info-home-page" >
-              {isCountrySelectDisabled
-                ? "Currently, there’s no option to filter by state or country when UNESCO is the only category selected."
-                : ""}
-            </span>
+              <span className="unesco-only-info-home-page">
+                {isCountrySelectDisabled
+                  ? "Currently, there’s no option to filter by country or state when UNESCO is the only selected category."
+                  : ""}
+              </span>
 
-            <span className="unesco-only-info-home-page" >
-              {searchedDestinationType === "Both"
-                ? "Please note that we always list all UNESCO World Heritage sites of the continent, regardless of the country or state selected."
-                : ""}
-            </span>
+              <span className="unesco-only-info-home-page">
+                {searchedDestinationType === "Both"
+                  ? "Please note that we always list all UNESCO World Heritage sites of the continent, regardless of the country or state selected."
+                  : ""}
+              </span>
 
               {countryOrStateError && (
-                <p className="home-page-form-error-msg">Choose a Country/State.</p>
+                <p
+                  className="home-page-form-error-msg"
+                  id="country-error"
+                  aria-live="assertive"
+                >
+                  Please choose a country or state.
+                </p>
               )}
 
               <button
                 type="button"
                 className="search-button"
                 onClick={handleSearchButton}
+                aria-describedby={`${destinationError ? "destination-error" : ""} ${countryOrStateError ? "country-error" : ""}`.trim() || undefined}
               >
                 Search
               </button>
@@ -357,9 +377,7 @@ export default function HomeNavAndHero() {
       </div>
 
       <hr
-        className={`hr-below-form ${
-          continentOpen || countryOrStateOpen ? "hr-hide" : ""
-        }`}
+        className={`hr-below-form ${continentOpen || countryOrStateOpen ? "hr-hide" : ""}`}
       />
     </div>
   );

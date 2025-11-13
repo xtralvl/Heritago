@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import "../styles/DetailsPage.scss";
 import logo from "../assets/heritago-logo.png";
 import profileIcon from "../assets/profile-icon.svg";
@@ -6,17 +6,15 @@ import hamburgerIcon from "../assets/hamburger-icon.svg";
 import heartIcon from "../assets/heart-icon.svg";
 import previousIcon from "../assets/previous-icon.svg";
 import nextIcon from "../assets/next-icon.svg";
-import noImgPlaceholder from '../../src/assets/noImgPlaceholder.jpg'
+import noImgPlaceholder from "../../src/assets/noImgPlaceholder.jpg";
 import heritagoLogo from "../assets/heritago-logo.png";
 import MobileMenu from "../components/homePageComponents/MobileMenu";
 import LoginRegister from "../components/homePageComponents/LoginRegister";
 import Newsletter from "../components/homePageComponents/Newsletter";
-import { useNavigate } from "react-router-dom";
-import { SearchedDestinationTypeContext } from "../context/SearchedDestinationTypeContext";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchParks } from "../components/API/fetchParks";
 import { fetchUsaUnescos } from "../components/API/fetchUnescos";
 import BackButton from "../components/BackButton";
-import { useParams } from "react-router-dom";
 
 export default function DetailsPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -25,69 +23,70 @@ export default function DetailsPage() {
   const [selectedResultDetails, setSelectedResultDetails] = useState<any>(undefined);
   const [selectedResultImages, setSelectedResultImages] = useState<any[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isAllActivitiesOpen, setIsAllActivitiesOpen] = useState(false);
 
-  const { searchedDestinationType } = useContext(SearchedDestinationTypeContext)!;
+  const { destinationId } = useParams();
+  const navigate = useNavigate();
+  const currentYear = new Date().getFullYear();
 
   function slugify(name: string) {
     return name.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
   }
-  const {destinationId} = useParams();
 
-
-
+  // Load data on mount or when destinationId changes
   useEffect(() => {
     async function loadDetails() {
-      if (searchedDestinationType === "National Park") {
-        const allParks = await fetchParks();
-        const foundPark = allParks.find((p: any) => slugify(p.fullName) === destinationId);
-        setSelectedResultDetails(foundPark);
-        setSelectedResultImages(foundPark.images);
+      // Try National Parks
+      const allParks = await fetchParks();
+      const foundPark = allParks.find((p: any) => slugify(p.fullName) === destinationId);
 
-      } else if (searchedDestinationType === "UNESCO") {
-        const allUnescos = await fetchUsaUnescos();
-        const foundUnesco = allUnescos.find((u: any) => slugify(u.name_en) === destinationId);
+      if (foundPark) {
+        setSelectedResultDetails(foundPark);
+        setSelectedResultImages(foundPark.images || []);
+        return;
+      }
+
+      // Try UNESCOs
+      const allUnescos = await fetchUsaUnescos();
+      const foundUnesco = allUnescos.find((u: any) => slugify(u.name_en) === destinationId);
+
+      if (foundUnesco) {
         setSelectedResultDetails(foundUnesco);
-        // UNESCO images
         const imagesArray = foundUnesco.images_urls
           ? foundUnesco.images_urls.split(",").map((url: string) => ({ url }))
           : [{ url: foundUnesco.main_image_url?.url || noImgPlaceholder }];
         setSelectedResultImages(imagesArray);
+        return;
       }
+
+      // Not found
+      setSelectedResultDetails(null);
+      setSelectedResultImages([]);
     }
 
     loadDetails();
-  }, [destinationId, searchedDestinationType]);
-
-  const navigate = useNavigate();
-  const date = new Date();
-  const currentYear = date.getFullYear();
+  }, [destinationId]);
 
   if (!selectedResultDetails) {
     return (
-      <div className="details-page-container">
+      <div className="loading-container">
         <p>Loading details…</p>
+        <img src={heritagoLogo} alt="" />
       </div>
     );
-  };
+  }
 
-  // ====== Helper variables for conditional rendering ======
-  const isPark = searchedDestinationType === "National Park";
-
+  // Determine type
+  const isPark = selectedResultDetails?.fullName !== undefined;
+  const isUnesco = selectedResultDetails?.name_en !== undefined;
 
   return (
     <div className="details-page-container">
-      {/* ==============================
-          HEADER / NAVIGATION
-      ============================== */}
+      {/* HEADER / NAV */}
       <div className="top-row-details-page">
-        <img
-          onClick={() => navigate(-2)}
-          src={logo}
-          alt="Heritago Logo"
-          className="homepage-logo"
-        />
+        <img onClick={() => navigate(-2)} src={logo} alt="Heritago Logo" className="homepage-logo" />
 
-        {/* === MOBILE & TABLET === */}
+        {/* MOBILE & TABLET */}
         <div className="top-row-buttons-container-mobile">
           <button
             className="profile-button"
@@ -96,22 +95,15 @@ export default function DetailsPage() {
           >
             <img src={profileIcon} alt="Profile" />
           </button>
-          <button
-            onClick={() => setIsMobileMenuOpen(true)}
-            className="hamburger-button"
-            aria-label="Open menu"
-          >
+          <button onClick={() => setIsMobileMenuOpen(true)} className="hamburger-button" aria-label="Open menu">
             <img src={hamburgerIcon} alt="Menu" />
           </button>
         </div>
 
-        {/* === MOBILE MENU === */}
         {isMobileMenuOpen && <MobileMenu onClose={() => setIsMobileMenuOpen(false)} />}
-
-        {/* === LOGIN REGISTER === */}
         {isLoginRegisterMenuOpen && <LoginRegister onClose={() => setIsLoginRegisterMenuOpen(false)} />}
 
-        {/* === DESKTOP === */}
+        {/* DESKTOP */}
         <div className="top-row-buttons-container-desktop-details-page">
           <div className="about-and-help-button-container-top">
             <button className="about-button-home-top" onClick={() => navigate("/about")}>About</button>
@@ -128,31 +120,31 @@ export default function DetailsPage() {
 
       <hr className="desktop-hr-details-page" />
 
-      {/* ==============================
-          MAIN CONTENT
-      ============================== */}
+      {/* MAIN CONTENT */}
       <div className="details-page-content">
-        {/* BACK BUTTON */}
         <BackButton />
 
         <div className="details-page-title-container">
           <div className="details-page-title-and-paragraph">
-            <h1>{isPark ? selectedResultDetails.fullName : selectedResultDetails.name_en}</h1>
+            <h1>{isPark ? selectedResultDetails.fullName : isUnesco ? selectedResultDetails.name_en : "Unknown"}</h1>
+
             <p>
               {isPark
-                ? `${selectedResultDetails.addresses[0]?.line1}, ${selectedResultDetails.addresses[0]?.city}, ${selectedResultDetails.addresses[0]?.stateCode} ${selectedResultDetails.addresses[0]?.postalCode}`
-                : `Located in: ${selectedResultDetails.states_names.join(", ")}`}
+                ? `${selectedResultDetails.addresses?.[0]?.line1 ?? ""}, ${selectedResultDetails.addresses?.[0]?.city ?? ""}, ${selectedResultDetails.addresses?.[0]?.stateCode ?? ""} ${selectedResultDetails.addresses?.[0]?.postalCode ?? ""}`
+                : isUnesco
+                ? `Located in: ${selectedResultDetails.states_names?.join(", ") ?? ""}`
+                : ""}
               <span></span>
-              <button className="details-page-show-on-map-button show-map-button-desktop">
-                Show on map
-              </button>
+              <button className="details-page-show-on-map-button show-map-button-desktop">Show on map</button>
             </p>
           </div>
 
           <div className="details-page-buttons-container">
-            {isPark && selectedResultDetails.url && (
+            {selectedResultDetails.url && (
               <button className="details-see-their-website-container">
-                <a href={selectedResultDetails.url}>See their website</a>
+                <a href={selectedResultDetails.url} target="_blank" rel="noopener noreferrer">
+                  See their website
+                </a>
               </button>
             )}
           </div>
@@ -166,16 +158,12 @@ export default function DetailsPage() {
           </button>
         </div>
 
-        {/* === IMAGE CAROUSEL === */}
+        {/* IMAGE CAROUSEL */}
         <div className="details-page-carousel-container-mobile">
           <button
             className="details-page-carousel-left-button"
             aria-label="Previous image"
-            onClick={() =>
-              setCurrentImageIndex((prev) =>
-                prev === 0 ? selectedResultImages.length - 1 : prev - 1
-              )
-            }
+            onClick={() => setCurrentImageIndex(prev => (prev === 0 ? selectedResultImages.length - 1 : prev - 1))}
           >
             <img src={previousIcon} alt="Previous image" />
           </button>
@@ -188,11 +176,7 @@ export default function DetailsPage() {
           <button
             className="details-page-carousel-right-button"
             aria-label="Next image"
-            onClick={() =>
-              setCurrentImageIndex((prev) =>
-                prev === selectedResultImages.length - 1 ? 0 : prev + 1
-              )
-            }
+            onClick={() => setCurrentImageIndex(prev => (prev === selectedResultImages.length - 1 ? 0 : prev + 1))}
           >
             <img src={nextIcon} alt="Next image" />
           </button>
@@ -202,22 +186,28 @@ export default function DetailsPage() {
           </div>
         </div>
 
-        {/* === ABOUT SECTION === */}
+        {/* ABOUT */}
         <section className="details-page-about-container">
           <h3>About:</h3>
-          <p>{isPark ? selectedResultDetails.description : selectedResultDetails.description_en}</p>
+          <p>{isPark ? selectedResultDetails.description : isUnesco ? selectedResultDetails.description_en : "No description available."}</p>
         </section>
 
-        {/* === ACTIVITIES / FACILITIES === */}
-        {isPark && selectedResultDetails.activities && (
+        {/* ACTIVITIES / FACILITIES */}
+        {isPark && selectedResultDetails.activities?.length > 0 && (
           <>
             <hr />
             <section className="details-page-facilities-section">
               <h2>Facilities & Services</h2>
               <div className="details-page-facilities-and-services-container">
-                {selectedResultDetails.activities.map((act: any, i: number) => (
+                {!isAllActivitiesOpen && selectedResultDetails.activities.slice(0, 10).map((act: any, i: number) => (
                   <span key={i}>{act.name}</span>
                 ))}
+
+                {isAllActivitiesOpen && selectedResultDetails.activities.map((act: any, i: number) => (
+                  <span key={i}>{act.name}</span>
+                ))}
+
+              {!isAllActivitiesOpen && <button onClick={() => setIsAllActivitiesOpen(true)} >Show all activities</button>}
               </div>
             </section>
           </>
@@ -225,12 +215,10 @@ export default function DetailsPage() {
 
         <hr />
 
-        {/* === NEWSLETTER SECTION === */}
+        {/* NEWSLETTER */}
         <section className="details-page-newsletter-container">
           <p>
-            Sign up to our monthly newsletter to get the best suggestions and
-            have first-hand information on the latest innovations of the
-            webpage.
+            Sign up to our monthly newsletter to get the best suggestions and have first-hand information on the latest innovations of the webpage.
           </p>
           <button className="newsletter-open-btn" onClick={() => setIsNewsletterModalOpen(true)}>
             Sign up to the newsletter here.
@@ -240,9 +228,7 @@ export default function DetailsPage() {
 
       {isNewsletterModalOpen && <Newsletter onClose={() => setIsNewsletterModalOpen(false)} />}
 
-      {/* ==============================
-          FOOTER
-      ============================== */}
+      {/* FOOTER */}
       <footer className="details-page-footer">
         <div className="navigation-section-details-bottom">
           <button onClick={() => navigate("/about")} className="language-button-home-bottom">About</button>
