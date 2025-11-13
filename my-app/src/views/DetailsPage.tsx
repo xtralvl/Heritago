@@ -184,7 +184,11 @@ export default function DetailsPage() {
           <div className="details-page-carousel-pic-counter">
             {currentImageIndex + 1} / {selectedResultImages.length}
           </div>
+
+
         </div>
+
+
 
         {/* ABOUT */}
         <section className="details-page-about-container">

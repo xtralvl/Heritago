@@ -434,7 +434,12 @@ footer {
 /* =========================
    RESPONSIVE ADJUSTMENTS
    ========================= */
-@media (min-width: 600px) {
+@media (min-width: 570px) {
+
+  .details-page-container {
+
+    padding: 1rem 2rem;
+  }
   .top-row-details-page {
     height: 4.5rem;
 
@@ -449,20 +454,19 @@ footer {
   }
 
   .details-page-carousel-container-mobile {
+    width: 80%;
+    margin: 0 auto;
+
     button {
-      border: 1px solid $custom-dark-green !important;
       width: 2.5rem;
     }
 
     img {
-      width: 80% !important;
-      max-height: 10rem;
+      width: 100% !important;
+      height: 10rem;
     }
   }
 
-  .details-page-carousel-pic-counter {
-    right: 4.7rem !important;
-  }
 
   .details-page-title-container .details-page-add-to-favorite-button-mobile img {
     width: 1.8rem;
@@ -470,26 +474,31 @@ footer {
     margin-right: 7rem;
   }
 }
-
-@media (min-width: 750px) {
-  .details-page-carousel-pic-counter {
-    right: 5.5rem !important;
-  }
-}
-
-@media (min-width: 842px) {
-  .details-page-carousel-pic-counter {
-    right: 6rem !important;
-  }
-
   .details-page-facilities-section {
     margin-top: 2rem !important;
   }
-}
+
+  @media (min-width:705px) {
+
+    .details-page-carousel-container-mobile {
+  
+      button {
+        border: 1px solid $custom-dark-green !important;
+        width: 3rem;
+        height: 3rem;
+      }
+  
+    }
+    .details-page-carousel-pic-counter {
+      display: none;
+    }
+  }
+
 
 /* =========================
    DESKTOP LAYOUT
    ========================= */
+
 @media (min-width: 1024px) {
 
   .details-page-add-to-favorite-button-desktop {
@@ -660,3 +669,4 @@ html,
 body {
   overflow-x: hidden;
 }
+
