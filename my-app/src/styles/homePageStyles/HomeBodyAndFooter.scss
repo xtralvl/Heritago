@@ -28,7 +28,7 @@
 
   // ======== TRENDING DESTINATIONS CAROUSEL =========
   .trending-destinations-carousel-container {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     display: flex;
     align-items: center;
 
@@ -66,7 +66,7 @@
         align-items: center;
         color: $custom-dark-green;
         font-size: 0.8rem;
-        padding: 0rem 0.1rem;
+        padding: 0.2rem 0.1rem;
       }
     }
   }
@@ -148,12 +148,13 @@
   }
 
   // ======== NAVIGATION SECTION (BOTTOM) =========
+
   .navigation-section-home-bottom {
-    width: 100vw; // ensures full-width expansion
+    width: 100vw ; // ensures full-width expansion
     position: relative;
     left: 50%;
     right: 50%;
-    margin-left: -50vw; // expands beyond container padding
+    margin-left: -50vw !important; // expands beyond container padding
     margin-right: -50vw;
     margin-bottom: 2rem;
     background-color: $custom-dark-green;
@@ -161,6 +162,7 @@
     justify-content: center;
     gap: 2rem;
     height: 3rem !important;
+    
 
     button {
       background: none;

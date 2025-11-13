@@ -223,7 +223,9 @@ export default function HomeNavAndHero() {
             <div className="form-fields">
               {/* Continent Select */}
               <div
-                className="continent-select form-group custom-select-wrapper"
+                className={`continent-select form-group custom-select-wrapper ${
+                  countryOrStateError ? "country-or-state-error-state" : ""
+                } ${isCountrySelectDisabled ? "disabled-select" : ""}`}
                 ref={continentRef}
               >
                 <label htmlFor="continent">Continent</label>
@@ -363,7 +365,7 @@ export default function HomeNavAndHero() {
                   id="country-error"
                   aria-live="assertive"
                 >
-                  Please choose a country or state.
+                  {searchedDestinationType === "UNESCO" &&  "Please choose a continent."}
                 </p>
               )}
 

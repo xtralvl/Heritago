@@ -14,12 +14,12 @@
 }
 
 .mobile-hero-bg-wrapper h2 {
-  position: relative; // needed for z-index to work
-  z-index: 2;         // higher than the bg
-  color: white;       // just in case it's blending in
+  position: relative; 
+  z-index: 2;         
+  color: white;       
   text-align: center;
-  margin-top: 2rem;   // adjust as needed
-  font-size: 1.2rem;
+  margin: 3rem 0 2rem 0;   
+  font-size: 1.5rem;
 }
 
 .mobile-hero-overlay {
@@ -31,8 +31,6 @@
   background: rgba(0,0,0,0.65); // semi-transparent overlay
   z-index: 1; // below h2
 }
-
-
 
 .fade-in {
   opacity: 1;
@@ -67,6 +65,13 @@
   .fade-out {
     opacity: 0;
   }
+}
 
+@media (min-width: 715px) {
+
+  .mobile-hero-bg-wrapper h2 {
+    margin: 5rem 0 3rem 0;
+    font-size: 2rem;
+  }
   
 }

@@ -1,31 +1,59 @@
+import { useNavigate } from "react-router-dom";
 import '../../styles/homePageStyles/DesktopCarousel.scss';
 
-interface Park {
-  id: number;
-  fullName: string;
-  images: { url: string; altText?: string }[];
+interface Destination {
+  id?: number;
+  fullName?: string;
+  name_en?: string;
+  images?: { url: string; altText?: string }[];
+  main_image_url?: { url: string };
 }
 
 interface DesktopCarouselProps {
-  parks: Park[];
+  parks: Destination[];
   startIndex: number;
 }
 
 export default function DesktopCarousel({ parks, startIndex }: DesktopCarouselProps) {
-  const visibleParks = parks.slice(startIndex, startIndex + 3);
+  const navigate = useNavigate();
+
+  // slice 3 visible items, looping around
+  const visibleDestinations = Array.from({ length: 3 }, (_, i) =>
+    parks[(startIndex + i) % parks.length]
+  );
+
+  function slugify(name: string) {
+    return name.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
+  }
 
   return (
     <div className="carousel">
       <div className="carousel-track">
-        {visibleParks.map((park) => (
-          <div className="carousel-item" key={park.id}>
-            <img
-              src={park.images?.[0]?.url}
-              alt={park.images?.[0]?.altText || park.fullName}
-            />
-            <p>{park.fullName}</p>
-          </div>
-        ))}
+        {visibleDestinations.map((destination, index) => {
+          const imageUrl =
+            destination?.images?.[0]?.url || destination?.main_image_url?.url;
+          const altText =
+            destination?.images?.[0]?.altText ||
+            destination?.fullName ||
+            destination?.name_en ||
+            "Destination image";
+
+          const displayName = destination?.fullName || destination?.name_en;
+          const slug = slugify(displayName || "");
+
+          return (
+            <div
+              key={index}
+              className="carousel-item"
+              onClick={() => navigate(`/details/${slug}`)}
+              role="button"
+              tabIndex={0}
+            >
+              <img src={imageUrl} alt={altText} />
+              <p>{displayName}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
