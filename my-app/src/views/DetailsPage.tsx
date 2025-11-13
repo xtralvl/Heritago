@@ -134,8 +134,6 @@ export default function DetailsPage() {
                 : isUnesco
                 ? `Located in: ${selectedResultDetails.states_names?.join(", ") ?? ""}`
                 : ""}
-              <span></span>
-              <button className="details-page-show-on-map-button show-map-button-desktop">Show on map</button>
             </p>
           </div>
 
@@ -184,12 +182,44 @@ export default function DetailsPage() {
           <div className="details-page-carousel-pic-counter">
             {currentImageIndex + 1} / {selectedResultImages.length}
           </div>
-
-
         </div>
 
+        {/* DESKTOP IMAGES GRID */}
+        {/* DESKTOP IMAGES GRID */}
+        <div className="details-page-images-container-desktop">
+          <div className="row row-1">
+            <div className="big-img">
+              <img
+                src={selectedResultImages[0]?.url || noImgPlaceholder}
+                alt={selectedResultImages[0]?.altText || "Main image"}
+              />
+            </div>
 
+            <div className="small-imgs">
+              <img
+                src={selectedResultImages[1]?.url || noImgPlaceholder}
+                alt={selectedResultImages[1]?.altText || "Small image 1"}
+                onError={(e) => (e.currentTarget.src = noImgPlaceholder)}
+              />
+              <img
+                src={selectedResultImages[2]?.url || noImgPlaceholder}
+                alt={selectedResultImages[2]?.altText || "Small image 2"}
+                onError={(e) => (e.currentTarget.src = noImgPlaceholder)}
+              />
+            </div>
+          </div>
 
+          <div className="row row-2">
+            {selectedResultImages.slice(3, 7).map((img, index) => (
+              
+              <img
+                key={index}
+                src={img?.url || noImgPlaceholder}
+                alt={img?.altText || `Extra image ${index + 3}`}
+              />
+            ))}
+          </div>
+        </div>
         {/* ABOUT */}
         <section className="details-page-about-container">
           <h3>About:</h3>

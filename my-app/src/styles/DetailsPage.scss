@@ -416,7 +416,7 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 3rem;
 
     .logo-bottom {
       width: 40%;
@@ -596,73 +596,59 @@ footer {
 
   /* Desktop images grid */
   .details-page-images-container-desktop {
-    display: grid !important;
-    grid-template-columns: 1.4fr 1fr;
-    grid-template-rows: 1fr auto;
-    gap: 0.5rem;
-    align-items: stretch;
-    width: 100%;
-    margin-top: 1rem;
-  }
-
-  .details-page-images-desktop-first-row {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 0.5rem;
-    height: 60vh;
-    min-height: 300px;
-    max-height: 520px;
-  }
-
-  .details-page-images-desktop-first-row-first-column,
-  .details-page-images-desktop-first-row-second-column {
-    display: grid;
-    gap: 0.5rem;
-    align-items: stretch;
-  }
-
-  .img-wrap {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    border-radius: 8px;
-
-    img {
-      position: absolute;
-      inset: 0;
+    display: flex !important;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  
+    .row {
+      display: flex;
+      gap: 0.75rem;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    }
+  
+    .row-1 {
+      .big-img {
+        flex: 2; // larger left image
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 10px;
+        }
+      }
+  
+      .small-imgs {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+  
+        img {
+          width: 100%;
+          height: 100%;
+          flex: 1;
+          object-fit: cover;
+          border-radius: 10px;
+        }
+      }
+    }
+  
+    .row-2 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+  
+      img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
     }
   }
-
-  .details-page-images-desktop-first-row-second-column {
-    grid-template-rows: 1fr 1fr;
-  }
-
-  .details-page-images-desktop-second-row {
-    grid-column: 1 / 3;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-    height: 18vh;
-    min-height: 90px;
-  }
-
-  .details-page-images-desktop-second-row .img-wrap {
-    height: 100%;
-  }
-
-  .details-page-images-desktop-second-row .img-wrap img {
-    object-position: center;
-  }
 }
-
-/* =========================
+  /* =========================
    PREVENT HORIZONTAL SCROLL
    ========================= */
 html,

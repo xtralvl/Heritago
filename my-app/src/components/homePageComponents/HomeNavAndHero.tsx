@@ -12,7 +12,7 @@ import LoginRegister from "./LoginRegister";
 import { useNavigate } from "react-router-dom";
 import { SearchedCountryOrStateContext } from "../../context/SearchedCountryOrStateContext";
 import { SearchedDestinationTypeContext } from "../../context/SearchedDestinationTypeContext";
-import HeroCarousel from "./data/heroCarousel";
+import HeroCarousel from "./data/HeroCarousel";
 
 export default function HomeNavAndHero() {
   type category = "National Park" | "UNESCO" | "Both";
