@@ -18,7 +18,6 @@ import { SearchedDestinationTypeContext } from "../context/SearchedDestinationTy
 import { fetchParks } from "../components/API/fetchParks";
 import { fetchUsaUnescos } from "../components/API/fetchUnescos";
 import { northAmerica } from "../components/homePageComponents/data/Countries";
-import { SelectedResultIdContext } from "../context/SelectedResultIdContext";
 import BackButton from "../components/BackButton";
 
 export default function SearchResultsPage() {
@@ -89,9 +88,6 @@ export default function SearchResultsPage() {
   }, [searchedDestinationType, searchedCountryOrState]);
   
 
-  const parkContext = useContext(SelectedResultIdContext);
-  if (!parkContext) throw new Error("Must be used inside SelectedParkProvider");
-  const { setSelectedResultId } = parkContext;
 
   const handleLoadMoreResultsButton = () => {
     setCurrentIndex(prev => {
@@ -101,6 +97,11 @@ export default function SearchResultsPage() {
       : nextIndex;
     });
   };
+
+   function slugify(name: string) {
+    return name.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
+  }
+  
 
  
     // === DATE FOR FOOTER ===
@@ -280,11 +281,11 @@ export default function SearchResultsPage() {
           </div>
 
           <button
+          className="result-see-details-button"
             onClick={() => {
-              setSelectedResultId(result.id || result.uuid);
-              navigate(`/details`);
+              const slug = slugify(result.fullName || result.name_en);
+              navigate(`/details/${slug}`);
             }}
-            className="result-see-details-button"
           >
             See details
           </button>

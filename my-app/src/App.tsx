@@ -36,6 +36,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/search" element={<SearchResultsPage />} />
         <Route path="/details" element={<DetailsPage />} />
+        <Route path="/details/:destinationId" element={<DetailsPage />} />
 
         {/* My Account nested routes */}
         <Route path="/my-account" element={<MyAccountPage  />} />

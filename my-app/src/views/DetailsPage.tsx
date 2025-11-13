@@ -12,11 +12,11 @@ import MobileMenu from "../components/homePageComponents/MobileMenu";
 import LoginRegister from "../components/homePageComponents/LoginRegister";
 import Newsletter from "../components/homePageComponents/Newsletter";
 import { useNavigate } from "react-router-dom";
-import { SelectedResultIdContext } from "../context/SelectedResultIdContext";
 import { SearchedDestinationTypeContext } from "../context/SearchedDestinationTypeContext";
 import { fetchParks } from "../components/API/fetchParks";
 import { fetchUsaUnescos } from "../components/API/fetchUnescos";
 import BackButton from "../components/BackButton";
+import { useParams } from "react-router-dom";
 
 export default function DetailsPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -26,19 +26,26 @@ export default function DetailsPage() {
   const [selectedResultImages, setSelectedResultImages] = useState<any[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const { selectedResultId } = useContext(SelectedResultIdContext)!;
   const { searchedDestinationType } = useContext(SearchedDestinationTypeContext)!;
+
+  function slugify(name: string) {
+    return name.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
+  }
+  const {destinationId} = useParams();
+
+
 
   useEffect(() => {
     async function loadDetails() {
       if (searchedDestinationType === "National Park") {
         const allParks = await fetchParks();
-        const foundPark = allParks.find((p: any) => p.id === selectedResultId);
+        const foundPark = allParks.find((p: any) => slugify(p.fullName) === destinationId);
         setSelectedResultDetails(foundPark);
         setSelectedResultImages(foundPark.images);
+
       } else if (searchedDestinationType === "UNESCO") {
         const allUnescos = await fetchUsaUnescos();
-        const foundUnesco = allUnescos.find((u: any) => u.uuid === selectedResultId);
+        const foundUnesco = allUnescos.find((u: any) => slugify(u.name_en) === destinationId);
         setSelectedResultDetails(foundUnesco);
         // UNESCO images
         const imagesArray = foundUnesco.images_urls
@@ -49,7 +56,7 @@ export default function DetailsPage() {
     }
 
     loadDetails();
-  }, [selectedResultId, searchedDestinationType]);
+  }, [destinationId, searchedDestinationType]);
 
   const navigate = useNavigate();
   const date = new Date();
@@ -61,10 +68,11 @@ export default function DetailsPage() {
         <p>Loading details…</p>
       </div>
     );
-  }
+  };
 
   // ====== Helper variables for conditional rendering ======
   const isPark = searchedDestinationType === "National Park";
+
 
   return (
     <div className="details-page-container">
