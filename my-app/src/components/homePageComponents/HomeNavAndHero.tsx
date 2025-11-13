@@ -12,6 +12,7 @@ import LoginRegister from "./LoginRegister";
 import { useNavigate } from "react-router-dom";
 import { SearchedCountryOrStateContext } from "../../context/SearchedCountryOrStateContext";
 import { SearchedDestinationTypeContext } from "../../context/SearchedDestinationTypeContext";
+import HeroCarousel from "./data/heroCarousel";
 
 export default function HomeNavAndHero() {
   type category = "National Park" | "UNESCO" | "Both";
@@ -164,7 +165,10 @@ export default function HomeNavAndHero() {
           </div>
         </div>
 
-        <h2 className="mobile-hero-subheader">What would you like to visit?</h2>
+
+        <div className="mobile-hero-subheader">
+        <HeroCarousel />
+        </div>
 
         <div className="form-outermost-container">
           <div

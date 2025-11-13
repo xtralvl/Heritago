@@ -86,7 +86,7 @@ hr {
     }
 
     .mobile-hero-subheader {
-      font-size: 1.2rem;
+      font-size: 1rem;
       background-color: $custom-dark-green;
       color: white;
       text-align: center;
@@ -97,8 +97,11 @@ hr {
       transform: translateX(-50%);
       margin: 1rem 0 0;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      z-index: 0;
       font-weight: lighter;
+
+      h1 {
+        z-index: 10;
+      }
     }
 
     .hero-option-buttons {
