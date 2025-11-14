@@ -366,6 +366,9 @@ export default function HomeNavAndHero() {
                   aria-live="assertive"
                 >
                   {searchedDestinationType === "UNESCO" &&  "Please choose a continent."}
+                  {searchedDestinationType === "National Park" &&  "Please choose a continent and country/state."}
+                  {searchedDestinationType === "Both" &&  "Please choose a continent and country/state."}
+
                 </p>
               )}
 
@@ -378,6 +381,20 @@ export default function HomeNavAndHero() {
                 Search
               </button>
             </div>
+
+            {countryOrStateError && (
+                <p
+                  className="home-page-form-error-msg"
+                  id="country-error-desktop"
+                  aria-live="assertive"
+                >
+                  {searchedDestinationType === "UNESCO" &&  "Please choose a continent."}
+                  {searchedDestinationType === "National Park" &&  "Please choose a continent and country/state."}
+                  {searchedDestinationType === "Both" &&  "Please choose a continent and country/state."}
+
+                </p>
+              )}
+
           </div>
         </div>
       </div>

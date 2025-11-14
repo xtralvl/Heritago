@@ -52,13 +52,13 @@ hr {
         width: 2rem;
       }
     }
-  };
+  }
 
   .home-page-form-error-msg {
     text-align: center;
     color: red;
     font-weight: bold;
-  };
+  }
 
   .home-page-form-error-button {
     border: 2px solid red;
@@ -308,7 +308,7 @@ hr {
             color: #333;
 
             &:hover {
-              opacity: 0.6;
+              color: rgb(0, 144, 0);
             }
 
             &.disabled {
@@ -340,10 +340,11 @@ hr {
       .country-or-state-error-state {
 
         label {
-          color: red;
+          color: red !important;
         }
 
-      }
+      }      
+
 
       .search-button {
         border: none;
@@ -371,6 +372,7 @@ hr {
   }
 }
 
+
 // ===== TABLET ==== //
 
 @media (min-width: 600px) and (max-width: 1024px) {
@@ -397,11 +399,11 @@ hr {
     p {
       font-size: 1rem !important;
     }
-  };
+  }
   
   .mobile-hero-subheader {
     font-size: 1.6rem !important;
-  };
+  }
 
   .hero-option-buttons {
 
@@ -412,7 +414,7 @@ hr {
         height: 55% !important;
       }
     }
-  };
+  }
 
   .hero-location-form {
 
@@ -423,7 +425,7 @@ hr {
     label {
       font-size: 1.2rem !important;
     }
-  };
+  }
 
   .custom-select {
 
@@ -435,8 +437,8 @@ hr {
   
   .search-button {
     font-size: 1.3rem !important;
-  };
-};
+  }
+}
 
 // ===== DESKTOP ==== //
 @media (min-width: 1300px) {
@@ -446,6 +448,7 @@ hr {
   }
 
 }
+
 @media (min-width: 1024px) {
 
   // Make all main page sections have consistent side padding
@@ -518,7 +521,7 @@ hr {
     img {
       width: 2.2rem;
     }
-  };
+  }
 
   .top-hr-line-home {
     display: none;
@@ -554,12 +557,12 @@ hr {
 
   .mobile-hero-subheader {
     display: none;
-  };
+  }
 
   .form-outermost-container {
     position: relative;
     padding: 0 !important;
-  };
+  }
 
   .hero-option-buttons {
     justify-content: flex-start;
@@ -569,10 +572,11 @@ hr {
     .option-button {
       margin-bottom: 0 !important;
     }
-  };
+  }
 
   .hero-location-form {
     position: relative;
+    z-index: 20; // FIX
     
     .form-fields {
       padding: 1rem !important;
@@ -584,11 +588,11 @@ hr {
       margin-top: -1rem;
       
     }
-  };
+  }
 
   .form-heading {
     display: none;
-  };
+  }
 
   .hero-option-buttons {
     height: auto !important;
@@ -605,12 +609,12 @@ hr {
 
       }
     }
-  };
+  }
 
   label {
     color: white !important;
     margin-bottom: .2rem !important;
-  };
+  }
 
   .custom-select {
     width: 100%; 
@@ -640,7 +644,7 @@ hr {
     }
 
     
-  };
+  }
 
   .hr-below-form {
     display: none !important;
@@ -649,10 +653,18 @@ hr {
   .home-page-first-error {
     position: absolute;
     top: 1rem;
-    right: 12rem;
+    right: 7rem;
     z-index: 10000;
   }
-};
+}
+
+#country-error {
+  display: none !important;
+}
+
+#country-error-desktop {
+  display: block !important;
+}
 
 .unesco-only-info-home-page {
   font-size: 0.7rem;
