@@ -8,7 +8,7 @@ import filterIcon from '../assets/filter-icon.svg';
 import sortIcon from '../assets/sort-icon.svg';
 import heartIconGreen from '../assets/heart-icon.svg';
 import downIcon from '../../src/assets/down-icon.svg';
-
+import heritagoLogo from "../assets/heritago-logo.png";
 import MobileMenu from '../components/homePageComponents/MobileMenu';
 import LoginRegister from '../components/homePageComponents/LoginRegister';
 import MobileFilterMenu from "../components/MobileFilterMenu";
@@ -118,8 +118,11 @@ export default function SearchResultsPage() {
   // ==============================
   if (filteredFetchResults.length === 0) {
     return (
-      <div className="details-page-container">
-        <p>Loading results…</p>
+      <div className="loading-container">
+        {searchedDestinationType === "UNESCO" && <p>Loading UNESCO sites..</p>}
+        {searchedDestinationType === "National Park" && <p>Loading National Parks..</p>}
+        {searchedDestinationType === "Both" && <p>Loading UNESCO sites and National Parks..</p>}
+        <img src={heritagoLogo} alt="" />
       </div>
     );
   }
