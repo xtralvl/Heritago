@@ -19,6 +19,7 @@ import { fetchParks } from "../components/API/fetchParks";
 import { fetchUsaUnescos } from "../components/API/fetchUnescos";
 import { northAmerica } from "../components/homePageComponents/data/Countries";
 import BackButton from "../components/BackButton";
+import { FilterContext } from "../context/FilterContext";
 
 export default function SearchResultsPage() {
   // ==============================
@@ -31,6 +32,8 @@ export default function SearchResultsPage() {
   const [filteredFetchResults, setFilteredFetchResults] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(10);
 
+  // const { appliedFilter, setAppliedFilter } = useContext(FilterContext)!;
+
   const countryStateContext = useContext(SearchedCountryOrStateContext);
   if (!countryStateContext) {
     throw new Error("SearchedCountryOrStateContext must be used within SearchedCountryOrStateProvider");
@@ -42,6 +45,9 @@ export default function SearchResultsPage() {
     throw new Error("SearchedDestinationTypeContext must be used within SearchedDestinationTypeProvider");
   }
   const { searchedDestinationType } = destinationTypeContext;
+
+
+
 
   const navigate = useNavigate();
 
@@ -66,6 +72,7 @@ export default function SearchResultsPage() {
           park.states.split(",").includes(selectedAbbr)
         );
         setFilteredFetchResults(filteredParks);
+        console.log(filteredParks)
 
       } else if (searchedDestinationType === "Both") {
         const parkData = await fetchParks();
@@ -128,6 +135,9 @@ export default function SearchResultsPage() {
   }
 
   return (
+    <div>
+
+    
     <div className="search-results-page-container">
       {/* ==============================
           TOP NAV BAR
@@ -179,6 +189,7 @@ export default function SearchResultsPage() {
           </div>
         </div>
       </div>
+      <hr />
 
       {/* ==============================
           HERO / SEARCH FORM
@@ -195,6 +206,10 @@ export default function SearchResultsPage() {
 
       <div className="search-result-page-inner-container">
         <BackButton />
+
+        <div className="applied-filter-and-sort-options-container">
+          
+        </div>
 
         <div className="search-result-page-filtering-options-container">
           <button onClick={() => setIsMobileFilterMenuOpen(true)}>
@@ -273,7 +288,7 @@ export default function SearchResultsPage() {
               </button>
             </div>
 
-  {/* Row 5: See Details button */}
+          {/* Row 5: See Details button */}
           <button
             className="result-see-details-button"
             onClick={() => {
@@ -309,8 +324,9 @@ export default function SearchResultsPage() {
         </a>
       </div>
 
+    </div>
       {/* === FOOTER === */}
-      <footer>
+        <footer>
         <div className="navigation-section-home-bottom">
           <button onClick={() => navigate("about")} className="language-button-home-bottom">About</button>
           <button onClick={() => navigate("help")}>Help</button>
@@ -321,6 +337,7 @@ export default function SearchResultsPage() {
           <p>© {currentYear} Heritago | All rights reserved</p>
         </div>
       </footer>
+
     </div>
   );
 }

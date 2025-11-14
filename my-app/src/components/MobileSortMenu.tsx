@@ -1,10 +1,28 @@
 import '../styles/MobileSortMenu.scss';
+// import { useContext, useEffect } from 'react';
+// import { SortContext } from '../context/SortContext';
+
 
 interface MobileSortMenuProps {
   onClose: () => void;
 }
 
 export default function MobileSortMenu({ onClose }: MobileSortMenuProps) {
+
+    // const { appliedSort, setAppliedSort } = useContext(SortContext)!;
+
+    // const handleClick = (e: any) => {
+    //   const checkbox = e.target as HTMLInputElement;
+    //   const currentValue = checkbox.value;
+  
+    //   if (appliedSort.includes(currentValue)) {
+    //     setAppliedSort(prev => prev.filter(p => p !== currentValue));
+    //   } else {
+    //     setAppliedSort(prev => [...prev, currentValue]);
+    //   }
+    // };
+  
+  
   return (
     <div className="mobile-sort-overlay" onClick={onClose}>
       <div

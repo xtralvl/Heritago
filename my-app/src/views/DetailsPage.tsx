@@ -81,6 +81,7 @@ export default function DetailsPage() {
   const isUnesco = selectedResultDetails?.name_en !== undefined;
 
   return (
+    <div>
     <div className="details-page-container">
       {/* HEADER / NAV */}
       <div className="top-row-details-page">
@@ -262,6 +263,7 @@ export default function DetailsPage() {
 
       {isNewsletterModalOpen && <Newsletter onClose={() => setIsNewsletterModalOpen(false)} />}
 
+    </div>
       {/* FOOTER */}
       <footer className="details-page-footer">
         <div className="navigation-section-details-bottom">
@@ -274,6 +276,7 @@ export default function DetailsPage() {
           <p>© {currentYear} Heritago | All rights reserved</p>
         </div>
       </footer>
+
     </div>
   );
 }
