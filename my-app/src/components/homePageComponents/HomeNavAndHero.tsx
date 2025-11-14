@@ -17,9 +17,9 @@ import HeroCarousel from "./data/HeroCarousel";
 export default function HomeNavAndHero() {
   type category = "National Park" | "UNESCO" | "Both";
 
-  // ==============================
+  // =============================
   // STATE HOOKS
-  // ==============================
+  // =============================
   const [continentOpen, setContinentOpen] = useState(false);
   const [countryOrStateOpen, setCountryOrStateOpen] = useState(false);
   const [continent, setContinent] = useState("North America");
