@@ -11,6 +11,8 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   text-align: left;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+
 
   .customization-preferences-page-container-logo {
     width: 5rem;
@@ -53,8 +55,8 @@
         color: $custom-dark-green;
       }
 
-      span {
-        color: #555;
+      p {
+        color: $custom-dark-green;
         font-size: 0.85rem;
       }
     }
@@ -86,8 +88,8 @@
         margin: 0;
       }
 
-      span {
-        color: #555;
+      p {
+        color: $custom-dark-green;
         font-size: 0.9rem;
       }
     }
@@ -118,9 +120,13 @@
       }
     }
   }
+}
 
-
-  &.dark-theme {
-    background-color: $custom-dark-green;
-  }
+@media (min-width: 650px) {
+  .customization-preferences-page-container {
+    padding: 1rem;
+    max-width: 700px;
+    margin: 3rem auto;
+    
+    }
 }

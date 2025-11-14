@@ -17,6 +17,8 @@ body.my-account-menu-open {
   transition: transform 0.3s ease-in-out;
   overflow-y: auto;
   overscroll-behavior: contain;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+
 
   /* === CLOSE ICON === */
   .my-account-menu-close-icon {
@@ -60,7 +62,7 @@ body.my-account-menu-open {
   .my-account-menu-section {
     background-color: $custom-dark-green;
     color: white;
-    padding: .6rem .5rem;
+    padding: 0.8rem .6rem;
     border-radius: 10px;
 
     h2 {
@@ -74,11 +76,12 @@ body.my-account-menu-open {
         flex-direction: row;
         background-color: white;
         color: $custom-dark-green;
-        width: 95%;
+        width: 100%;
         margin: 1rem auto;
         border-radius: 5px;
         padding: .6rem .5rem;
         justify-content: space-between;
+        margin: 1.2rem 0;
 
         img {
           width: .7rem;

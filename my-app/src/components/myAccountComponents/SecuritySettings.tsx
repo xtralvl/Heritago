@@ -60,7 +60,7 @@ export default function SecuritySettings() {
       <div className="security-settings-page-header-section">
         <div className="security-settings-texts">
           <h1>Security settings</h1>
-          <span>Change your password or delete your account.</span>
+          <p>Change your password or delete your account.</p>
         </div>
       </div>
 
@@ -70,7 +70,7 @@ export default function SecuritySettings() {
       <section className="security-settings-section">
         <div className="security-settings-info">
           <h2>Password</h2>
-          <span>Change your password regularly to keep your account safe.</span>
+          <p>Change your password regularly to keep your account safe.</p>
         </div>
         <button className="security-settings-edit-button" onClick={() => setIsPasswordEditOpen(true)}>
           Change
@@ -106,7 +106,7 @@ export default function SecuritySettings() {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
 
-            {passwordError && <span className="modal-error-msg">{passwordError}</span>}
+            {passwordError && <p className="modal-error-msg">{passwordError}</p>}
 
             <div className="modal-buttons">
               <button className="cancel-btn" onClick={() => setIsPasswordEditOpen(false)}>Cancel</button>
@@ -122,7 +122,7 @@ export default function SecuritySettings() {
       <section className="security-settings-section">
         <div className="security-settings-info">
           <h2>Delete account</h2>
-          <span>Once you delete your account, all your data will be permanently removed.</span>
+          <p>Once you delete your account, all your data will be permanently removed.</p>
         </div>
         <button className="security-settings-delete-button" onClick={() => setIsDeleteModalOpen(true)}>
           Delete

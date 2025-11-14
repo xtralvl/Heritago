@@ -16,6 +16,9 @@ export default function PersonalDetails() {
   // === MODALS ===
   const [isNameEditOpen, setIsNameEditOpen] = useState(false);
   const [isEmailEditOpen, setIsEmailEditOpen] = useState(false);
+  const [isImagePreviewOpen, setIsImagePreviewOpen] = useState(false);
+  const [tempImageUrl, setTempImageUrl] = useState<string | null>(null);
+
 
   const [isEmailVerified, _setIsEmailVerified] = useState(false);
 
@@ -37,15 +40,17 @@ export default function PersonalDetails() {
     const file = event.target.files?.[0];
     if (file) {
       const newPicUrl = URL.createObjectURL(file);
-      setProfileImage(newPicUrl);
+      setTempImageUrl(newPicUrl); // temporary for preview
+      setIsImagePreviewOpen(true); // open preview modal
     }
   }
-
+  
   // === PREVENT SCROLL WHEN MODAL OPEN ===
   useEffect(() => {
-    document.body.style.overflow = isNameEditOpen || isEmailEditOpen ? 'hidden' : '';
-  }, [isNameEditOpen, isEmailEditOpen]);
-
+    document.body.style.overflow =
+      isNameEditOpen || isEmailEditOpen || isImagePreviewOpen ? "hidden" : "";
+  }, [isNameEditOpen, isEmailEditOpen, isImagePreviewOpen]);
+  
   // === HANDLE SAVE ===
   const handleNameChange = () => {
     const firstEmpty = tempFirstName.trim() === "";
@@ -82,7 +87,7 @@ export default function PersonalDetails() {
       <div className="personal-details-page-header-section">
         <div className="personal-details-texts">
           <h1>Personal details</h1>
-          <span>Update your info and find out how it’s used.</span>
+          <p>Update your info and find out how it’s used.</p>
         </div>
         <div className="personal-details-page-prof-pic-container" onClick={() => fileInputRef.current?.click()}>
           <img src={profileImage} alt="Profile" className="personal-details-page-prof-pic" />
@@ -97,7 +102,7 @@ export default function PersonalDetails() {
       <section className="personal-details-page-name-section">
         <div className="personal-details-info">
           <h2>Name</h2>
-          <span>{firstName} {lastName}</span>
+          <p>{firstName} {lastName}</p>
         </div>
         <button
           onClick={() => {
@@ -110,6 +115,49 @@ export default function PersonalDetails() {
           Edit
         </button>
       </section>
+
+      {isImagePreviewOpen && tempImageUrl && (
+          <div className="modal-overlay">
+            <div className="editing-modal" style={{ height: "60vh" }}>
+              <h3>Preview Profile Image</h3>
+              <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <img
+                  src={tempImageUrl}
+                  alt="Preview"
+                  style={{
+                    maxHeight: "100%",
+                    maxWidth: "100%",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+
+              <div className="modal-buttons">
+                <button
+                  className="cancel-btn"
+                  onClick={() => {
+                    setIsImagePreviewOpen(false);
+                    setTempImageUrl(null);
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="save-btn"
+                  onClick={() => {
+                    setProfileImage(tempImageUrl);
+                    setIsImagePreviewOpen(false);
+                    setTempImageUrl(null);
+                  }}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
 
       {isNameEditOpen && (
         <div className="modal-overlay">
@@ -124,7 +172,7 @@ export default function PersonalDetails() {
               onChange={(e) => { setTempFirstName(e.target.value); if (e.target.value.trim() !== "") setIsFirstNameError(false); }}
               className={`${isFirstNameError ? "first-name-error-input" : ""}`}
             />
-            {isFirstNameError && <span className='name-editing-error-msg'>Required field</span>}
+            {isFirstNameError && <p className='name-editing-error-msg'>Required field</p>}
 
             <label htmlFor="last-name">Last Name(s)<span>*</span></label>
             <input
@@ -134,7 +182,7 @@ export default function PersonalDetails() {
               onChange={(e) => { setTempLastName(e.target.value); if (e.target.value.trim() !== "") setIsLastNameError(false); }}
               className={`${isLastNameError ? "last-name-error-input" : ""}`}
             />
-            {isLastNameError && <span className='name-editing-error-msg'>Required field</span>}
+            {isLastNameError && <p className='name-editing-error-msg'>Required field</p>}
 
             <div className="modal-buttons">
               <button className="cancel-btn" onClick={() => setIsNameEditOpen(false)}>Cancel</button>
@@ -151,7 +199,7 @@ export default function PersonalDetails() {
         <div className="personal-details-email-info">
           <h2>E-mail address</h2>
           <div className="email-top-row">
-            <span className="personal-details-page-email-section-email-address">{email}</span>
+            <p className="personal-details-page-email-section-email-address">{email}</p>
             <span className={`personal-details-verified ${isEmailVerified ? "" : "not-verified-email"}`}>
               {isEmailVerified ? "Verified" : "Not verified"}
             </span>
@@ -173,7 +221,7 @@ export default function PersonalDetails() {
               onChange={(e) => { setTempEmail(e.target.value); if (e.target.value.trim() !== "") setIsEmailError(false); }}
               className={`${isEmailError ? "last-name-error-input" : ""}`}
             />
-            {isEmailError && <span className='name-editing-error-msg'>Required field</span>}
+            {isEmailError && <p className='name-editing-error-msg'>Required field</p>}
 
             <p className="email-info-text">
               We’ll send a verification link to your new email address — check your inbox.

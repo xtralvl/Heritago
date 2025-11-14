@@ -73,8 +73,8 @@
         margin-bottom: 0.4rem;
         color: $custom-dark-green;
       }
-      span {
-        color: #555;
+      p {
+        color: $custom-dark-green;
         font-size: 0.85rem;
       }
     }
@@ -135,7 +135,7 @@
       }
 
       span {
-        color: #555;
+        color: $custom-dark-green;
         font-size: 0.9rem;
       }
     }
@@ -162,11 +162,13 @@
     align-items: flex-start;
     flex-direction: row;
 
+
     .personal-details-email-info {
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
+
 
       h2 {
         font-size: 1rem;
@@ -179,10 +181,11 @@
         justify-content: flex-start;
         align-items: center;
         gap: 1rem;
+        
 
         span {
           font-size: 0.9rem;
-          color: #555;
+          color: $custom-dark-green;
         }
 
         .personal-details-verified {
@@ -200,7 +203,7 @@
       }
 
       p {
-        color: #555;
+        color: $custom-dark-green;
         font-size: 0.85rem;
         line-height: 1.3;
       }
@@ -248,7 +251,7 @@
 
   label {
     font-size: 0.9rem;
-    color: #444;
+    color: $custom-dark-green !important;
     margin-top: 0.4rem;
   }
 
@@ -270,7 +273,7 @@
 
   .email-info-text {
     font-size: 0.85rem;
-    color: #555;
+    color: $custom-dark-green;
     line-height: 1.4;
     margin-top: -0.2rem;
   }
@@ -354,4 +357,13 @@
     opacity: 1;
   }
 }
+}
+
+@media (min-width: 650px) {
+  .personal-details-page-container {
+    padding: 1rem;
+    max-width: 700px;
+    margin: 3rem auto;
+    
+    }
 }

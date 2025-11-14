@@ -1,10 +1,14 @@
 @use '../colors.scss' as *;
 
 .saved-destinations-page-container {
+  inset: 0;
+  height: 100vh;
   padding: 1rem !important;
   max-width: 700px;
   margin: 0 auto;
   font-family: 'Inter', sans-serif;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+
 
   .saved-destinations-page-container-logo {
     width: 5rem !important;
@@ -149,6 +153,13 @@
       transition: all 0.3s ease;
       background: white;
 
+      .destination-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+  
+      }
+
       &:hover {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         transform: translateY(-2px);
@@ -167,11 +178,14 @@
           margin: 0;
           font-size: 1rem;
           color: $custom-dark-green;
+          margin: 0;
         }
 
         span {
           font-size: 0.8rem;
           color: #666;
+          margin: 0;
+
         }
       }
     }
@@ -197,4 +211,13 @@
       }
     }
   }
+}
+
+@media (min-width: 650px) {
+  .saved-destinations-page-container {
+    padding: 1rem;
+    max-width: 700px;
+    margin: 3rem auto;
+    
+    }
 }

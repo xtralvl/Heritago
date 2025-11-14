@@ -29,7 +29,7 @@ export default function CustomizationPreferences() {
             <div className="customization-preferences-page-header-section">
                 <div className="customization-preferences-texts">
                     <h1>Customization preferences</h1>
-                    <span>Personalize your account to meet your needs.</span>
+                    <p>Personalize your account to meet your needs.</p>
                 </div>
             </div>
 
@@ -39,7 +39,7 @@ export default function CustomizationPreferences() {
             <section className="customization-preferences-section">
                 <div className="customization-preferences-info">
                     <h2>Font size</h2>
-                    <span>Adjust the font size for better readability.</span>
+                    <p>Adjust the font size for better readability.</p>
                 </div>
                 <div className="customization-preferences-buttons">
                     <button

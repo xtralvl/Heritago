@@ -6,13 +6,22 @@ import bothIconBlack from "../../assets/both-icon-black.svg";
 import "../../styles/myAccountPageStyles/SavedDestinations.scss";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../BackButton";
+import mockPic from '../../assets/yosemite-national-park-river-forest-autumn-scenery-5120x2880-3967.jpg'
 
 // Dummy data for destinations
 const destinations = [
-  { id: 1, name: "Yellowstone", type: "National Park", img: "https://via.placeholder.com/150" },
-  { id: 2, name: "Louvre", type: "Museum", img: "https://via.placeholder.com/150" },
-  { id: 3, name: "Grand Canyon", type: "National Park", img: "https://via.placeholder.com/150" },
-  { id: 4, name: "Metropolitan Museum", type: "Museum", img: "https://via.placeholder.com/150" },
+  { id: 1, name: "Yellowstone", type: "UNESCO", img: mockPic },
+  { id: 1, name: "Yellowstone", type: "National Park", img: mockPic },
+  { id: 1, name: "Yellowstone", type: "National Park", img: mockPic },
+  { id: 1, name: "Yellowstone", type: "National Park", img: mockPic },
+  { id: 1, name: "Yellowstone", type: "National Park", img: mockPic },
+  { id: 1, name: "Yellowstone", type: "National Park", img: mockPic },
+  { id: 1, name: "Yellowstone", type: "National Park", img: mockPic },
+  { id: 1, name: "Yellowstone", type: "National Park", img: mockPic },
+  { id: 1, name: "Yellowstone", type: "National Park", img: mockPic },
+  { id: 1, name: "Yellowstone", type: "National Park", img: mockPic },
+
+
 ];
 
 
@@ -20,7 +29,7 @@ export default function SavedDestinations() {
 
     const navigate = useNavigate();
 
-    const [filter, setFilter] = useState<"Both" | "National Park" | "Museum">("Both");
+    const [filter, setFilter] = useState<"Both" | "National Park" | "UNESCO">("Both");
 
     const filteredDestinations = destinations.filter(dest => 
         filter === "Both" ? true : dest.type === filter
@@ -55,11 +64,11 @@ export default function SavedDestinations() {
                 <span>Type</span>
                 <div className="hero-option-buttons">
                     <button
-                        className={`option-button ${filter === "Museum" ? "selected" : ""}`}
-                        onClick={() => setFilter("Museum")}
+                        className={`option-button ${filter === "UNESCO" ? "selected" : ""}`}
+                        onClick={() => setFilter("UNESCO")}
                     >
                         <img src={museumIconBlack} alt="Museum" />
-                        <p>Museums</p>
+                        <p>UNESCOs</p>
                     </button>
 
                     <button
