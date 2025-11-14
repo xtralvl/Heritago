@@ -123,9 +123,6 @@
       cursor: pointer;
       transition: background 0.2s ease;
 
-      &:hover {
-        background: darken($custom-dark-green, 8%);
-      }
     }
   }
 }
