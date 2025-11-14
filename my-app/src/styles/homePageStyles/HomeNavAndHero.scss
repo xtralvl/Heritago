@@ -641,6 +641,9 @@ hr {
 
     &:hover {
       transform: translateY(50%) scale(1.05);
+      color: white !important;
+      background-color: $custom-dark-green !important;
+      border: 2px solid white !important;
     }
 
     

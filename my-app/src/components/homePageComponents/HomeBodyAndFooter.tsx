@@ -73,6 +73,9 @@ export default function HomeBodyAndFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
+    <div>
+
+    
     <div className="home-body-container">
       {/* === HEADER === */}
       <div className="home-body-header-and-paragraph-container">
@@ -207,6 +210,7 @@ export default function HomeBodyAndFooter() {
         <Newsletter onClose={() => setIsNewsletterModalOpen(false)} />
       )}
 
+    </div>
       {/* === FOOTER === */}
       <footer>
         <div className="navigation-section-home-bottom">
@@ -219,6 +223,7 @@ export default function HomeBodyAndFooter() {
           <p>© {currentYear} Heritago | All rights reserved</p>
         </div>
       </footer>
+      
     </div>
   );
 }
