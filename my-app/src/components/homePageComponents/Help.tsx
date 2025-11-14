@@ -44,9 +44,8 @@ export default function Help() {
         <h2>Contact support</h2>
         <p>
           Still need help? Our support team is here to assist you.  
-          Reach out and we’ll get back to you shortly.
+          Reach us at <a href="mailto:contact@heritago.com">contact@heritago.com</a>.
         </p>
-        <button className="help-contact-button">Contact us</button>
       </section>
     </div>
   );

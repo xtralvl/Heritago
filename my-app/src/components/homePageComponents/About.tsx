@@ -29,7 +29,7 @@ export default function About() {
         <p>
           Heritago was created to make exploring and preserving cultural heritage
           easier and more engaging. We connect users with thousands of historical
-          landmarks, parks, and museums through a modern and user-friendly platform.
+          landmarks and parks through a modern and user-friendly platform.
         </p>
       </section>
 
