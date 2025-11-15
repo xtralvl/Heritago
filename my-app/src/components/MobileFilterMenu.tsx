@@ -1,6 +1,7 @@
 import { FilterContext } from '../context/FilterContext';
 import '../styles/MobileFilterMenu.scss';
 import { useContext, useEffect, useState } from 'react';
+import infoIcon from '../assets/info-icon.svg'
 
 interface MobileFilterMenuProps {
   onClose: () => void;
@@ -75,7 +76,10 @@ export default function MobileFilterMenu({ onClose }: MobileFilterMenuProps) {
           <h2>Filters</h2>
           <button className="close-filter-button" onClick={handleClose}>✕</button>
         </div>
-        <p>Currently, filtering options work on National Parks only.</p>
+        <div className='filter-no-results-mobile-filter-menu'>
+          <img src={infoIcon} alt="" />
+          <p>Currently, filtering options are available for — and will be applied to — National Parks only.</p>  
+        </div>
 
         {/* FILTER SECTIONS */}
         <div className="filter-sections">
