@@ -11,7 +11,6 @@ export default function MobileSortMenu({ onClose }: MobileSortMenuProps) {
 
     const { appliedSort, setAppliedSort } = useContext(SortContext)!;
     const [temporarySort, setTemporarySort] = useState<string | undefined>(appliedSort);
-    const [sortedResults, setSortedResults] = useState([]);
 
     const handleClick = (e: any) => {
     const checkbox = e.target as HTMLInputElement;
