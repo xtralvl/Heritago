@@ -75,6 +75,7 @@ export default function MobileFilterMenu({ onClose }: MobileFilterMenuProps) {
           <h2>Filters</h2>
           <button className="close-filter-button" onClick={handleClose}>✕</button>
         </div>
+        <p>Currently, filtering options work on National Parks only.</p>
 
         {/* FILTER SECTIONS */}
         <div className="filter-sections">

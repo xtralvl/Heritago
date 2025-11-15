@@ -238,7 +238,13 @@ export default function SearchResultsPage() {
 
         {/* ========== RESULTS ========== */}
         <div className="search-results-container">
-        {finalResults.slice(0, currentIndex).map((result: any) => {
+        {finalResults.length === 0 &&
+        <div className="filter-no-results">
+        <p>No results.</p>
+        <p>Currently, filtering options are available for National Parks only.</p>  
+  
+        </div>}
+        {finalResults.length !== 0 && finalResults.slice(0, currentIndex).map((result: any) => {
           const isPark = searchedDestinationType === "National Park" || result.fullName;
           const imageUrl = isPark
             ? result.images?.[0]?.url

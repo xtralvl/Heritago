@@ -312,6 +312,16 @@ hr {
   }
 }
 
+.filter-no-results {
+  p {
+    font-size: 1.2rem !important;
+    color: $custom-dark-green;
+    font-weight: bold;
+    padding: 1rem;
+  
+  }
+}
+
 
 .search-result-page-load-more-results-button {
   margin: 1rem auto 2rem auto;
