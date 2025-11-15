@@ -32,8 +32,6 @@ export default function SearchResultsPage() {
   const [filteredFetchResults, setFilteredFetchResults] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(10);
 
-  // const { appliedFilter, setAppliedFilter } = useContext(FilterContext)!;
-
   const countryStateContext = useContext(SearchedCountryOrStateContext);
   if (!countryStateContext) {
     throw new Error("SearchedCountryOrStateContext must be used within SearchedCountryOrStateProvider");
@@ -45,9 +43,7 @@ export default function SearchResultsPage() {
     throw new Error("SearchedDestinationTypeContext must be used within SearchedDestinationTypeProvider");
   }
   const { searchedDestinationType } = destinationTypeContext;
-
-
-
+  const { appliedFilter } = useContext(FilterContext)!;
 
   const navigate = useNavigate();
 
@@ -90,11 +86,13 @@ export default function SearchResultsPage() {
         }
 
         setFilteredFetchResults(combinedResults);
+        console.log(combinedResults)
       }
     }
 
     loadFilteredFetchResults();
   }, [searchedDestinationType, searchedCountryOrState]);
+
 
   // ==============================
   // LOAD MORE RESULTS
@@ -129,15 +127,28 @@ export default function SearchResultsPage() {
         {searchedDestinationType === "UNESCO" && <p>Loading UNESCO sites..</p>}
         {searchedDestinationType === "National Park" && <p>Loading National Parks..</p>}
         {searchedDestinationType === "Both" && <p>Loading UNESCO sites and National Parks..</p>}
-        <img src={heritagoLogo} alt="" />
+        <img src={heritagoLogo} alt="Heritago Logo" />
       </div>
     );
   }
 
+  const finalResults =
+  appliedFilter.length === 0
+    ? filteredFetchResults
+    : filteredFetchResults.filter(result => {
+        // Only parks have activities → UNESCO items must be kept always
+        if (!result.activities) return false;
+
+        // result.activities = [{ name: "Hiking" }, ...]
+        // appliedFilter = ["Hiking", "Camping"]
+        return result.activities.some((activity: any) =>
+          appliedFilter.includes(activity.name)
+        );
+      });
+
   return (
     <div>
-
-    
+      
     <div className="search-results-page-container">
       {/* ==============================
           TOP NAV BAR
@@ -227,7 +238,7 @@ export default function SearchResultsPage() {
 
         {/* ========== RESULTS ========== */}
         <div className="search-results-container">
-        {filteredFetchResults.slice(0, currentIndex).map((result: any) => {
+        {finalResults.slice(0, currentIndex).map((result: any) => {
           const isPark = searchedDestinationType === "National Park" || result.fullName;
           const imageUrl = isPark
             ? result.images?.[0]?.url
@@ -239,6 +250,7 @@ export default function SearchResultsPage() {
               } ${result.addresses?.[0]?.postalCode || ""}`
             : `${result.iso_codes || ""}`;
 
+        {/* ============ CARDS ============ */}
           return (
             <div key={result.id || result.uuid}>
               <div className="search-result-page-listed-results-container">

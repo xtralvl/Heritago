@@ -24,22 +24,52 @@ export default function MobileFilterMenu({ onClose }: MobileFilterMenuProps) {
   const handleApplyFilterButton = () => {
     setAppliedFilter(temporaryFilter);
     onClose();
-  }
+  };
 
   const handleClose = () => {
     setTemporaryFilter([]); // reset temp
     onClose();
-  }
+  };
 
   useEffect(() => {
     console.log('Applied filter:', appliedFilter);
     console.log('Temporary filter:', temporaryFilter);
   }, [appliedFilter, temporaryFilter]);
 
+  // Values EXACTLY as they appear in the API
+  const activitiesBlocks = [
+    [
+      { value: "Food", label: "Food" },
+      { value: "Shopping", label: "Shopping" }
+    ],
+    [
+      { value: "Guided Tours", label: "Guided Tours" },
+      { value: "Junior Ranger Program", label: "Junior Ranger Program" }
+    ],
+    [
+      { value: "Arts and Crafts", label: "Arts and Crafts" }
+    ],
+    [
+      { value: "Scenic Driving", label: "Scenic Driving" },
+      { value: "Stargazing", label: "Stargazing" },
+      { value: "Wildlife Watching", label: "Wildlife Watching" }
+    ],
+    [
+      { value: "Camping", label: "Camping" },
+      { value: "Hiking", label: "Hiking" },
+      { value: "Auto and ATV", label: "Auto and ATV" }
+    ],
+    [
+      { value: "Road Biking", label: "Road Biking" },
+      { value: "Mountain Biking", label: "Mountain Biking" },
+      { value: "Horseback Riding", label: "Horseback Riding" }
+    ]
+  ];
+
   return (
     <div className="mobile-filter-overlay">
       <div className="mobile-filter-menu" onClick={(e) => e.stopPropagation()}>
-        
+
         {/* HEADER */}
         <div className="filter-header">
           <h2>Filters</h2>
@@ -51,65 +81,21 @@ export default function MobileFilterMenu({ onClose }: MobileFilterMenuProps) {
           <div className="filter-category">
             <h3>Activities</h3>
 
-            <div className="filter-block">
-              <label>
-                <input type="checkbox" value="food" checked={temporaryFilter.includes("food")} onChange={handleClick}/> Food
-              </label>
-              <label>
-                <input type="checkbox" value="shopping" checked={temporaryFilter.includes("shopping")} onChange={handleClick}/> Shopping
-              </label>
-            </div>
-
-            <div className="filter-block">
-              <label>
-                <input type="checkbox" value="guided tours" checked={temporaryFilter.includes("guided tours")} onChange={handleClick}/> Guided Tours
-              </label>
-              <label>
-                <input type="checkbox" value="junior-ranger-program" checked={temporaryFilter.includes("junior-ranger-program")} onChange={handleClick}/> Junior Ranger Program
-              </label>
-            </div>
-
-            <div className="filter-block">
-              <label>
-                <input type="checkbox" value="arts-and-crafts" checked={temporaryFilter.includes("arts-and-crafts")} onChange={handleClick}/> Arts and Crafts
-              </label>
-            </div>
-
-            <div className="filter-block">
-              <label>
-                <input type="checkbox" value="scenic-driving" checked={temporaryFilter.includes("scenic-driving")} onChange={handleClick}/> Scenic Driving
-              </label>
-              <label>
-                <input type="checkbox" value="stargazing" checked={temporaryFilter.includes("stargazing")} onChange={handleClick}/> Stargazing
-              </label>
-              <label>
-                <input type="checkbox" value="wildlife-watching" checked={temporaryFilter.includes("wildlife-watching")} onChange={handleClick}/> Wildlife Watching
-              </label>
-            </div>
-
-            <div className="filter-block">
-              <label>
-                <input type="checkbox" value="camping" checked={temporaryFilter.includes("camping")} onChange={handleClick}/> Camping
-              </label>
-              <label>
-                <input type="checkbox" value="hiking" checked={temporaryFilter.includes("hiking")} onChange={handleClick}/> Hiking
-              </label>
-              <label>
-                <input type="checkbox" value="auto-and-atv" checked={temporaryFilter.includes("auto-and-atv")} onChange={handleClick}/> Auto and ATV
-              </label>
-            </div>
-
-            <div className="filter-block">
-              <label>
-                <input type="checkbox" value="road-biking" checked={temporaryFilter.includes("road-biking")} onChange={handleClick}/> Road Biking
-              </label>
-              <label>
-                <input type="checkbox" value="mountain-biking" checked={temporaryFilter.includes("mountain-biking")} onChange={handleClick}/> Mountain Biking
-              </label>
-              <label>
-                <input type="checkbox" value="horseback-riding" checked={temporaryFilter.includes("horseback-riding")} onChange={handleClick}/> Horseback Riding
-              </label>
-            </div>
+            {activitiesBlocks.map((block, index) => (
+              <div className="filter-block" key={index}>
+                {block.map(activity => (
+                  <label key={activity.value}>
+                    <input
+                      type="checkbox"
+                      value={activity.value}
+                      checked={temporaryFilter.includes(activity.value)}
+                      onChange={handleClick}
+                    />
+                    {activity.label}
+                  </label>
+                ))}
+              </div>
+            ))}
 
           </div>
         </div>
