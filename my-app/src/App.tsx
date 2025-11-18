@@ -35,6 +35,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/search" element={<SearchResultsPage />} />
+        <Route path="/search/:searchedDestinationType/:searchedCountryOrState" element={<SearchResultsPage />} />
         <Route path="/details" element={<DetailsPage />} />
         <Route path="/details/:destinationId" element={<DetailsPage />} />
 

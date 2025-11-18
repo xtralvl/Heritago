@@ -85,7 +85,7 @@ export default function DetailsPage() {
     <div className="details-page-container">
       {/* HEADER / NAV */}
       <div className="top-row-details-page">
-        <img onClick={() => navigate(-2)} src={logo} alt="Heritago Logo" className="homepage-logo" />
+        <img onClick={() => navigate("/")} src={logo} alt="Heritago Logo" className="homepage-logo" />
 
         {/* MOBILE & TABLET */}
         <div className="top-row-buttons-container-mobile">

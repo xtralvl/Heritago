@@ -91,7 +91,7 @@ export default function HomeNavAndHero() {
     setCountryOrStateError(requiresCountry && !hasValidCountry);
 
     if (hasDestination && (searchedDestinationType === "UNESCO" || hasValidCountry)) {
-      navigate("/search");
+      navigate(`/search/${searchedDestinationType}/${searchedCountryOrState}`);
     }
   };
 
