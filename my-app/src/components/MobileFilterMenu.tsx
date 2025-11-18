@@ -68,7 +68,7 @@ export default function MobileFilterMenu({ onClose }: MobileFilterMenuProps) {
   ];
 
   return (
-    <div className="mobile-filter-overlay">
+    <div className="mobile-filter-overlay" onClick={onClose}>
       <div className="mobile-filter-menu" onClick={(e) => e.stopPropagation()}>
 
         {/* HEADER */}
