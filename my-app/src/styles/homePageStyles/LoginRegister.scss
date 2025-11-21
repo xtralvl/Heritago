@@ -104,7 +104,7 @@
       border-radius: 5px;
       padding: 0.7rem;
       font-size: 1rem;
-      cursor: pointer;
+      cursor: pointer !important;
       transition: 0.3s ease all;
       width: 100%;
 
@@ -159,69 +159,20 @@
   }
 }
 
-/* ======================================
-   VERIFICATION MODE (Code Input Screen)
-====================================== */
-.verification-screen {
-  animation: fadeIn 0.35s ease;
-
-  p {
-    font-size: 0.95rem;
-    color: rgba(0, 0, 0, 0.65);
-    margin-bottom: 1rem;
-    line-height: 1.4;
-  }
-
-  strong {
-    color: $custom-dark-green;
-  }
-
-  input {
-    width: 80%;
-    margin: 0 auto;
-    padding: 0.8rem 1rem;
-    border: 2px solid $custom-dark-green;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    text-align: center;
-    letter-spacing: 2px;
-    font-weight: 600;
-
-    &:focus {
-      outline: none;
-      border-color: darken($custom-dark-green, 8%);
-      box-shadow: 0 0 0 3px rgba($custom-dark-green, 0.25);
-    }
-  }
-
-  .auth-submit-btn {
-    margin-top: 1.2rem;
-    font-size: 1.05rem;
-    padding: 0.85rem;
-    border-radius: 8px;
-    background-color: $custom-dark-green;
-    color: white;
-    transition: 0.3s ease;
-    width: 80%;
-    margin-inline: auto;
-
-    &:hover {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-  }
-
-  .resend-code {
-    margin-top: 1rem;
-    font-size: 0.85rem;
-    color: $custom-dark-green;
-    cursor: pointer;
+.resend-verification-email-container {
+  button {
     border: none;
     background: none;
-    transition: 0.2s ease;
+    color: $custom-dark-green;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: 0.3s ease;
 
     &:hover {
-      opacity: 0.6;
+      scale: (1.1);
+      opacity: 0.8;
     }
   }
 }

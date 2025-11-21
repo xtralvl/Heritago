@@ -110,7 +110,7 @@ export default function HomeNavAndHero() {
   }
 
   const handleMobileLoginButton = () => {
-    isLoggedIn ? navigate("/my-account") : setIsLoginRegisterMenuOpen(true);
+    isLoggedIn ? navigate("/my-account") : setIsMobileMenuOpen(true);
   };
   
   // ==============================
