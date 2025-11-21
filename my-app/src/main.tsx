@@ -8,10 +8,12 @@ import SearchedCountryOrStateProvider from './context/SearchedCountryOrStateCont
 import SearchedDestinationTypeProvider from './context/SearchedDestinationTypeContext.tsx';
 import FilterProvider from './context/FilterContext.tsx';
 import SortProvider from './context/SortContext.tsx';
+import IsLoggedInProvider from './context/IsLoggedInContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+    <IsLoggedInProvider>
       <SearchedCountryOrStateProvider>
         <SearchedDestinationTypeProvider>
           <FontSizeProvider>
@@ -23,6 +25,7 @@ createRoot(document.getElementById('root')!).render(
           </FontSizeProvider>
         </SearchedDestinationTypeProvider>
       </SearchedCountryOrStateProvider>
+      </IsLoggedInProvider>
     </BrowserRouter>
   </StrictMode>
 );

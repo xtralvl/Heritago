@@ -12,6 +12,7 @@ import LoginRegister from "./LoginRegister";
 import { useNavigate } from "react-router-dom";
 import { SearchedCountryOrStateContext } from "../../context/SearchedCountryOrStateContext";
 import { SearchedDestinationTypeContext } from "../../context/SearchedDestinationTypeContext";
+import { IsLoggedInContext } from "../../context/IsLoggedInContext";
 import HeroCarousel from "./data/HeroCarousel";
 
 export default function HomeNavAndHero() {
@@ -29,11 +30,11 @@ export default function HomeNavAndHero() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginRegisterMenuOpen, setIsLoginRegisterMenuOpen] = useState(false);
 
-  const { searchedCountryOrState, setSearchedCountryOrState } =
-    useContext(SearchedCountryOrStateContext)!;
-  const { searchedDestinationType, setSearchedDestinationType } =
-    useContext(SearchedDestinationTypeContext)!;
+  const { searchedCountryOrState, setSearchedCountryOrState } = useContext(SearchedCountryOrStateContext)!;
+  const { searchedDestinationType, setSearchedDestinationType } = useContext(SearchedDestinationTypeContext)!;
 
+  const { isLoggedIn, setIsLoggedIn } = useContext(IsLoggedInContext)!;
+    
   const navigate = useNavigate();
 
   // ==============================
@@ -99,6 +100,19 @@ export default function HomeNavAndHero() {
     setSearchedDestinationType(category);
   };
 
+  const handleDesktopLoginButton = () => {
+    if (!isLoggedIn) {
+      setIsLoginRegisterMenuOpen(true); // open modal
+    } else {
+      // user is logged in → logout
+      setIsLoggedIn(false);
+    }
+  }
+
+  const handleMobileLoginButton = () => {
+    isLoggedIn ? navigate("/my-account") : setIsLoginRegisterMenuOpen(true);
+  };
+  
   // ==============================
   // RENDER
   // ==============================
@@ -113,7 +127,7 @@ export default function HomeNavAndHero() {
           <button
             className="profile-button"
             aria-label="Open Profile Menu"
-            onClick={() => setIsLoginRegisterMenuOpen(true)}
+            onClick={handleMobileLoginButton}
           >
             <img src={profileIcon} alt="Show Profile" />
           </button>
@@ -146,9 +160,9 @@ export default function HomeNavAndHero() {
           <div className="sign-up-and-log-in-button-container-top">
             <button
               className="sign-up-button"
-              onClick={() => setIsLoginRegisterMenuOpen(true)}
+              onClick={handleDesktopLoginButton}
             >
-              <strong>Login</strong>
+              <strong>{isLoggedIn ? "Log out" : "Login"}</strong>
             </button>
           </div>
         </div>

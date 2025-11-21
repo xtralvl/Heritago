@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import closeIcon from "../../assets/close-icon.svg";
 import "../../styles/homePageStyles/LoginRegister.scss";
-import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/firebase";
 import {createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword} from "firebase/auth";
+import { IsLoggedInContext } from "../../context/IsLoggedInContext";
 
 interface LoginRegisterProps {
   onClose: () => void;
@@ -17,9 +17,7 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
   const [name, setName] = useState("");
 
   const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState<"error" | "success" | "">("");
-
-  const navigate = useNavigate();
+  const [messageType, setMessageType] = useState<"error" | "success" | "logged-in" | "">("");
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -28,6 +26,8 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
     };
   }, []);
 
+  const { setIsLoggedIn } = useContext(IsLoggedInContext)!;
+  
   // -----------------------------
   // REGISTER
   // -----------------------------
@@ -44,7 +44,7 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
       const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
       await sendEmailVerification(userCredentials.user);
 
-      setMessage("Account created! Please verify your email in order to being able to log in.");
+      setMessage("Account created! We've just sent you an e-mail! Please verify your email in order to being able to log in.");
       setMessageType("success");
 
     } catch (error: any) {
@@ -66,16 +66,20 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
 
     try {
       const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+
       if (!userCredentials.user.emailVerified) {
         setMessage("Your e-mail has been not verified yet. Please check your e-mail and click the verification link.");
         setMessageType("error")
         return;
       };
       
-      setMessage("");
-      setMessageType("");
+      setIsLoggedIn(true);
+      setMessage("You are logged in!")
+      setMessageType("success");
 
-      navigate("/my-account");
+      setInterval(() => {
+        onClose()
+      }, 2200);
       
     } catch (error: any) {
       if (error.code === "auth/invalid-credential") {

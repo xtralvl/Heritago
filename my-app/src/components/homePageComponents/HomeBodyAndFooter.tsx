@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import leftIcon from "../../assets/left-icon-green.svg";
 import rightIcon from "../../assets/right-icon-green.svg";
 import "../../styles/homePageStyles/HomeBodyAndFooter.scss";
@@ -12,6 +12,7 @@ import DesktopCarousel from "./DesktopCarousel";
 import { fetchTopSixParks } from "../API/fetchParks";
 import { fetchTopUnescos } from "../API/fetchUnescos";
 import Newsletter from "./Newsletter";
+import { IsLoggedInContext } from "../../context/IsLoggedInContext";
 
 export default function HomeBodyAndFooter() {
   const navigate = useNavigate();
@@ -48,6 +49,8 @@ export default function HomeBodyAndFooter() {
       setTopDestinations([...topSixNationalParks, ...topSixUnescos]);
     }
   }, [topSixNationalParks, topSixUnescos]);
+
+  const { isLoggedIn } = useContext(IsLoggedInContext)!;
 
   // === CAROUSEL NAVIGATION ===
   const handlePrev = () => {
@@ -180,6 +183,7 @@ export default function HomeBodyAndFooter() {
       <hr />
 
       {/* === SIGN-IN SECTION === */}
+      {!isLoggedIn &&
       <div className="sign-up-log-in-section-home-container">
         <h4>Login to access additional features</h4>
         <p>
@@ -189,9 +193,10 @@ export default function HomeBodyAndFooter() {
           <strong>Login</strong>
         </button>
       </div>
+      }
 
-      <hr />
-
+      {!isLoggedIn && <hr />}
+      
       {/* === NEWSLETTER === */}
       <div className="newsletter-section-home-container">
         <p>

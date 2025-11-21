@@ -2,8 +2,9 @@ import closeIcon from '../../src/assets/close-icon.svg';
 import '../styles/myAccountPageStyles/MyAccountPage.scss';
 import profilePicPlaceholder from "../assets/prof-pic-placeholder.svg"
 import rightArrow from "../assets/right-arrow.svg"
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IsLoggedInContext } from '../context/IsLoggedInContext';
 
 export default function MyAccountPage() {
 
@@ -11,10 +12,13 @@ export default function MyAccountPage() {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
+    setIsLoggedIn(false);
     setIsSignOutOpen(false);
     navigate(-1);
-  }
+  };
 
+  const { setIsLoggedIn } = useContext(IsLoggedInContext)!;
+  
   return (
     <div className="my-account-menu-container">
       {/* Close icon */}
