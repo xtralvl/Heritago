@@ -9,13 +9,12 @@ import { getStorage } from "firebase/storage";
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDc7sLKzhOSdW_Iqs9DYVxR-ZBJ4eqz6Ek",
-  authDomain: "heritago-66a32.firebaseapp.com",
-  projectId: "heritago-66a32",
-  storageBucket: "heritago-66a32.firebasestorage.app",
-  messagingSenderId: "341319340410",
-  appId: "1:341319340410:web:db6bc91982cf65920506c3",
-  measurementId: "G-GTH860KKML"
+  apiKey: "AIzaSyCwh5-QEeWjPlC6Z-_5l-wEOjW2jZ_CHMg",
+  authDomain: "heritagoo.firebaseapp.com",
+  projectId: "heritagoo",
+  storageBucket: "heritagoo.firebasestorage.app",
+  messagingSenderId: "1078603779952",
+  appId: "1:1078603779952:web:70c286a3383397216d89b5"
 };
 
 // Initialize Firebase

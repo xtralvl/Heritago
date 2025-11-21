@@ -129,6 +129,8 @@ const handleResendEmailButton = async () => {
   }
 
   try {
+    await currentUser.reload();
+    
     await sendEmailVerification(currentUser);
     setMessage("We sent you a new verification email. Please check your inbox.");
     setMessageType("success");
@@ -137,6 +139,9 @@ const handleResendEmailButton = async () => {
     setShowModal(true);
   } catch (error: any) {
     console.error(error);
+    if (error.code === "auth/too-many-requests") {
+      setMessage("Too many requests. Try again later.")
+    }
     setMessage("Failed to resend verification email. Try again later.");
     setMessageType("error");
     setShowModal(true);
