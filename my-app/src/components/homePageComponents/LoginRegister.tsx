@@ -3,10 +3,7 @@ import closeIcon from "../../assets/close-icon.svg";
 import "../../styles/homePageStyles/LoginRegister.scss";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/firebase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import {createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword} from "firebase/auth";
 
 interface LoginRegisterProps {
   onClose: () => void;
@@ -44,10 +41,12 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(userCredentials.user);
 
-      setMessage("Sign up successful! Account created!");
+      setMessage("Account created! Please verify your email in order to being able to log in.");
       setMessageType("success");
+
     } catch (error: any) {
       if (error.code === "auth/email-already-in-use") {
         setMessage("E-mail address is already registered. Please log in.");
@@ -66,11 +65,18 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
     e.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+      if (!userCredentials.user.emailVerified) {
+        setMessage("Your e-mail has been not verified yet. Please check your e-mail and click the verification link.");
+        setMessageType("error")
+        return;
+      };
+      
       setMessage("");
       setMessageType("");
 
       navigate("/my-account");
+      
     } catch (error: any) {
       if (error.code === "auth/invalid-credential") {
         setMessage(
