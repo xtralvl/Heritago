@@ -29,7 +29,7 @@ export default function PersonalDetails() {
   const [email, setEmail] = useState("youremail@domain.com");
   const [tempEmail, setTempEmail] = useState("");
   const [isEmailError, setIsEmailError] = useState(false);
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [isEmailVerified, _setIsEmailVerified] = useState(false);
 
   // === LOAD USER DATA ON AUTH CHANGE ===
   useEffect(() => {
