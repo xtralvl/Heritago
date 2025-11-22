@@ -68,7 +68,7 @@ export default function MyAccountPage() {
         <img className='my-account-menu-profile-pic' src={profilePicPlaceholder} alt="" />
         <span>
           {name === null
-            ? `Loading${dots}`        // loading animation
+            ? `Loading your name${dots}`        // loading animation
             : name === "" 
             ? "Set up your name"     // no name yet
             : name                     // display fetched name

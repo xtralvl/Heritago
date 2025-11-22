@@ -187,7 +187,7 @@ export default function HomeBodyAndFooter() {
       <div className="sign-up-log-in-section-home-container">
         <h4>Login to access additional features</h4>
         <p>
-          Unlock features like marking favorites, viewing insights, changing font size and switching to dark mode.
+          Unlock features like marking favorites, viewing insights or changing font size.
         </p>
         <button onClick={() => setIsLoginRegisterMenuOpen(true)}>
           <strong>Login</strong>

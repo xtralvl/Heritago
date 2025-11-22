@@ -11,6 +11,7 @@ import {
 import { IsLoggedInContext } from "../../context/IsLoggedInContext";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 interface LoginRegisterProps {
   onClose: () => void;
@@ -23,9 +24,7 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
   const [password, setPassword] = useState("");
 
   const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState<
-    "error" | "success" | "logged-in" | "logged-out" | ""
-  >("");
+  const [messageType, setMessageType] = useState<"error" | "success" | "logged-in" | "logged-out" | "">("");
 
   const [currentUser, setCurrentUser] = useState<null | any>(null); // store Firebase User
 
@@ -110,6 +109,7 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
         setMessage("");
         setMessageType("");
       }, 2200);
+
     } catch (error: any) {
       setMessage("Login failed. Please try again.");
       setMessageType("error");
@@ -126,7 +126,7 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
       setMessageType("error");
       setShowModal(true);
       return;
-    }
+    }    
 
     try {
       await currentUser.reload();
@@ -137,6 +137,7 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
       setIsVerificationResent(true);
       setShowResendVerification(false);
       setShowModal(true);
+      
     } catch (error: any) {
       console.error(error);
       if (error.code === "auth/too-many-requests") {
@@ -147,6 +148,38 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
       setShowModal(true);
     }
   };
+
+  // -----------------------------
+  // PASSWORD RESET
+  // -----------------------------
+
+  const handlePasswordReset = async () => {
+    if (!email) {
+      setMessage("Please enter your email first.");
+      setMessageType("error");
+      setShowModal(true);
+      return;
+    }
+  
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setMessage("Password reset email sent! Check your inbox.");
+      setMessageType("success");
+      setShowModal(true);
+    } catch (error: any) {
+      console.error(error);
+      if (error.code === "auth/user-not-found") {
+        setMessage("No account found with this email.");
+      } else if (error.code === "auth/invalid-email") {
+        setMessage("Invalid email address.");
+      } else {
+        setMessage("Failed to send password reset email. Try again later.");
+      }
+      setMessageType("error");
+      setShowModal(true);
+    }
+  }
+
 
   return (
     <>
@@ -217,6 +250,17 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
               {isLogin ? "Log In" : "Register"}
             </button>
           </form>
+
+          {isLogin && (
+            <button
+              type="button"
+              className="forgot-password-btn"
+              onClick={handlePasswordReset}
+            >
+              Forgot password?
+            </button>
+          )}
+
 
           <div className="auth-toggle">
             <p>{isLogin ? "Don't have an account?" : "Already have an account?"}</p>
