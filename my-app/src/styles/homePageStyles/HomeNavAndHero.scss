@@ -134,6 +134,18 @@ hr {
         border-right: none;
       }
 
+      @media (min-width: 1024px) {
+        .unesco-select-button {
+          border-radius: 10px 0 0 0px;
+        }
+
+        .both-select-button {
+          border-radius: 0px 10px 0px 0px !important;
+        }
+
+  
+      }
+
       .both-select-button {
         border-radius: 0 10px 10px 0;
         border-left: none;
@@ -586,6 +598,7 @@ hr {
       gap: 3rem;
       border: 1px solid white;
       margin-top: -1rem;
+      border-radius: 0 10px 0 10px;
       
     }
   }
