@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import closeIcon from "../../assets/close-icon.svg";
+import infoIcon from '../../assets/info-icon.svg'
 import "../../styles/homePageStyles/LoginRegister.scss";
 import { auth } from "../../firebase/firebase";
 import {
@@ -8,6 +9,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { IsLoggedInContext } from "../../context/IsLoggedInContext";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 interface LoginRegisterProps {
   onClose: () => void;
@@ -18,7 +21,6 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
 
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<
@@ -46,18 +48,18 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (name.trim() === "") {
-      setMessage("Name is required.");
-      setMessageType("error");
-      return;
-    }
-
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
+
+      await setDoc(doc(db, "users", userCredentials.user.uid), {
+        email: email,
+        createdAt: new Date()
+      });
+
       await sendEmailVerification(userCredentials.user);
 
       setMessage(
@@ -65,7 +67,6 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
       );
       setMessageType("success");
       setShowModal(true);
-
 
     } catch (error: any) {
       if (error.code === "auth/email-already-in-use") {
@@ -75,78 +76,78 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
       }
       setMessageType("error");
       setShowModal(true);
-
     }
   };
 
-// -----------------------------
-// LOGIN
-// -----------------------------
-const handleLogin = async (e: React.FormEvent) => {
-  e.preventDefault();
+  // -----------------------------
+  // LOGIN
+  // -----------------------------
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  try {
-    const userCredentials = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredentials.user;
+    try {
+      const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredentials.user;
 
-    setCurrentUser(user); // store Firebase user
+      setCurrentUser(user); // store Firebase user
 
-    if (!user.emailVerified) {
-      setMessage("Your email has not been verified yet. Please check your inbox.");
+      if (!user.emailVerified) {
+        setMessage("Your email has not been verified yet. Please check your inbox.");
+        setMessageType("error");
+        setShowModal(true);
+        setShowResendVerification(true);
+        return;
+      }
+
+      setIsLoggedIn(true);
+      setMessage("You are logged in!");
+      setMessageType("logged-in");
+      setShowModal(true);
+
+      setTimeout(() => {
+        setShowModal(false);
+        onClose(); // close modal after success
+        setMessage("");
+        setMessageType("");
+      }, 2200);
+    } catch (error: any) {
+      setMessage("Login failed. Please try again.");
       setMessageType("error");
       setShowModal(true);
-      setShowResendVerification(true);
+    }
+  };
+
+  // -----------------------------
+  // RESEND EMAIL
+  // -----------------------------
+  const handleResendEmailButton = async () => {
+    if (!currentUser) {
+      setMessage("No user available to resend verification email.");
+      setMessageType("error");
+      setShowModal(true);
       return;
     }
 
-    setIsLoggedIn(true);
-    setMessage("You are logged in!");
-    setMessageType("logged-in");
-    setShowModal(true);
-
-    setTimeout(() => {
-      setShowModal(false);
-      onClose(); // close modal after success
-      setMessage("");
-      setMessageType("");
-    }, 2200);
-  } catch (error: any) {
-    setMessage("Login failed. Please try again.");
-    setMessageType("error");
-    setShowModal(true);
-  }
-};
-
-// -----------------------------
-// RESEND EMAIL
-// -----------------------------
-const handleResendEmailButton = async () => {
-  if (!currentUser) {
-    setMessage("No user available to resend verification email.");
-    setMessageType("error");
-    setShowModal(true);
-    return;
-  }
-
-  try {
-    await currentUser.reload();
-    
-    await sendEmailVerification(currentUser);
-    setMessage("We sent you a new verification email. Please check your inbox.");
-    setMessageType("success");
-    setIsVerificationResent(true);
-    setShowResendVerification(false);
-    setShowModal(true);
-  } catch (error: any) {
-    console.error(error);
-    if (error.code === "auth/too-many-requests") {
-      setMessage("Too many requests. Try again later.")
+    try {
+      await currentUser.reload();
+      
+      await sendEmailVerification(currentUser);
+      setMessage("We sent you a new verification email. Please check your inbox.");
+      setMessageType("success");
+      setIsVerificationResent(true);
+      setShowResendVerification(false);
+      setShowModal(true);
+    } catch (error: any) {
+      console.error(error);
+      if (error.code === "auth/too-many-requests") {
+        setMessage("Too many requests. Try again later.")
+      }
+      setMessage("Failed to resend verification email. Try again later.");
+      setMessageType("error");
+      setShowModal(true);
     }
-    setMessage("Failed to resend verification email. Try again later.");
-    setMessageType("error");
-    setShowModal(true);
-  }
-};
+  };
+
   return (
     <>
       {/* AUTH MODAL */}
@@ -157,8 +158,6 @@ const handleResendEmailButton = async () => {
           </button>
 
           <h1>{isLogin ? "Log In" : "Create Account"}</h1>
-
-          
 
           {message && (
             <p
@@ -176,30 +175,14 @@ const handleResendEmailButton = async () => {
             </p>
           )}
 
-        {showResendVerification && (
-          <div className="resend-verification-email-container">
-            <p>Can't find our email?</p>
-            <button onClick={handleResendEmailButton}>Resend email</button>
-          </div>
-            )}
-
-
+          {showResendVerification && (
+            <div className="resend-verification-email-container">
+              <p>Can't find our email?</p>
+              <button onClick={handleResendEmailButton}>Resend email</button>
+            </div>
+          )}
 
           <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
-            {!isLogin && (
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                  id="name"
-                  type="text"
-                  placeholder="Your name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </div>
-            )}
-
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
@@ -223,6 +206,8 @@ const handleResendEmailButton = async () => {
                 required
               />
             </div>
+            {!isLogin && <div className="register-modal-info" ><img className="info-icon-register-modal" src={infoIcon} alt="" /><p>After registration, you'll be able to set up additional information in the app.</p></div>}
+
 
             <button
               type="submit"

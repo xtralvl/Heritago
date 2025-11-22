@@ -2,88 +2,101 @@ import { useRef, useState, useEffect } from 'react';
 import '../../styles/myAccountPageStyles/PersonalDetails.scss';
 import profilePicPlaceholder from '../../assets/prof-pic-placeholder.svg';
 import profilePicEditBadge from '../../assets/prof-pic-edit-badge.svg';
-import logo from "../../assets/heritago-logo.png"
+import logo from "../../assets/heritago-logo.png";
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../BackButton';
+import { auth, db } from "../../firebase/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export default function PersonalDetails() {
-
   const navigate = useNavigate();
-
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [profileImage, setProfileImage] = useState<string>(profilePicPlaceholder);
+
+  const [profileImage, _setProfileImage] = useState<string>(profilePicPlaceholder);
 
   // === MODALS ===
   const [isNameEditOpen, setIsNameEditOpen] = useState(false);
   const [isEmailEditOpen, setIsEmailEditOpen] = useState(false);
-  const [isImagePreviewOpen, setIsImagePreviewOpen] = useState(false);
-  const [tempImageUrl, setTempImageUrl] = useState<string | null>(null);
-
-
-  const [isEmailVerified, _setIsEmailVerified] = useState(false);
 
   // === NAME STATE ===
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [tempFirstName, setTempFirstName] = useState("");
-  const [tempLastName, setTempLastName] = useState("");
-  const [isFirstNameError, setIsFirstNameError] = useState(false);
-  const [isLastNameError, setIsLastNameError] = useState(false);
+  const [name, setName] = useState<string | null>(null); // null = loading
+  const [dots, setDots] = useState(""); // loading animation
+  const [tempName, setTempName] = useState(""); 
+  const [isNameError, setIsNameError] = useState(false);
 
   // === EMAIL STATE ===
   const [email, setEmail] = useState("youremail@domain.com");
   const [tempEmail, setTempEmail] = useState("");
   const [isEmailError, setIsEmailError] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
-  // === FILE CHANGE ===
-  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file) {
-      const newPicUrl = URL.createObjectURL(file);
-      setTempImageUrl(newPicUrl); // temporary for preview
-      setIsImagePreviewOpen(true); // open preview modal
-    }
-  }
-  
+  // === LOAD USER DATA ON AUTH CHANGE ===
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots(prev => (prev.length < 3 ? prev + "." : ""));
+    }, 500);
+
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        setName(""); // no user
+        return;
+      }
+
+      const userDocRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(userDocRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setName(data.name || ""); // Firestore name
+      } else {
+        setName(""); // no Firestore data
+      }
+
+      setTempName(""); // reset tempName
+    });
+
+    return () => {
+      clearInterval(interval); // cleanup interval
+      unsubscribe();
+    };
+  }, []);
+
   // === PREVENT SCROLL WHEN MODAL OPEN ===
   useEffect(() => {
-    document.body.style.overflow =
-      isNameEditOpen || isEmailEditOpen || isImagePreviewOpen ? "hidden" : "";
-  }, [isNameEditOpen, isEmailEditOpen, isImagePreviewOpen]);
-  
-  // === HANDLE SAVE ===
-  const handleNameChange = () => {
-    const firstEmpty = tempFirstName.trim() === "";
-    const lastEmpty = tempLastName.trim() === "";
+    document.body.style.overflow = isNameEditOpen || isEmailEditOpen ? "hidden" : "";
+  }, [isNameEditOpen, isEmailEditOpen]);
 
-    setIsFirstNameError(firstEmpty);
-    setIsLastNameError(lastEmpty);
+  // === HANDLE NAME SAVE ===
+  const handleNameChange = async () => {
+    const trimmedName = tempName.trim();
+    setIsNameError(trimmedName === "");
+    if (!trimmedName) return;
 
-    if (!firstEmpty && !lastEmpty) {
-      setFirstName(tempFirstName);
-      setLastName(tempLastName);
-      setIsNameEditOpen(false);
-    }
+    const user = auth.currentUser;
+    if (!user) return;
+
+    setName(trimmedName);
+    await setDoc(doc(db, "users", user.uid), { name: trimmedName }, { merge: true });
+    setIsNameEditOpen(false);
   };
 
+  // === HANDLE EMAIL SAVE ===
   const handleEmailChange = () => {
-    const empty = tempEmail.trim() === "";
-    setIsEmailError(empty);
-    if (!empty) {
-      setEmail(tempEmail);
-      setIsEmailEditOpen(false);
-    }
+    const trimmedEmail = tempEmail.trim();
+    setIsEmailError(trimmedEmail === "");
+    if (!trimmedEmail) return;
+
+    setEmail(trimmedEmail);
+    setIsEmailEditOpen(false);
   };
 
   return (
     <div className="personal-details-page-container">
-      
-      <img onClick={() => navigate(-2)} className="personal-details-page-container-logo" src={logo} alt="" />
+      <img onClick={() => navigate(-2)} className="personal-details-page-container-logo" src={logo} alt="Logo" />
+      <BackButton />
 
-            {/* BACK BUTTON */}
-            <BackButton/>
-
-      {/* === HEADER === */}
+      {/* HEADER */}
       <div className="personal-details-page-header-section">
         <div className="personal-details-texts">
           <h1>Personal details</h1>
@@ -93,21 +106,26 @@ export default function PersonalDetails() {
           <img src={profileImage} alt="Profile" className="personal-details-page-prof-pic" />
           <img src={profilePicEditBadge} alt="Edit badge" className="personal-details-page-prof-pic-badge" />
         </div>
-        <input type="file" accept="image/*" onChange={handleFileChange} hidden ref={fileInputRef} />
       </div>
 
       <hr />
 
-      {/* === NAME SECTION === */}
+      {/* NAME SECTION */}
       <section className="personal-details-page-name-section">
         <div className="personal-details-info">
           <h2>Name</h2>
-          <p>{firstName} {lastName}</p>
+          <p className="name-display">
+            {name === null
+              ? `Loading${dots}`
+              : name === ""
+                ? "Set up your name"
+                : name
+            }
+          </p>
         </div>
         <button
           onClick={() => {
-            setTempFirstName(firstName);
-            setTempLastName(lastName);
+            setTempName(name || "");
             setIsNameEditOpen(true);
           }}
           className="personal-details-page-edit-button"
@@ -116,73 +134,22 @@ export default function PersonalDetails() {
         </button>
       </section>
 
-      {isImagePreviewOpen && tempImageUrl && (
-          <div className="modal-overlay">
-            <div className="editing-modal" style={{ height: "60vh" }}>
-              <h3>Preview Profile Image</h3>
-              <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <img
-                  src={tempImageUrl}
-                  alt="Preview"
-                  style={{
-                    maxHeight: "100%",
-                    maxWidth: "100%",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
-
-              <div className="modal-buttons">
-                <button
-                  className="cancel-btn"
-                  onClick={() => {
-                    setIsImagePreviewOpen(false);
-                    setTempImageUrl(null);
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="save-btn"
-                  onClick={() => {
-                    setProfileImage(tempImageUrl);
-                    setIsImagePreviewOpen(false);
-                    setTempImageUrl(null);
-                  }}
-                >
-                  Save
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-
       {isNameEditOpen && (
         <div className="modal-overlay">
           <div className="editing-modal">
             <h3>Edit name</h3>
-
-            <label htmlFor="first-name">First Name(s)<span>*</span></label>
+            <label htmlFor="name">Name<span>*</span></label>
             <input
-              id="first-name"
+              id="name"
               type="text"
-              value={tempFirstName}
-              onChange={(e) => { setTempFirstName(e.target.value); if (e.target.value.trim() !== "") setIsFirstNameError(false); }}
-              className={`${isFirstNameError ? "first-name-error-input" : ""}`}
+              value={tempName}
+              onChange={(e) => {
+                setTempName(e.target.value);
+                if (e.target.value.trim() !== "") setIsNameError(false);
+              }}
+              className={isNameError ? "error-input" : ""}
             />
-            {isFirstNameError && <p className='name-editing-error-msg'>Required field</p>}
-
-            <label htmlFor="last-name">Last Name(s)<span>*</span></label>
-            <input
-              id="last-name"
-              type="text"
-              value={tempLastName}
-              onChange={(e) => { setTempLastName(e.target.value); if (e.target.value.trim() !== "") setIsLastNameError(false); }}
-              className={`${isLastNameError ? "last-name-error-input" : ""}`}
-            />
-            {isLastNameError && <p className='name-editing-error-msg'>Required field</p>}
+            {isNameError && <p className="error-msg">Required field</p>}
 
             <div className="modal-buttons">
               <button className="cancel-btn" onClick={() => setIsNameEditOpen(false)}>Cancel</button>
@@ -194,7 +161,7 @@ export default function PersonalDetails() {
 
       <hr />
 
-      {/* === EMAIL SECTION === */}
+      {/* EMAIL SECTION */}
       <section className="personal-details-page-email-section">
         <div className="personal-details-email-info">
           <h2>E-mail address</h2>
@@ -218,10 +185,13 @@ export default function PersonalDetails() {
               id="email"
               type="email"
               value={tempEmail}
-              onChange={(e) => { setTempEmail(e.target.value); if (e.target.value.trim() !== "") setIsEmailError(false); }}
-              className={`${isEmailError ? "last-name-error-input" : ""}`}
+              onChange={(e) => {
+                setTempEmail(e.target.value);
+                if (e.target.value.trim() !== "") setIsEmailError(false);
+              }}
+              className={isEmailError ? "error-input" : ""}
             />
-            {isEmailError && <p className='name-editing-error-msg'>Required field</p>}
+            {isEmailError && <p className='error-msg'>Required field</p>}
 
             <p className="email-info-text">
               We’ll send a verification link to your new email address — check your inbox.
