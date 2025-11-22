@@ -110,7 +110,7 @@ export default function HomeNavAndHero() {
   }
 
   const handleMobileLoginButton = () => {
-    isLoggedIn ? navigate("/my-account") : setIsMobileMenuOpen(true);
+    isLoggedIn ? navigate("/my-account") : setIsLoginRegisterMenuOpen(true);
   };
   
   // ==============================
@@ -131,6 +131,7 @@ export default function HomeNavAndHero() {
           >
             <img src={profileIcon} alt="Show Profile" />
           </button>
+
           <button
             onClick={() => setIsMobileMenuOpen(true)}
             className="hamburger-button"
