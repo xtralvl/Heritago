@@ -8,6 +8,14 @@
   display: none;
 }   
 
+.favoritedText-desktop {
+  display: none;
+
+  .add-to-fav-container-desktop {
+    display: none;
+  }
+}
+
 .map-container-desktop {
   display: none;
 }
@@ -188,7 +196,6 @@
       border: none;
       cursor: pointer;
       padding: 0;
-      margin-left: 0.6rem;
       width: 3rem;
       height: 3rem;
       grid-column: 2;
@@ -202,6 +209,39 @@
       }
     }
   }
+
+.add-to-fav-container-mobile {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    color: red;
+    font-weight: bold;
+    font-size: 0.7rem;
+    margin: 0 0.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+
+  }
+
+  .see-favorites-button-mobile,
+  .see-favorites-button-desktop {
+    color: red;
+    background: none;
+    border: none;
+    text-decoration: underline;
+  }
+
+}
+
+.see-favorites-button-desktop {
+  display: none;
+}
 
   /* ===== CAROUSEL ===== */
   .details-page-carousel-container-mobile {
@@ -431,6 +471,18 @@ footer {
   }
 }
 
+.redheart {
+  scale: (1.5);
+}
+
+.added-to-favorites {
+  color: red;
+}
+
+.removed-from-favorites {
+  color: $custom-dark-green !important;
+}
+
 /* =========================
    RESPONSIVE ADJUSTMENTS
    ========================= */
@@ -471,7 +523,6 @@ footer {
   .details-page-title-container .details-page-add-to-favorite-button-mobile img {
     width: 1.8rem;
     height: 1.8rem;
-    margin-right: 7rem;
   }
 }
   .details-page-facilities-section {
@@ -543,6 +594,15 @@ footer {
     display: none !important;
   }
 
+  .favoritedText-mobile {
+    display: none;
+  }
+
+  .favoritedText-desktop {
+    display: inline-block;
+  }
+
+
   .details-page-container {
     padding: 2rem;
   }
@@ -592,6 +652,10 @@ footer {
     display: inline-flex;
     font-weight: bold;
     font-size: 0.8rem;
+  }
+
+  .see-favorites-button-mobile {
+    display: none;
   }
 
   /* Desktop images grid */

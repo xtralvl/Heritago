@@ -4,6 +4,7 @@ import logo from "../assets/heritago-logo.png";
 import profileIcon from "../assets/profile-icon.svg";
 import hamburgerIcon from "../assets/hamburger-icon.svg";
 import heartIcon from "../assets/heart-icon.svg";
+import redHeartIcon from "../assets/heart-icon-red.svg";
 import previousIcon from "../assets/previous-icon.svg";
 import nextIcon from "../assets/next-icon.svg";
 import noImgPlaceholder from "../../src/assets/noImgPlaceholder.jpg";
@@ -24,6 +25,9 @@ export default function DetailsPage() {
   const [selectedResultImages, setSelectedResultImages] = useState<any[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isAllActivitiesOpen, setIsAllActivitiesOpen] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [showAddedToFavorites, setShowAddedToFavorites] = useState(false);
+  const [favoritedMessage, setFavoritedMessage] = useState("");
 
   const { destinationId } = useParams();
   const navigate = useNavigate();
@@ -67,6 +71,16 @@ export default function DetailsPage() {
     loadDetails();
   }, [destinationId]);
 
+  useEffect(() => {
+    if (!showAddedToFavorites) return;
+  
+    const timer = setTimeout(() => {
+      setShowAddedToFavorites(false);
+    }, 3500);
+  
+    return () => clearTimeout(timer);
+  }, [showAddedToFavorites]);
+  
   if (!selectedResultDetails) {
     return (
       <div className="loading-container">
@@ -74,7 +88,7 @@ export default function DetailsPage() {
         <img src={heritagoLogo} alt="" />
       </div>
     );
-  }
+  };
 
   // Determine type
   const isPark = selectedResultDetails?.fullName !== undefined;
@@ -148,14 +162,43 @@ export default function DetailsPage() {
             )}
           </div>
 
-          <button className="details-page-add-to-favorite-button-desktop" aria-label="Add to favorites">
-            <img src={heartIcon} alt="Add to favorites" />
-          </button>
+          <div className="add-to-fav-container-mobile" >
+            <button onClick={() => {
+              if (isFavorited) {
+                setIsFavorited(false)
+                setShowAddedToFavorites(true);
+                setFavoritedMessage("Removed from favorites!")
+              } else {
+                setIsFavorited(true);
+                setShowAddedToFavorites(true);
+                setFavoritedMessage("Added to favorites!")
+              }
+              }}
+              className="details-page-add-to-favorite-button-mobile" aria-label="Add to favorites">
+            <img src={isFavorited ? redHeartIcon : heartIcon} alt="Add to favorites" />
+            </button>
+            {showAddedToFavorites && <span className={`favoritedText-mobile ${isFavorited ? "added-to-favorites" : "removed-from-favorites"}`} >{favoritedMessage}</span>}
+            {showAddedToFavorites && <button className={`see-favorites-button-mobile ${isFavorited ? "added-to-favorites" : "removed-from-favorites"}`}>See favorites</button>}
+          </div>
+         </div>
 
-          <button className="details-page-add-to-favorite-button-mobile" aria-label="Add to favorites">
-            <img src={heartIcon} alt="Add to favorites" />
-          </button>
-        </div>
+          <div className="add-to-fav-container-desktop" >
+          <button onClick={() => {
+              if (isFavorited) {
+                setIsFavorited(false)
+                setShowAddedToFavorites(false);
+              } else {
+                setIsFavorited(true);
+                setShowAddedToFavorites(true);
+              }
+              }}
+              className="details-page-add-to-favorite-button-desktop" aria-label="Add to favorites">
+              <img  className={isFavorited ? "redheart" : ""} src={isFavorited ? redHeartIcon : heartIcon} alt="Add to favorites" />
+            </button>
+            {showAddedToFavorites && <span className="favoritedText-desktop" >Added to favorites!</span>}
+            {showAddedToFavorites && <button className="see-favorites-button-desktop" >See favorites</button>}
+          </div>
+
 
         {/* IMAGE CAROUSEL */}
         <div className="details-page-carousel-container-mobile">
