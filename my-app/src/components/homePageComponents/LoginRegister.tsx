@@ -27,9 +27,9 @@ export default function LoginRegister({ onClose }: LoginRegisterProps) {
 
   const [currentUser, setCurrentUser] = useState<null | any>(null); // store Firebase User
 
-  const [showModal, setShowModal] = useState(false);
+  const [_showModal, setShowModal] = useState(false);
   const [showResendVerification, setShowResendVerification] = useState(false);
-  const [isVerificationResent, setIsVerificationResent] = useState(false);
+  const [_isVerificationResent, setIsVerificationResent] = useState(false);
 
   const { setIsLoggedIn } = useContext(IsLoggedInContext)!;
 
