@@ -178,25 +178,29 @@ export default function DetailsPage() {
             <img src={isFavorited ? redHeartIcon : heartIcon} alt="Add to favorites" />
             </button>
             {showAddedToFavorites && <span className={`favoritedText-mobile ${isFavorited ? "added-to-favorites" : "removed-from-favorites"}`} >{favoritedMessage}</span>}
-            {showAddedToFavorites && <button className={`see-favorites-button-mobile ${isFavorited ? "added-to-favorites" : "removed-from-favorites"}`}>See favorites</button>}
+            {showAddedToFavorites && <button onClick={() => navigate("/my-account/saved-destinations")} className={`see-favorites-button-mobile ${isFavorited ? "added-to-favorites" : "removed-from-favorites"}`}>See favorites</button>}
           </div>
          </div>
 
           <div className="add-to-fav-container-desktop" >
+            <div className="add-to-fav-text-desktop" >
+            {showAddedToFavorites && <span className={`favoritedText-desktop ${isFavorited ? "added-to-favorites" : "removed-from-favorites"}`} >{favoritedMessage}</span>}
+            {showAddedToFavorites && <button onClick={() => navigate("/my-account/saved-destinations")} className={`see-favorites-button-desktop ${isFavorited ? "added-to-favorites" : "removed-from-favorites"}`}>See favorites</button>}
+            </div>
           <button onClick={() => {
               if (isFavorited) {
                 setIsFavorited(false)
-                setShowAddedToFavorites(false);
+                setShowAddedToFavorites(true);
+                setFavoritedMessage("Removed from favorites!")
               } else {
                 setIsFavorited(true);
                 setShowAddedToFavorites(true);
+                setFavoritedMessage("Added to favorites!")
               }
               }}
               className="details-page-add-to-favorite-button-desktop" aria-label="Add to favorites">
               <img  className={isFavorited ? "redheart" : ""} src={isFavorited ? redHeartIcon : heartIcon} alt="Add to favorites" />
             </button>
-            {showAddedToFavorites && <span className="favoritedText-desktop" >Added to favorites!</span>}
-            {showAddedToFavorites && <button className="see-favorites-button-desktop" >See favorites</button>}
           </div>
 
 

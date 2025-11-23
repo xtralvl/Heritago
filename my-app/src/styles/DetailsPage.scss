@@ -658,6 +658,32 @@ footer {
     display: none;
   }
 
+  .add-to-fav-container-desktop {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .add-to-fav-text-desktop {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .favoritedText-desktop {
+    color: red;
+    font-weight: bold;
+  }
+
+  .see-favorites-button-desktop {
+    display: block !important;
+    border: none;
+    color: red;
+    text-decoration: underline;
+    background: none;
+  }
+
   /* Desktop images grid */
   .details-page-images-container-desktop {
     display: flex !important;
