@@ -43,7 +43,7 @@ Complete Firebase auth integration:
 | Styling | SCSS |
 | Auth | Firebase Authentication |
 | Routing | React Router |
-| APIs | Multiple nature & UNESCO APIs |
+| APIs | NPS API & UNESCO local JSON file |
 | UI/UX | Figma |
 
 ---
